@@ -1,0 +1,4 @@
+config:
+  # General configuration of the framework
+  general:
+    sample: 1
