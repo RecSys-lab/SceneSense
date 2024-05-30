@@ -1,6 +1,6 @@
 # SceneSense
 
-Intuitive Movie Recommendations for You
+This repository provides a multi-modal movie recommendation framework titled `SceneSense` that benefits from **Generative AI** for providing enhanced suggestions.
 
 ## 🛠️ Getting Started
 
@@ -9,6 +9,13 @@ After cloning the repository, you need to install the required dependencies. The
 ```
 pip install -r requirements.txt
 ```
+
+## 📊 Data
+
+As the framework supports multi-modal processing and covers **text**, **visual**, and **fused data**, varios datasets can be fed for reproducibility, evaluation, and experiments purposes:
+
+- **Text Feed:** `MovieLenz-25M` ([link](https://grouplens.org/datasets/movielens/25m/)) is recommended to provide data about movies, user interactions, _etc._
+- **Visual Feed:** `SceneSense Dataset` ([link](https://huggingface.co/datasets/alitourani/moviefeats_visual)) is collected by the team and provides frame-level features for each movie using different Convolutional Neural Networks (CNNs).
 
 ## 🚀 Launching the Framework
 

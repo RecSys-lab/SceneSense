@@ -2,3 +2,25 @@ config:
   # General configuration of the framework
   general:
     sample: 1
+  # Datasets
+  datasets:
+    # Text dataset (MovieLenz 25M)
+    text_dataset:
+      # Path to the dataset
+      url: https://files.grouplens.org/datasets/movielens/ml-25m.zip
+    # Visual dataset (SceneSense)
+    visual_dataset:
+      # Path to the dataset
+      url: https://huggingface.co/datasets/alitourani/moviefeats_visual
+  # Models
+  # Aggregations
+  aggregations:
+    # Pointwise aggregation
+    pointwise:
+      include: true
+    # Distributional aggregation
+    distributional:
+      include: true
+    # Temporal aggregation
+    temporal:
+      include: true
