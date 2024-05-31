@@ -6,13 +6,20 @@ config:
   datasets:
     # Text dataset (MovieLenz 25M)
     text_dataset:
+      # Dataset name
+      name: movielens-25m
       # Path to the dataset
       url: https://files.grouplens.org/datasets/movielens/ml-25m.zip
     # Visual dataset (SceneSense)
     visual_dataset:
+      # Dataset name
+      name: SceneSense-visual
       # Path to the dataset
       url: https://huggingface.co/datasets/alitourani/moviefeats_visual
+      # Dataset folders
+      datasetFolders: ["full_movies", "movie_shots", "movie_trailers"]
   # Models
+  models: ["incp3", "vgg19"]
   # Aggregations
   aggregations:
     # Pointwise aggregation
