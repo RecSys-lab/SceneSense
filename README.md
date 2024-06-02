@@ -21,6 +21,37 @@ As the framework supports multi-modal processing and covers **text**, **visual**
 
 TBD
 
+## 🗄️ Code Structure
+
+You can find below where to search for the codes in the framework:
+
+```
+> [config]              ## framework configs & docs
+    - config.yml
+> [src]                 ## framework codes
+    > [core]            ## core functionalities
+        > [datasets]    ## dataset connection & helpers
+    > [multimodal]      ## processing modules
+        > [textual]
+        > [visual]
+        > [fused]
+    - utils.py          ## general utilities
+    - main.py           ## main runner file
+```
+
 ## 👨🏻‍💻 Contribution
 
+In case you are willing to contribute to the project, please consider the following notes before opening your [pull requests](https://github.com/RecSys-lab/SceneSense/pulls):
+
+- Please keep the structure of the project and add new codes in proper locations in the `src` folder. The **Code Structure** section provides general information accordingly.
 - In case you add new dependencies, do not forget to add them to `requirements.txt` using `pip freeze > requirements.txt` (you may need to remove the current file to have an updated version!).
+
+## 📝 Citation
+
+If you find **SceneSense** useful for your research or development, please cite the following [paper](#):
+
+```
+@article{tbd,
+  title={TBD}
+}
+```
