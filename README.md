@@ -19,7 +19,11 @@ As the framework supports multi-modal processing and covers **text**, **visual**
 
 ## 🚀 Launching the Framework
 
-TBD
+To launch the framework, you need to take the below steps:
+
+### I. Set Configurations
+
+The first step is to modify the configurations, adapting the framework towards what you target. Accordingly, you need to modify the [config.yml](/config/config.yml) file based on the [documentations provided for it](/config/README.md).
 
 ## 🗄️ Code Structure
 
