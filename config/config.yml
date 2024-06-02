@@ -16,10 +16,12 @@ config:
       name: SceneSense-visual
       # Path to the dataset
       url: https://huggingface.co/datasets/alitourani/moviefeats_visual
-      # Dataset folders
-      datasetFolders: ["full_movies", "movie_shots", "movie_trailers"]
-  # Models
-  models: ["incp3", "vgg19"]
+      # Feature sources to be used (in an array)
+      # Possible values: ["full_movies", "movie_shots", "movie_trailers"]
+      feature_sources: ["full_movies", "movie_shots", "movie_trailers"]
+      # Feature extraction models to be used (in an array)
+      # Possible values: ["incp3", "vgg19"]
+      feature_models: ["incp3", "vgg19"]
   # Aggregations
   aggregations:
     # Pointwise aggregation
