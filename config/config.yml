@@ -15,7 +15,7 @@ config:
       # Dataset name
       name: SceneSense-visual
       # Path to the dataset
-      url: https://huggingface.co/datasets/alitourani/moviefeats_visual
+      url: https://huggingface.co/datasets/alitourani/moviefeats_visual/resolve/main
       # Feature sources to be used (in an array)
       # Possible values: ["full_movies", "movie_shots", "movie_trailers"]
       feature_sources: ["full_movies", "movie_shots", "movie_trailers"]

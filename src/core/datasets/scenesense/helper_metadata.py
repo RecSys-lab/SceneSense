@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
+
 import json
 import random
 import requests
 from collections import Counter
 
-def loadJsonFromUrl(url):
+def loadJsonFromUrl(url: str):
     """
     Load `stats.json` data from a given URL and return it.
 
     Parameters:
-        url (str): The URL to load JSON data from.
+        url (str): The root address of SceneSense to load JSON data from.
 
     Returns:
         dict: The JSON data loaded from the URL.
     """
     try:
-        response = requests.get(url)
+        # Prepare the proper address for the JSON data
+        jsonUrl = f"{url}/stats.json"
+        # Load JSON data from the URL
+        response = requests.get(jsonUrl)
         response.raise_for_status()  # Raise an error for bad status codes
         data = response.json()  # Parse JSON data'
         print("JSON data loaded successfully!")
@@ -40,10 +44,11 @@ def countNumberOfMovies(data):
     """
     if data:
         moviesCount = len(data)
-        print(f"The dataset contains {moviesCount} movies!")
+        # print(f"The dataset contains {moviesCount} movies!")
         return moviesCount
     else:
         print("Data is empty or not loaded.")
+        return -1
 
 
 def fetchRandomMovie(data):
@@ -59,10 +64,11 @@ def fetchRandomMovie(data):
     if data:
         randomMovie = random.choice(data)
         print("Randomly fetched movie:")
-        print(json.dumps(randomMovie, indent=4))
+        # print(json.dumps(randomMovie, indent=4))
         return randomMovie
     else:
         print("Data is empty or not loaded.")
+        return {}
 
 def fetchMovieById(data, movieId):
     """
@@ -79,28 +85,10 @@ def fetchMovieById(data, movieId):
         for movie in data:
             if movie.get('id') == standardizedId:
                 print("Fetched movie by ID:")
-                print(json.dumps(movie, indent=4))
+                # print(json.dumps(movie, indent=4))
                 return movie
         # If no movie is found with the given ID
         print(f"No movie found with ID: {standardizedId}")
-    else:
-        print("Data is empty or not loaded.")
-
-# Fetching and classifying all years by count
-def classifyYearsByCount(data):
-    """
-    Classify all the years in the dataset by count.
-
-    Parameters:
-        data (dict): The JSON data containing the movies.
-
-    Returns:
-        dict: A dictionary containing the years as keys and their counts as values.
-    """
-    if data:
-        years = [movie['year'] for movie in data if 'year' in movie]
-        yearsCount = Counter(years)
-        return dict(yearsCount)
     else:
         print("Data is empty or not loaded.")
         return {}
@@ -120,6 +108,25 @@ def fetchMoviesByGenre(data, genre):
     if data:
         matchedMovies = {movie['id']: movie for movie in data if genre in movie.get('genres', [])}
     return matchedMovies
+
+# Fetching and classifying all years by count
+def classifyYearsByCount(data):
+    """
+    Classify all the years in the dataset by count.
+
+    Parameters:
+        data (dict): The JSON data containing the movies.
+
+    Returns:
+        dict: A dictionary containing the years as keys and their counts as values.
+    """
+    if data:
+        years = [movie['year'] for movie in data if 'year' in movie]
+        yearsCount = Counter(years)
+        return dict(yearsCount)
+    else:
+        print("Data is empty or not loaded.")
+        return {}
 
 def classifyMoviesByGenre(data):
     """
