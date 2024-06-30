@@ -17,6 +17,8 @@ As the framework supports multi-modal processing and covers **text**, **visual**
 - **Text Feed:** `MovieLenz-25M` ([link](https://grouplens.org/datasets/movielens/25m/)) is recommended to provide data about movies, user interactions, _etc._
 - **Visual Feed:** `SceneSense Dataset` ([link](https://huggingface.co/datasets/alitourani/moviefeats_visual)) is collected by the team and provides frame-level features for each movie using different Convolutional Neural Networks (CNNs).
 
+In order to use the datasets, some helper functions are provided in the `src/core/datasets` [`path`](https://github.com/RecSys-lab/SceneSense/tree/main/src/core/datasets).
+
 ## 🚀 Launching the Framework
 
 To launch the framework, you need to take the below steps:
