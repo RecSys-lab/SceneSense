@@ -1,35 +1,7 @@
 #!/usr/bin/env python3
 
-import json
 import random
-import requests
 from collections import Counter
-
-def loadJsonFromUrl(url: str):
-    """
-    Load `stats.json` data from a given URL and return it.
-
-    Parameters:
-        url (str): The root address of SceneSense to load JSON data from.
-
-    Returns:
-        dict: The JSON data loaded from the URL.
-    """
-    try:
-        # Prepare the proper address for the JSON data
-        jsonUrl = f"{url}/stats.json"
-        # Load JSON data from the URL
-        response = requests.get(jsonUrl)
-        response.raise_for_status()  # Raise an error for bad status codes
-        data = response.json()  # Parse JSON data'
-        print("JSON data loaded successfully!")
-        return data
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching data from {url}: {e}")
-        return None
-    except json.JSONDecodeError as e:
-        print(f"Error parsing JSON data: {e}")
-        return None
 
 
 def countNumberOfMovies(data):

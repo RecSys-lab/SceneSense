@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
 
+from scenesense.common import loadJsonFromUrl
 from scenesense.visualizer_metadata import visualizeGenresDictionary
-from scenesense.helper_metadata import loadJsonFromUrl, countNumberOfMovies, fetchRandomMovie, fetchMovieById
+from scenesense.helper_metadata import countNumberOfMovies, fetchRandomMovie, fetchMovieById
 from scenesense.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre, calculateAverageGenrePerMovie
 
 # Sample variables
 datasetName = "SceneSense-visual"
 featureModels = ["incp3", "vgg19"]
 featureSources = ["full_movies", "movie_shots", "movie_trailers"]
-datasetUrl = "https://huggingface.co/datasets/alitourani/moviefeats_visual/resolve/main"
+datasetMetadataUrl = "https://huggingface.co/datasets/alitourani/moviefeats_visual/resolve/main/stats.json"
 
 def testMetadataProcess():
     print(f"Hi! This is an example provided for you to work with the '{datasetName}' dataset ... \n")
     # Fetch JSON data from the URL
-    print(f"- Fetching URL from '{datasetUrl}' ...")
-    jsonData = loadJsonFromUrl(datasetUrl)
+    print(f"- Fetching URL from '{datasetMetadataUrl}' ...")
+    jsonData = loadJsonFromUrl(datasetMetadataUrl)
     # Count the number of movies in the dataset
     print(f"\n- Testing Movie Count ...")
     moviesCount = countNumberOfMovies(jsonData)
