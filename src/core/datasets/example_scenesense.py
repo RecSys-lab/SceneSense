@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-from scenesense.helper_metadata import loadJsonFromUrl, countNumberOfMovies, fetchRandomMovie, fetchMovieById
+from scenesense.visualizer_metadata import visualizeGenresDictionary
 from scenesense.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre
+from scenesense.helper_metadata import loadJsonFromUrl, countNumberOfMovies, fetchRandomMovie, fetchMovieById
 
 # Sample variables
 datasetName = "SceneSense-visual"
@@ -9,7 +10,7 @@ featureModels = ["incp3", "vgg19"]
 featureSources = ["full_movies", "movie_shots", "movie_trailers"]
 datasetUrl = "https://huggingface.co/datasets/alitourani/moviefeats_visual/resolve/main"
 
-def main():
+def testMetadataProcess():
     print(f"Hi! This is an example provided for you to work with the '{datasetName}' dataset ... \n")
     # Fetch JSON data from the URL
     print(f"- Fetching URL from '{datasetUrl}' ...")
@@ -40,7 +41,11 @@ def main():
     print(f"\n- Testing Movie Classification by Genre ...")
     moviesByGenre = classifyMoviesByGenre(jsonData)
     print(f"- Returned variable (dict): {moviesByGenre}\n")
+    # Show the classification results in a bar chart
+    print(f"\n- Visualizing Movie Classification by Genre ...")
+    visualizeGenresDictionary(moviesByGenre)
     # End of the example
     print(f"End of the example for the '{datasetName}' dataset ...")
 
-main()
+# Run
+testMetadataProcess()
