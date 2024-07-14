@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 from scenesense.visualizer_metadata import visualizeGenresDictionary
-from scenesense.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre
 from scenesense.helper_metadata import loadJsonFromUrl, countNumberOfMovies, fetchRandomMovie, fetchMovieById
+from scenesense.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre, calculateAverageGenrePerMovie
 
 # Sample variables
 datasetName = "SceneSense-visual"
@@ -41,6 +41,10 @@ def testMetadataProcess():
     print(f"\n- Testing Movie Classification by Genre ...")
     moviesByGenre = classifyMoviesByGenre(jsonData)
     print(f"- Returned variable (dict): {moviesByGenre}\n")
+    # Calculate the average genre per movie
+    print(f"\n- Testing Average Genre per Movie ...")
+    averageGenrePerMovie = calculateAverageGenrePerMovie(moviesByGenre, moviesCount)
+    print(f"- Returned variable (float): {averageGenrePerMovie}\n")
     # Show the classification results in a bar chart
     print(f"\n- Visualizing Movie Classification by Genre ...")
     visualizeGenresDictionary(moviesByGenre)

@@ -109,7 +109,6 @@ def fetchMoviesByGenre(data, genre):
         matchedMovies = {movie['id']: movie for movie in data if genre in movie.get('genres', [])}
     return matchedMovies
 
-# Fetching and classifying all years by count
 def classifyYearsByCount(data):
     """
     Classify all the years in the dataset by count.
@@ -127,6 +126,28 @@ def classifyYearsByCount(data):
     else:
         print("Data is empty or not loaded.")
         return {}
+
+def calculateAverageGenrePerMovie(genresDict, moviesCount):
+    """
+    Calculate the average number of genres per movie.
+
+    Parameters:
+        genresDict (dict): A dictionary containing genres as keys and their counts as values.
+        moviesCount (int): The total number of movies in the dataset.
+        
+    Returns:
+        float: The average number of genres per movie.
+    """
+    # Check if the genres dictionary is not empty
+    if genresDict:
+        # Calculate the total number of genres
+        totalGenres = sum(genresDict.values())
+        # Calculate the average number of genres per movie
+        averageGenrePerMovie = round(totalGenres / moviesCount, 3)
+        # Return the result
+        return averageGenrePerMovie
+    else:
+        print("Genres dictionary is empty!")
 
 def classifyMoviesByGenre(data):
     """
