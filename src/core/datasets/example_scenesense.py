@@ -2,6 +2,7 @@
 
 from scenesense.common import loadJsonFromUrl
 from scenesense.visualizer_metadata import visualizeGenresDictionary
+from scenesense.helper_visualfeats import packetAddressGenerator, fetchAllPackets
 from scenesense.helper_metadata import countNumberOfMovies, fetchRandomMovie, fetchMovieById
 from scenesense.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre, calculateAverageGenrePerMovie
 
@@ -9,10 +10,11 @@ from scenesense.helper_metadata import classifyYearsByCount, fetchMoviesByGenre,
 datasetName = "SceneSense-visual"
 featureModels = ["incp3", "vgg19"]
 featureSources = ["full_movies", "movie_shots", "movie_trailers"]
+datasetRawFilesUrl = "https://huggingface.co/datasets/alitourani/moviefeats_visual/raw/main/"
 datasetMetadataUrl = "https://huggingface.co/datasets/alitourani/moviefeats_visual/resolve/main/stats.json"
 
 def testMetadataProcess():
-    print(f"Hi! This is an example provided for you to work with the '{datasetName}' dataset ... \n")
+    print(f"Hi! This is an example provided for you to work with the metadata (json) file of the '{datasetName}' dataset ... \n")
     # Fetch JSON data from the URL
     print(f"- Fetching URL from '{datasetMetadataUrl}' ...")
     jsonData = loadJsonFromUrl(datasetMetadataUrl)
@@ -52,5 +54,18 @@ def testMetadataProcess():
     # End of the example
     print(f"End of the example for the '{datasetName}' dataset ...")
 
+def testVisualDataProcess():
+    print(f"Hi! This is an example provided for you to work with the visual packets of the '{datasetName}' dataset ... \n")
+    # Fetch JSON data from the URL
+    givenMovieId = 6
+    print(f"- Generating a sample packet address file from '{datasetRawFilesUrl}' ...")
+    packetAddress = packetAddressGenerator(datasetRawFilesUrl, featureSources[2], featureModels[0], givenMovieId, 1)
+    print(f"- Generated address (str): {packetAddress}\n")
+    # Fetch all packets of a movie
+    print(f"- Fetching all packets of the movie #{givenMovieId}) ...")
+    moviePackets = fetchAllPackets(datasetRawFilesUrl, featureSources[2], featureModels[0], givenMovieId)
+    print(f"- Number of packets fetched (list): {len(moviePackets)}")
+
 # Run
 testMetadataProcess()
+testVisualDataProcess()
