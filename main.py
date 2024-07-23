@@ -1,15 +1,26 @@
 #!/usr/bin/env python3
 
 from src.utils import readConfigs
+from src.runCore import runTrailerDownloader
 
 def main():
     print("Welcome! Starting 'SceneSense'!\n")
     # Read the configuration file
+    configs = {}
     configs = readConfigs("config/config.yml")
     # If properly read, print the configurations
-    if configs:
-        print(configs)
+    if not configs:
+        print("Error reading the configurations!")
+        return
+    # Get common configurations
+    cfgDatasets = configs['config']['datasets']
+    cfgPipeline = configs['config']['pipelines']
+    # Run the trailer downloader pipeline
+    datasetInfo = {'name': cfgDatasets['visual_dataset']['name'],
+                   'jsonPath': cfgDatasets['visual_dataset']['path_metadata']}
+    runTrailerDownloader(cfgPipeline['movie_trailers'], datasetInfo)
     # Finish the program
     print("\nStopping 'SceneSense'!")
 
-main()
+if __name__ == "__main__":
+    main()

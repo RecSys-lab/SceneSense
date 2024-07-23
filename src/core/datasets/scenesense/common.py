@@ -18,10 +18,10 @@ def loadJsonFromUrl(jsonUrl: str):
         response = requests.get(jsonUrl)
         response.raise_for_status()  # Raise an error for bad status codes
         data = response.json()  # Parse JSON data'
-        print("JSON data loaded successfully!")
+        print("JSON data loaded successfully!\n")
         return data
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching data from {jsonUrl}: {e}")
+        print(f"Error fetching data from {jsonUrl}: {e}\n")
         return None
     except json.JSONDecodeError as e:
         print(f"Error parsing JSON data: {e}")

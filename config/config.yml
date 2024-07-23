@@ -24,6 +24,13 @@ config:
       # Feature extraction models to be used (in an array)
       # Possible values: ["incp3", "vgg19"]
       feature_models: ["incp3", "vgg19"]
+  pipelines:
+    # Movie trailers finder and downloader pipeline
+    movie_trailers:
+      # Pipeline name
+      name: Trailer-fetcher
+      # Path to the pipeline
+      download_path: ""
   # Aggregations
   aggregations:
     # Pointwise aggregation
