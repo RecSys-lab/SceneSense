@@ -31,6 +31,16 @@ config:
       name: Trailer-fetcher
       # Path to the pipeline
       download_path: "~/Downloads"
+    # Movie frames extractor pipeline
+    movie_frames:
+      # Pipeline name
+      name: Frame-extractor
+      # Movies path
+      movies_path: "E:/Datasets/Movies/Videos"
+      # Frames path
+      frames_path: "E:/Datasets/Movies/MovieFrames"
+      # Supported video formats
+      video_formats: ["mp4", "avi", "mkv"]
   # Aggregations
   aggregations:
     # Pointwise aggregation
