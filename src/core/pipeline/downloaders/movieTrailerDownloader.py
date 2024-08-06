@@ -1,10 +1,4 @@
 from pytube import Search, YouTube
-# import os
-# import time
-# import pandas as pd
-# from utils import logger
-# from pytube import YouTube
-# from config import trailersDir, moviesListCSV, movieLenzYouTubeDir
 
 def getTrailerYoutubeLink(name: str, year: int):
     """
@@ -59,8 +53,27 @@ def generateTrailersYouTubeLinks(moviesList: list):
     return trailersYouTubeLinks
 
 def downloadMovieTrailers(configs: dict, filteredMovies: list):
+    """
+    Downloads the trailers of the movies
+
+    Parameters
+    ----------
+    configs: dict
+        The configurations of the pipeline
+    filteredMovies: list
+        The list of filtered movies
+    """
     print(f"- Running the {configs['name']} ...")
     # Prepare the list of trailers YouTube links
     trailersYouTubeLinks = generateTrailersYouTubeLinks(filteredMovies)
-    # print(movieList)
     print(f"Downloading the results in {configs['download_path']} ...")
+    # Iterate through the trailers YouTube links
+    for trailer in trailersYouTubeLinks:
+        print(f"Downloading the trailer of '{trailer['title']}' from {trailer['link']} ...")
+        # Check if the link is available
+        if trailer['link']:
+            # Download the trailer
+            YouTube(trailer['link']).streams.first().download(output_path=configs['download_path'], filename=f"{trailer['id']}")
+            print(f"Downloaded the trailer of '{trailer['title']}'!\n")
+        else:
+            print(f"Could not download the trailer of '{trailer['title']}'!\n")

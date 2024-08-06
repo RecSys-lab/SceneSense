@@ -30,7 +30,7 @@ config:
       # Pipeline name
       name: Trailer-fetcher
       # Path to the pipeline
-      download_path: ""
+      download_path: "~/Downloads"
   # Aggregations
   aggregations:
     # Pointwise aggregation
