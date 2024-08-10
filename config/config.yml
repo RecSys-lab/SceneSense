@@ -41,6 +41,8 @@ config:
       frames_path: "E:/Datasets/Movies/MovieFrames"
       # Supported video formats
       video_formats: ["mp4", "avi", "mkv"]
+      # Frequency of frames extraction (picking 'n' frames every second)
+      frequency: 1
   # Aggregations
   aggregations:
     # Pointwise aggregation

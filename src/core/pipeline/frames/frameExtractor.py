@@ -1,14 +1,12 @@
-# import os
-# import cv2
-# import time
+import os
+import time
 # import string
 # from glob import glob
 # from utils import logger
+import cv2 as cv
 # from FramesExtraction.utils import frameResize
 # from config import moviesDir, framesDir, networkInputSize
 from src.core.pipeline.frames.utils import initFramesFolder
-
-# videoTypes = ('mkv', 'avi', 'mp4')
 
 def extractMovieFrames(configs: dict, fetchedMoviesPaths: list):
     """
@@ -24,12 +22,36 @@ def extractMovieFrames(configs: dict, fetchedMoviesPaths: list):
     print("Extracting frames from the given set of movie videos ...")
     # Iterate on all video files in the given directory
     for videoFile in fetchedMoviesPaths[:3]:
-        # Extract frames from the video
-        print(f"- Processing '{videoFile}' ...")
         # Preparing the output frames directory
         outputDir = initFramesFolder(videoFile, configs['frames_path'])
         if not outputDir:
             continue
+        # Capturing video
+        try:
+            # Variables
+            frameCounter = 0
+            fileNameCounter = 0
+            startTime = time.time()
+            frequency = configs['frequency']
+            videoName = os.path.basename(outputDir)
+            # Extract frames from the video
+            capturedVideo = cv.VideoCapture(videoFile)
+            # Get the frame rate and compare it with the given frame rate
+            frameRate = int(capturedVideo.get(cv.CAP_PROP_FPS))
+            if frequency > frameRate:
+                frequency = frameRate
+            # Start extracting frames
+            print(f'- Extracting frames of {videoName} with the frequency of {frequency} fps ...')
+            success, image = capturedVideo.read()
+            # while success:
+            #     print(f'Frame #{frameCounter} ...')
+            # Finished extracting frames
+            elapsedTime = '{:.2f}'.format(time.time() - startTime)
+            print(f'- Extraction finished for {videoName} (took {elapsedTime} seconds to extract {frameCounter} frames, saved in {outputDir})!\n')
+        except cv.error as openCVError:
+            print(f'Error while processing video frames: {str(openCVError)}')
+        except Exception as otherError:
+            print(f'Error while processing video frames: {str(otherError)}')
 
 
 # # This module extracts frames from a given list of movies
