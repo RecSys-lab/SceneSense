@@ -40,7 +40,7 @@ def initMovieVideos(configs: dict):
     if len(videoFiles) == 0:
         print(f"No video files found in the given directory '{moviesDir}'! Exiting ...")
         return False
-    print(f"Found {len(videoFiles)} videos to process! (e.g., {videoFiles[0]})")
+    print(f"Found {len(videoFiles)} videos to process! (e.g., {videoFiles[0]})\n")
     # Return the list of video files
     return videoFiles
 
@@ -72,7 +72,7 @@ def initFramesFolder(videoFileAddress: str, framesDir: str):
     # Do not re-generate frames for movies if there is a folder with their normalized name
     if os.path.exists(generatedPath):
         print(
-            f'- Skipping movie {videoName} due to finding an output folder with the same name!')
+            f'- Skipping {videoName} due to finding an output folder with the same name!')
         return
     else:
         os.mkdir(generatedPath)

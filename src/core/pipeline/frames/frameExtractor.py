@@ -6,8 +6,30 @@
 # from utils import logger
 # from FramesExtraction.utils import frameResize
 # from config import moviesDir, framesDir, networkInputSize
+from src.core.pipeline.frames.utils import initFramesFolder
 
 # videoTypes = ('mkv', 'avi', 'mp4')
+
+def extractMovieFrames(configs: dict, fetchedMoviesPaths: list):
+    """
+    Extracts frames from the given set of fetched movies
+
+    Parameters
+    ----------
+    configs :dict
+        The configurations dictionary
+    fetchedMoviesPaths :list
+        The list of fetched movie paths
+    """
+    print("Extracting frames from the given set of movie videos ...")
+    # Iterate on all video files in the given directory
+    for videoFile in fetchedMoviesPaths[:3]:
+        # Extract frames from the video
+        print(f"- Processing '{videoFile}' ...")
+        # Preparing the output frames directory
+        outputDir = initFramesFolder(videoFile, configs['frames_path'])
+        if not outputDir:
+            continue
 
 
 # # This module extracts frames from a given list of movies
