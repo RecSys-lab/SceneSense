@@ -1,4 +1,5 @@
 import os
+import string
 # import cv2
 # import numpy as np
 from glob import glob
@@ -6,6 +7,16 @@ from glob import glob
 def initMovieVideos(configs: dict):
     """
     Pre-checks the given directory for movies and prepares it for further processing
+
+    Parameters
+    ----------
+    configs: dict
+        The configurations dictionary
+    
+    Returns
+    -------
+    videoFiles :list
+        A list of fetched video files
     """
     # Variables
     videoFiles = []
@@ -29,9 +40,43 @@ def initMovieVideos(configs: dict):
     if len(videoFiles) == 0:
         print(f"No video files found in the given directory '{moviesDir}'! Exiting ...")
         return False
-    print(f"Found {len(videoFiles)} videos to process!")
+    print(f"Found {len(videoFiles)} videos to process! (e.g., {videoFiles[0]})")
     # Return the list of video files
     return videoFiles
+
+def initFramesFolder(videoFileAddress: str, framesDir: str):
+    """
+    Pre-checks and generates the output frames folder
+
+    Parameters
+    ----------
+    videoFileAddress: str
+        The video file address to extract frames from
+    framesDir: str
+        The frames directory to save the extracted frames
+    
+    Returns
+    -------
+    videoFiles :list
+        A list of fetched video files
+    """
+    # Accessing video file
+    videoName = os.path.basename(videoFileAddress)
+    # Normalizing the video name to assign it to the output folder
+    videoName = string.capwords(
+        videoName.split('.')[0].replace("_", "")).replace(" ", "")
+    # Creating output folder
+    if not os.path.exists(framesDir):
+        os.mkdir(framesDir)
+    generatedPath = framesDir + '/' + videoName
+    # Do not re-generate frames for movies if there is a folder with their normalized name
+    if os.path.exists(generatedPath):
+        print(
+            f'- Skipping movie {videoName} due to finding an output folder with the same name!')
+        return
+    else:
+        os.mkdir(generatedPath)
+        return generatedPath
 
 # # This module receives a frame and generates aresized one while keeping the aspect ratio
 # def frameResize(image, networkInputSize):
