@@ -29,8 +29,9 @@ def extractMovieFrames(configs: dict, fetchedMoviesPaths: list):
         # Capturing video
         try:
             # Variables
+            frameIndex = 0
             frameCounter = 0
-            fileNameCounter = 0
+            frameIndexToPick = 0
             startTime = time.time()
             frequency = configs['frequency']
             videoName = os.path.basename(outputDir)
@@ -42,12 +43,30 @@ def extractMovieFrames(configs: dict, fetchedMoviesPaths: list):
                 frequency = frameRate
             # Start extracting frames
             print(f'- Extracting frames of {videoName} with the frequency of {frequency} fps ...')
-            success, image = capturedVideo.read()
-            # while success:
-            #     print(f'Frame #{frameCounter} ...')
-            # Finished extracting frames
-            elapsedTime = '{:.2f}'.format(time.time() - startTime)
-            print(f'- Extraction finished for {videoName} (took {elapsedTime} seconds to extract {frameCounter} frames, saved in {outputDir})!\n')
+            # Set a frame to pick
+            framePickingRate = int(frameRate / frequency)
+            print(f'--- Frame rate: {frameRate} fps, Frequency: {frequency} fps, Frame picking rate: {framePickingRate}')
+            while True:
+                success, image = capturedVideo.read()
+                # If the end of the video is reached
+                if not success:
+                    # Finished extracting frames
+                    elapsedTime = '{:.2f}'.format(time.time() - startTime)
+                    print(f'- Extraction finished for {videoName} (took {elapsedTime} seconds to extract {frameCounter} frames, saved in {outputDir})!\n')
+                    break
+                # Otherwise, continue extracting frames
+                # Pick only the frames with the given frequency
+                if (frameIndex == frameIndexToPick):
+                    # Showing progress every 1000 frames
+                    if (frameCounter > 0 and frameCounter % 100 == 0):
+                        elapsedTime = '{:.2f}'.format(time.time() - startTime)
+                        print(
+                            f'--- Processing frame #{frameIndex} of the video (took {elapsedTime} seconds to extract {frameCounter} frames so far) ...')
+                    # Increment the frame counter and set the next frame to pick
+                    frameCounter += 1
+                    frameIndexToPick += framePickingRate
+                # Increment the frame index
+                frameIndex += 1
         except cv.error as openCVError:
             print(f'Error while processing video frames: {str(openCVError)}')
         except Exception as otherError:
