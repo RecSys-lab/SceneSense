@@ -43,6 +43,10 @@ config:
       video_formats: ["mp4", "avi", "mkv"]
       # Frequency of frames extraction (picking 'n' frames every second)
       frequency: 1
+      # Output file format
+      output_format: "jpg"
+      # Feature extraction model input size (width)
+      model_input_size: 420
   # Aggregations
   aggregations:
     # Pointwise aggregation

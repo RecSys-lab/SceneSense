@@ -35,6 +35,8 @@ def extractMovieFrames(configs: dict, fetchedMoviesPaths: list):
             startTime = time.time()
             frequency = configs['frequency']
             videoName = os.path.basename(outputDir)
+            savedFrameFormat = configs['output_format']
+            modelInputSize = configs['model_input_size']
             # Extract frames from the video
             capturedVideo = cv.VideoCapture(videoFile)
             # Get the frame rate and compare it with the given frame rate
@@ -57,11 +59,19 @@ def extractMovieFrames(configs: dict, fetchedMoviesPaths: list):
                 # Otherwise, continue extracting frames
                 # Pick only the frames with the given frequency
                 if (frameIndex == frameIndexToPick):
+                    # Saved frame file name as: frame1 --> frame0000001
+                    fileName = '{0:07d}'.format(frameCounter)
                     # Showing progress every 1000 frames
                     if (frameCounter > 0 and frameCounter % 100 == 0):
                         elapsedTime = '{:.2f}'.format(time.time() - startTime)
                         print(
                             f'--- Processing frame #{frameIndex} of the video (took {elapsedTime} seconds to extract {frameCounter} frames so far) ...')
+                    # Resizing the image, while preserving its aspect-ratio
+                    # image = squareFrameGenerator(image, networkInputSize) # In case we need a square frame
+                    # image = frameResize(image, networkInputSize)
+                    # Save the frame as a file
+                    # cv2.imwrite(
+                    #     f"{framesDir}/{normalizedVideoName}/frame{fileName}.{savedFrameFormat}", image)
                     # Increment the frame counter and set the next frame to pick
                     frameCounter += 1
                     frameIndexToPick += framePickingRate
