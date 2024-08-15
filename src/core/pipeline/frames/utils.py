@@ -1,7 +1,7 @@
 import os
 import string
-# import cv2
-# import numpy as np
+import cv2 as cv
+import numpy as np
 from glob import glob
 
 def initMovieVideos(configs: dict):
@@ -78,52 +78,86 @@ def initFramesFolder(videoFileAddress: str, framesDir: str):
         os.mkdir(generatedPath)
         return generatedPath
 
-# # This module receives a frame and generates aresized one while keeping the aspect ratio
-# def frameResize(image, networkInputSize):
-#     # Calculating frame dimensions
-#     frameHeight, frameWidth = image.shape[:2]
-#     aspectRatio = frameWidth / frameHeight
-#     # Resize frame's width, while keeping its aspect ratio
-#     generatedImageW = networkInputSize
-#     generatedImageH = int(generatedImageW / aspectRatio)
-#     # Scale the frame
-#     scaledImage = cv2.resize(
-#         image, (generatedImageW, generatedImageH), interpolation=cv2.INTER_AREA)
-#     return scaledImage
+def resizeFrame(frame: cv.Mat, networkInputSize: int = 300):
+    """
+    Resize the given frame while preserving its aspect ratio
+
+    Parameters
+    ----------
+    frame: cv.Mat
+        The frame to be resized
+    networkInputSize: int
+        The network input size to resize the frame to
+
+    Returns
+    -------
+    pFrame: cv.Mat
+        The resized frame
+    """
+    # Calculating frame dimensions
+    height, width = frame.shape[:2]
+    # Calculate the aspect ratio
+    aspectRatio = width / height
+    # Resize frame's width, while keeping its aspect ratio
+    pFrameWidth = networkInputSize
+    pFrameHeight = int(pFrameWidth / aspectRatio)
+    # Scale the frame
+    pFrame = cv.resize(
+        frame, (pFrameWidth, pFrameHeight), interpolation=cv.INTER_AREA)
+    # Return the resized frame
+    return pFrame
 
 
-# def squareFrameGenerator(image, networkInputSize):
-#     finalImageDimensions = (networkInputSize, networkInputSize)
-#     # Calculating frame dimensions
-#     frameHeight, frameWidth = image.shape[:2]
-#     aspectRatio = frameWidth / frameHeight
-#     # Choosing proper interpolation
-#     dimensionH, dimensionW = finalImageDimensions
-#     interpolation = cv2.INTER_CUBIC  # Stretch the image
-#     if (frameHeight > dimensionH or frameWidth > dimensionW):
-#         interpolation = cv2.INTER_AREA  # Shrink the image
-#     # Add paddings to the image
-#     paddingColor = [0, 0, 0]
-#     if aspectRatio > 1:  # Image is horizontal
-#         generatedImageW = dimensionW
-#         generatedImageH = np.round(generatedImageW / aspectRatio).astype(int)
-#         verticalPadding = (dimensionH - generatedImageH) / 2
-#         paddingTop, paddingBottom = np.floor(verticalPadding).astype(
-#             int), np.ceil(verticalPadding).astype(int)
-#         paddingLeft, paddingRight = 0, 0
-#     elif aspectRatio < 1:  # Image is vertical
-#         generatedImageH = dimensionH
-#         generatedImageW = np.round(generatedImageH * aspectRatio).astype(int)
-#         horizontalPadding = (dimensionW - generatedImageW) / 2
-#         paddingLeft, paddingRight = np.floor(horizontalPadding).astype(
-#             int), np.ceil(horizontalPadding).astype(int)
-#         paddingTop, paddingBottom = 0, 0
-#     else:  # image is square, so no changes is needed
-#         generatedImageH, generatedImageW = dimensionH, dimensionW
-#         paddingLeft, paddingRight, paddingTop, paddingBottom = 0, 0, 0, 0
-#     # Scale the frame
-#     scaledImage = cv2.resize(
-#         image, (generatedImageW, generatedImageH), interpolation=interpolation)
-#     scaledImage = cv2.copyMakeBorder(scaledImage, paddingTop, paddingBottom,
-#                                      paddingLeft, paddingRight, borderType=cv2.BORDER_CONSTANT, value=paddingColor)
-#     return scaledImage
+def generateSquareFrame(frame: cv.Mat, networkInputSize: int = 300):
+    """
+    Generate a square frame from the given frame
+
+    Parameters
+    ----------
+    frame: cv.Mat
+        The frame to be resized and padded
+    networkInputSize: int
+        The network input size to resize the frame to
+    
+    Returns
+    -------
+    pFrame: cv.Mat
+        The scaled and padded frame
+    """
+    # Variables
+    paddingColor = [0, 0, 0]
+    frameDimension = (networkInputSize, networkInputSize)
+    # Calculating frame dimensions
+    height, width = frame.shape[:2]
+    aspectRatio = width / height
+    # Choosing proper interpolation
+    dimensionH, dimensionW = frameDimension
+    interpolation = cv.INTER_CUBIC  # Stretch the image
+    if (height > dimensionH or width > dimensionW):
+        interpolation = cv.INTER_AREA  # Shrink the image
+    # Add paddings to the image
+    if aspectRatio > 1:  # Image is horizontal
+        pFrameWidth = dimensionW
+        pFrameHeight = np.round(pFrameWidth / aspectRatio).astype(int)
+        paddingVertical = (dimensionH - pFrameHeight) / 2
+        paddingT, paddingB = np.floor(paddingVertical).astype(
+            int), np.ceil(paddingVertical).astype(int)
+        paddingL, paddingR = 0, 0
+    elif aspectRatio < 1:  # Image is vertical
+        pFrameHeight = dimensionH
+        pFrameWidth = np.round(pFrameHeight * aspectRatio).astype(int)
+        paddingHorizontal = (dimensionW - pFrameWidth) / 2
+        paddingL, paddingR = np.floor(paddingHorizontal).astype(
+            int), np.ceil(paddingHorizontal).astype(int)
+        paddingT, paddingB = 0, 0
+    else:  # image is square, so no changes is needed
+        pFrameHeight, pFrameWidth = dimensionH, dimensionW
+        paddingL, paddingR, paddingT, paddingB = 0, 0, 0, 0
+    # Scale the frame
+    pFrame = cv.resize(
+        frame, (pFrameWidth, pFrameHeight), interpolation=interpolation)
+    # Add paddings to the image
+    pFrame = cv.copyMakeBorder(pFrame, paddingT, paddingB,
+                                     paddingL, paddingR, borderType=cv.BORDER_CONSTANT, value=paddingColor)
+    # Return the scaled and padded frame
+    return pFrame
