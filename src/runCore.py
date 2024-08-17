@@ -5,6 +5,7 @@ from src.core.datasets.scenesense.common import loadJsonFromUrl
 from src.core.pipeline.downloaders.utils import filterMovieList
 from src.core.pipeline.frames.frameExtractor import extractMovieFrames
 from src.core.pipeline.visual_features.utils import initMovieFramesFolders
+from src.core.pipeline.visual_features.featureExtractor import extractMovieFeatures
 from src.core.pipeline.downloaders.movieTrailerDownloader import downloadMovieTrailers
 
 def runTrailerDownloader(configs: dict, datasetInfo: dict):
@@ -43,4 +44,4 @@ def runMoviesFramesFeatureExtractor(configs: dict):
     if not fetchedMovieFramesPaths:
         return
     # Extract visual features from the fetched frames
-    # extractMovieFrames(configs, fetchedMoviesPaths)
+    extractMovieFeatures(configs, fetchedMovieFramesPaths)

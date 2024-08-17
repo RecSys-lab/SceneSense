@@ -57,8 +57,8 @@ def initFramesFolder(videoFileAddress: str, framesDir: str):
     
     Returns
     -------
-    videoFiles :list
-        A list of fetched video files
+    generatedPath: str
+        The generated frames directory path
     """
     # Accessing video file
     videoName = os.path.basename(videoFileAddress)
@@ -68,7 +68,7 @@ def initFramesFolder(videoFileAddress: str, framesDir: str):
     # Creating output folder
     if not os.path.exists(framesDir):
         os.mkdir(framesDir)
-    generatedPath = framesDir + '/' + videoName
+    generatedPath = os.path.join(framesDir, videoName)
     # Do not re-generate frames for movies if there is a folder with their normalized name
     if os.path.exists(generatedPath):
         print(
