@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from src.utils import readConfigs
-from src.runCore import runTrailerDownloader, runMoviesFrameExtractor
+from src.runCore import runTrailerDownloader, runMoviesFrameExtractor, runMoviesFramesFeatureExtractor
 
 def main():
     print("Welcome! Starting 'SceneSense'!\n")
@@ -16,7 +16,9 @@ def main():
     cfgDatasets = configs['config']['datasets']
     cfgPipeline = configs['config']['pipelines']
     # Run the movies frame extractor pipeline
-    runMoviesFrameExtractor(cfgPipeline['movie_frames'])
+    runMoviesFramesFeatureExtractor(cfgPipeline['movie_frames_visual_features'])
+    # Run the movies frame extractor pipeline
+    # runMoviesFrameExtractor(cfgPipeline['movie_frames'])
     # Run the trailer downloader pipeline
     # datasetInfo = {'name': cfgDatasets['visual_dataset']['name'],
     #                'jsonPath': cfgDatasets['visual_dataset']['path_metadata']}

@@ -4,6 +4,7 @@ from src.core.pipeline.frames.utils import initMovieVideos
 from src.core.datasets.scenesense.common import loadJsonFromUrl
 from src.core.pipeline.downloaders.utils import filterMovieList
 from src.core.pipeline.frames.frameExtractor import extractMovieFrames
+from src.core.pipeline.visual_features.utils import initMovieFramesFolders
 from src.core.pipeline.downloaders.movieTrailerDownloader import downloadMovieTrailers
 
 def runTrailerDownloader(configs: dict, datasetInfo: dict):
@@ -31,3 +32,15 @@ def runMoviesFrameExtractor(configs: dict):
         return
     # Extract frames from the fetched movies
     extractMovieFrames(configs, fetchedMoviesPaths)
+
+def runMoviesFramesFeatureExtractor(configs: dict):
+    """
+    Runs the feature extractor pipeline from the movie frames
+    """
+    print("Running the movies frames visual feature extractor pipeline ...")
+    # Pre-check the input directory
+    fetchedMovieFramesPaths = initMovieFramesFolders(configs)
+    if not fetchedMovieFramesPaths:
+        return
+    # Extract visual features from the fetched frames
+    # extractMovieFrames(configs, fetchedMoviesPaths)

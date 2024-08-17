@@ -16,7 +16,7 @@ def extractMovieFrames(configs: dict, fetchedMoviesPaths: list):
     """
     print("Extracting frames from the given set of movie videos ...")
     # Iterate on all video files in the given directory
-    for videoFile in fetchedMoviesPaths[:3]:
+    for videoFile in fetchedMoviesPaths:
         # Preparing the output frames directory
         outputDir = initFramesFolder(videoFile, configs['frames_path'])
         if not outputDir:

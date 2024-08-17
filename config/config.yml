@@ -47,6 +47,17 @@ config:
       output_format: "jpg"
       # Feature extraction model input size (width)
       model_input_size: 420
+    # Movie frames visual feature extractor pipeline
+    movie_frames_visual_features:
+      # Pipeline name
+      name: Visual-feature-extractor
+      # Path the root directory containing the frames in folders
+      # [Note] it is equal to the frames_path in the movie_frames pipeline
+      movies_frames_path: "E:/Datasets/Movies/MovieFrames"
+      # Frames path
+      features_path: "E:/Datasets/Movies/MovieFeatures"
+      # Supported image (saved frames) formats
+      image_formats: ["png", "jpg", "jpeg"]
   # Aggregations
   aggregations:
     # Pointwise aggregation
