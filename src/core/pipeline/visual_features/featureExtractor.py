@@ -1,7 +1,7 @@
 import os
-from src.core.pipeline.visual_features.utils import initFeaturesFolder
 from src.core.pipeline.visual_features.models.vgg19 import InitModelVgg19
 from src.core.pipeline.visual_features.models.inception3 import InitModelInception3
+from src.core.pipeline.visual_features.utils import initFeaturesFolder, modelRunner
 
 def extractMovieFeatures(configs: dict, movieFramesPaths: list):
     """
@@ -19,9 +19,9 @@ def extractMovieFeatures(configs: dict, movieFramesPaths: list):
     model = None
     modelName = configs['feature_extractor_model']
     if modelName == 'incp3':
-        model = InitModelInception3(configs)
+        model = InitModelInception3()
     elif modelName == 'vgg19':
-        model = InitModelVgg19(configs)
+        model = InitModelVgg19()
     else:
         print(f"Feature extraction model '{modelName}' is not supported! Exiting ...")
         return
@@ -35,5 +35,8 @@ def extractMovieFeatures(configs: dict, movieFramesPaths: list):
         framesFolder = os.path.normpath(framesFolder)
         print(f"- Extracting features from the frames in '{framesFolder}' ...")
         outputDir = initFeaturesFolder(framesFolder, configs['features_path'])
+        # Skip if the output directory already exists
         if not outputDir:
             continue
+        # Extracting features from the frames
+        modelRunner(model, framesFolder, outputDir, configs)

@@ -77,3 +77,33 @@ def initFeaturesFolder(framesDir: str, featuresDir: str):
     else:
         os.mkdir(generatedPath)
         return generatedPath
+
+def modelRunner(model, framesFolder, outputDir, configs: dict):
+    """
+    Pre-checks the given directory for movie frames and prepares it for further processing
+
+    Parameters
+    ----------
+    configs: dict
+        The configurations dictionary
+    
+    Returns
+    -------
+    framesFolders :list
+        A list of fetched frames folders
+    """
+    # Variables
+    modelName = configs['feature_extractor_model']
+    if modelName == 'incp3':
+        # Load proper imports
+        from tensorflow.keras.applications.inception_v3 import preprocess_input
+        # Load Inception-v3 model variables
+        inputSize = 299  # Default input size for Inception-v3 model
+    elif modelName == 'vgg19':
+        # Load proper imports
+        from tensorflow.keras.applications.vgg19 import preprocess_input
+        # Load VGG-19 model variables
+        inputSize = 224 # Default input size for Inception-v3 model
+    else:
+        print(f"Feature extraction model '{modelName}' is not supported! Exiting ...")
+        return
