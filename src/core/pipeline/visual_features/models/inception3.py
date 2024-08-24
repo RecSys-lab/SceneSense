@@ -20,22 +20,20 @@ def InitModelInception3(configs: dict):
     # Variables
     model = None
     inputSize = 299  # Default input size for Inception-v3 model
-    # Load Inception-v3 model
-    from tensorflow.keras.applications.inception_v3 import InceptionV3, preprocess_input
-    # Create a model
-    model = InceptionV3()
-    # Return the model
-    return model
-    # model = Model(inputs=model.inputs, outputs=model.layers[-2].output)
-    # # keras.applications.InceptionV3(
-    # #     include_top=True,
-    # #     weights="imagenet",
-    # #     input_tensor=None,
-    # #     input_shape=None,
-    # #     pooling=None,
-    # #     classes=1000,
-    # #     classifier_activation="softmax",
-    # # )
+    try:
+        # Load Inception-v3 model
+        from tensorflow.keras import Model
+        from tensorflow.keras.applications.inception_v3 import InceptionV3, preprocess_input
+        # Create a model
+        model = InceptionV3()
+        # Removing the final output layer, so that the second last fully connected layer with 2,048 nodes will be the new output layer
+        model = Model(inputs=model.inputs, outputs=model.layers[-2].output)
+        print("- Initializing Inception-v3 finished. Getting ready for feature extraction ...\n")
+        # Return the model
+        return model
+    except Exception as otherError:
+        print(f'Error while processing video frames: {str(otherError)}')
+        return None
 
 # import os
 # from keras import Model

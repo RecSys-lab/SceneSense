@@ -14,7 +14,7 @@ def extractMovieFeatures(configs: dict, movieFramesPaths: list):
     movieFramesPaths :list
         The list of movie frames paths
     """
-    print("Extracting frames from the given set of extracted movie frames ...")
+    print("Extracting visual features from the given set of extracted movie frames ...")
     # Check the feature extraction model
     model = None
     modelName = configs['feature_extractor_model']
@@ -24,6 +24,10 @@ def extractMovieFeatures(configs: dict, movieFramesPaths: list):
         model = InitModelVgg19(configs)
     else:
         print(f"Feature extraction model '{modelName}' is not supported! Exiting ...")
+        return
+    # Check the model
+    if not model:
+        print(f"Error while initializing the feature extraction model '{modelName}'! Exiting ...")
         return
     # Iterate on all frame folders in the given root directory
     for framesFolder in movieFramesPaths:

@@ -20,12 +20,20 @@ def InitModelVgg19(configs: dict):
     # Variables
     model = None
     inputSize = 224 # Default input size for Inception-v3 model
-    # Load Inception-v3 model
-    from tensorflow.keras.applications.vgg19 import VGG19, preprocess_input
-    # Create a model
-    model = VGG19()
-    # Return the model
-    return model
+    try:
+        # Load Inception-v3 model
+        from tensorflow.keras import Model
+        from tensorflow.keras.applications.vgg19 import VGG19, preprocess_input
+        # Create a model
+        model = VGG19()
+        # Removing the final output layer, so that the second last fully connected layer with 4,096 nodes will be the new output layer
+        model = Model(inputs=model.inputs, outputs=model.layers[-2].output)
+        print("- Initializing VGG-19 finished. Getting ready for feature extraction ...\n")
+        # Return the model
+        return model
+    except Exception as otherError:
+            print(f'Error while processing video frames: {str(otherError)}')
+            return None
 
 # import os
 # from keras import Model
