@@ -60,7 +60,9 @@ config:
       image_formats: ["png", "jpg", "jpeg"]
       # Feature extraction models to be used (in an array)
       # Possible values: ["incp3", "vgg19"]
-      feature_extractor_model: "vgg19"
+      feature_extractor_model: "incp3"
+      # Packets size (number of frames in each packet)
+      packet_size: 25
   # Aggregations
   aggregations:
     # Pointwise aggregation

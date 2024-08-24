@@ -5,6 +5,7 @@ import cv2 as cv
 import numpy as np
 import pandas as pd
 from glob import glob
+from pandas.core.frame import DataFrame
 from src.core.pipeline.visual_features.models.vgg19 import getModelVariables as getVgg19Variables
 from src.core.pipeline.visual_features.models.inception3 import getModelVariables as getIncp3Variables
 
@@ -118,6 +119,58 @@ def featureExtractor(imageFile, model, preProcess, inputSize: int):
         print(f'- Error while extracting the features of "{imageFile}": {str(error)}')
         return None
 
+def featuresFileCreator(targetPath: str, fileName: str):
+    """
+    Creates a features file for a given movie ID and file name
+
+    Parameters
+    ----------
+    targetPath: str
+        The target path to save the features
+    fileName: str
+        The file name to save the features
+    
+    Returns
+    -------
+    featuresFilePath: str
+        The path of the created features file
+    """
+    # Create the features file path
+    featuresFilePath = f'{targetPath}/{fileName}.json'
+    # Create the features file if not exists
+    if not os.path.exists(featuresFilePath):
+        open(featuresFilePath, 'w+')
+    # Return the features file path
+    return featuresFilePath
+
+def packetManager(packetIndex: int, dataFrame: DataFrame, framesFolder: str, targetPath: str):
+    """
+    Manages the contents of a packet and sends a signal whether to reset the counter or not
+
+    Parameters
+    ----------
+    packetIndex: int
+        The index of the packet
+    dataFrame: DataFrame
+        The data frame to save as a packet
+    framesFolder: str
+        The movie ID to save the packet for
+    targetPath: str
+        The target path to save the packet
+    """
+    try:
+        # Format the packet index
+        packetIndex = '{0:04d}'.format(packetIndex)
+        # Create the packet name
+        packetName = f'packet{packetIndex}'
+        # Save the packet
+        print(f'- Saving "{packetName}" for "{framesFolder}" ...')
+        featuresFile = featuresFileCreator(targetPath, packetName)
+        dataFrame.to_json(featuresFile, orient="records",
+                        double_precision=6)
+    except Exception as error:
+        print(f'- Error while saving the packet "{packetName}" for "{framesFolder}": {str(error)}')
+
 def modelRunner(model, framesFolder, outputDir, configs: dict):
     """
     Pre-checks the given directory for movie frames and prepares it for further processing
@@ -176,15 +229,15 @@ def modelRunner(model, framesFolder, outputDir, configs: dict):
                     print(f'- No features extracted! Skipping "{frameFileName}" in "{framesFolder}" ...')
                     continue
                 # Append rows to dataFrame
-                frameFeatureDF = frameFeatureDF.append(
-                    {'frameId': frameId, 'features': features[0]}, ignore_index=True)
+                frameFeatureDF = pd.concat([frameFeatureDF, pd.DataFrame([{'frameId': frameId, 'features': features[0]}])],
+                                           ignore_index=True)
                 packetCounter += 1
                 # Reset the counter only if packetCounter reaches the limit (packetSize) and there is no more frames for process
                 remainingFrames -= 1
                 if ((packetCounter == packetSize) or remainingFrames == 0):
                     # Save dataFrame as packet in a file
-                    # packetManager(packetIndex, frameFeatureDF,
-                    #                 framesFolder, outputDir)
+                    packetManager(packetIndex, frameFeatureDF,
+                                    framesFolder, outputDir)
                     # Clear dataFrame rows
                     frameFeatureDF.drop(frameFeatureDF.index, inplace=True)
                     packetCounter = 0
