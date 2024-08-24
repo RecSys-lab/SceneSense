@@ -1,6 +1,6 @@
 import os
-from src.core.pipeline.visual_features.models.vgg19 import InitModelVgg19
-from src.core.pipeline.visual_features.models.inception3 import InitModelInception3
+from src.core.pipeline.visual_features.models.vgg19 import initModelVgg19
+from src.core.pipeline.visual_features.models.inception3 import initModelInception3
 from src.core.pipeline.visual_features.utils import initFeaturesFolder, modelRunner
 
 def extractMovieFeatures(configs: dict, movieFramesPaths: list):
@@ -19,9 +19,9 @@ def extractMovieFeatures(configs: dict, movieFramesPaths: list):
     model = None
     modelName = configs['feature_extractor_model']
     if modelName == 'incp3':
-        model = InitModelInception3()
+        model = initModelInception3()
     elif modelName == 'vgg19':
-        model = InitModelVgg19()
+        model = initModelVgg19()
     else:
         print(f"Feature extraction model '{modelName}' is not supported! Exiting ...")
         return

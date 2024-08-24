@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-def InitModelInception3():
+def initModelInception3():
     """
     Initializes the Inception-v3 (GoogleNet) model for feature extraction
         - The model expects color images to have the square shape 299 x 299
@@ -28,3 +28,24 @@ def InitModelInception3():
     except Exception as otherError:
         print(f'Error while processing video frames: {str(otherError)}')
         return None
+
+def getModelVariables():
+    """
+    Provides the model variables for the VGG-19 model
+   
+    Returns
+    -------
+    modelInputSize: int
+        The input size for the VGG-19 model
+    modelPreprocess: function
+        The preprocess function for the VGG-19 model
+    """
+    # Load proper imports
+    from tensorflow.keras.applications.inception_v3 import preprocess_input
+
+    # Load Inception-v3 model variables
+    modelInputSize = 299  # Default input size for Inception-v3 model
+    modelPreprocess = preprocess_input
+    
+    # Return the model variables
+    return modelInputSize, modelPreprocess

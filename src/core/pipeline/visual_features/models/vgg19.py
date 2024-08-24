@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-def InitModelVgg19():
+def initModelVgg19():
     """
     Initializes the VGG-19 model for feature extraction
         - Running the example will load the VGG-19 model and download the model weights
@@ -28,3 +28,24 @@ def InitModelVgg19():
     except Exception as otherError:
             print(f'Error while processing video frames: {str(otherError)}')
             return None
+
+def getModelVariables():
+    """
+    Provides the model variables for the VGG-19 model
+   
+    Returns
+    -------
+    modelInputSize: int
+        The input size for the VGG-19 model
+    modelPreprocess: function
+        The preprocess function for the VGG-19 model
+    """
+    # Load proper imports
+    from tensorflow.keras.applications.vgg19 import preprocess_input
+    
+    # Load VGG-19 model variables
+    modelInputSize = 224 # Default input size for Inception-v3 model
+    modelPreprocess = preprocess_input
+    
+    # Return the model variables
+    return modelInputSize, modelPreprocess

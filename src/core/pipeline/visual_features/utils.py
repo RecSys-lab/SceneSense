@@ -5,6 +5,8 @@ import cv2 as cv
 import numpy as np
 import pandas as pd
 from glob import glob
+from src.core.pipeline.visual_features.models.vgg19 import getModelVariables as getVgg19Variables
+from src.core.pipeline.visual_features.models.inception3 import getModelVariables as getIncp3Variables
 
 def initMovieFramesFolders(configs: dict):
     """
@@ -149,17 +151,11 @@ def modelRunner(model, framesFolder, outputDir, configs: dict):
     frameFeatureDF = pd.DataFrame(columns=['frameId', 'features'])
     # Prepare the model-specific variables
     if modelName == 'incp3':
-        # Load proper imports
-        from tensorflow.keras.applications.inception_v3 import preprocess_input
         # Load Inception-v3 model variables
-        modelInputSize = 299  # Default input size for Inception-v3 model
-        modelPreprocess = preprocess_input
+        modelInputSize, modelPreprocess = getIncp3Variables()
     elif modelName == 'vgg19':
-        # Load proper imports
-        from tensorflow.keras.applications.vgg19 import preprocess_input
         # Load VGG-19 model variables
-        modelInputSize = 224 # Default input size for Inception-v3 model
-        modelPreprocess = preprocess_input
+        modelInputSize, modelPreprocess = getVgg19Variables()
     else:
         print(f"Feature extraction model '{modelName}' is not supported! Exiting ...")
         return
