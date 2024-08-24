@@ -144,6 +144,7 @@ def modelRunner(model, framesFolder, outputDir, configs: dict):
     modelInputSize = 0
     modelPreprocess = None
     startTime = time.time()
+    packetSize = configs['packet_size']
     imageTypes = configs['image_formats']
     totalFrames = len(os.listdir(framesFolder))
     modelName = configs['feature_extractor_model']
@@ -174,6 +175,20 @@ def modelRunner(model, framesFolder, outputDir, configs: dict):
                 if features is None:
                     print(f'- No features extracted! Skipping "{frameFileName}" in "{framesFolder}" ...')
                     continue
+                # Append rows to dataFrame
+                frameFeatureDF = frameFeatureDF.append(
+                    {'frameId': frameId, 'features': features[0]}, ignore_index=True)
+                packetCounter += 1
+                # Reset the counter only if packetCounter reaches the limit (packetSize) and there is no more frames for process
+                remainingFrames -= 1
+                if ((packetCounter == packetSize) or remainingFrames == 0):
+                    # Save dataFrame as packet in a file
+                    # packetManager(packetIndex, frameFeatureDF,
+                    #                 framesFolder, outputDir)
+                    # Clear dataFrame rows
+                    frameFeatureDF.drop(frameFeatureDF.index, inplace=True)
+                    packetCounter = 0
+                    packetIndex += 1
             except Exception as error:
                 print(f'- Error while extracting the features of "{frameFileName}" in "{framesFolder}": {str(error)}')
                 continue
