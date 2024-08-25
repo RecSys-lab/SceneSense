@@ -9,6 +9,7 @@ from src.core.pipeline.shots.utils import initFramesFoldersForShotDetection
 from src.core.pipeline.shots.utils import initFeaturesFoldersForShotDetection
 from src.core.pipeline.visual_features.featureExtractor import extractMovieFeatures
 from src.core.pipeline.downloaders.movieTrailerDownloader import downloadMovieTrailers
+from src.core.pipeline.shots.shotDetection import extractShotsFromMovieFrames, extractShotsFromMovieFeatures
 
 def runTrailerDownloader(configs: dict, datasetInfo: dict):
     """
@@ -79,6 +80,8 @@ def runShotDetectionFromFrames(configs: dict):
     movieFramesPaths = initFramesFoldersForShotDetection(configs)
     if not movieFramesPaths:
         return
+    # Extract shots from the fetched frames
+    extractShotsFromMovieFrames(configs, movieFramesPaths)
 
 def runShotDetectionFromFeatures(configs: dict):
     """
@@ -94,3 +97,5 @@ def runShotDetectionFromFeatures(configs: dict):
     movieFeaturesPaths = initFeaturesFoldersForShotDetection(configs)
     if not movieFeaturesPaths:
         return
+    # Extract shots from the fetched features
+    extractShotsFromMovieFeatures(configs, movieFeaturesPaths)
