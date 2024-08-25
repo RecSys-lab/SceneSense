@@ -67,12 +67,24 @@ config:
     movie_shots:
       # Pipeline name
       name: Shot-detector
-      # Frames path (if shot detection from frames is selected)
-      frames_path: "E:/Datasets/Movies/MovieFrames"
-      # Features path (if shot detection from features is selected)
-      features_path: "E:/Datasets/Movies/MovieFeatures"
-      # Supported image (saved frames) formats (if shot detection from frames is selected)
-      image_formats: ["png", "jpg", "jpeg"]
+      # Variants of shot detection
+      variants:
+        # Shot detection from frames
+        from_frames:
+          # Input frames path
+          frames_path: "E:/Datasets/Movies/MovieFrames"
+          # Output shot frames path
+          shot_frames_path: "E:/Datasets/Movies/MovieShotsFrames"
+          # Supported input image (saved frames) formats
+          image_formats: ["png", "jpg", "jpeg"]
+          # Output file format
+          output_format: "jpg"
+        # Shot detection from features
+        from_features:
+          # Input features path
+          features_path: "E:/Datasets/Movies/MovieFeatures"
+          # Output shot features path
+          shot_features_path: "E:/Datasets/Movies/MovieShotsFeatures"
   # Aggregations
   aggregations:
     # Pointwise aggregation

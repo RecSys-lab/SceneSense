@@ -17,8 +17,8 @@ def main():
     cfgDatasets = configs['config']['datasets']
     cfgPipeline = configs['config']['pipelines']
     # Run the movies frame extractor pipeline
-    runShotDetectionFromFrames(cfgPipeline['movie_shots'])
-    # runShotDetectionFromFeatures(cfgPipeline['movie_shots'])
+    # runShotDetectionFromFrames(cfgPipeline['movie_shots']['variants']['from_frames'])
+    runShotDetectionFromFeatures(cfgPipeline['movie_shots']['variants']['from_features'])
     # Run the movies frame extractor pipeline
     # runMoviesFramesFeatureExtractor(cfgPipeline['movie_frames_visual_features'])
     # Run the movies frame extractor pipeline

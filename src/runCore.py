@@ -5,6 +5,8 @@ from src.core.datasets.scenesense.common import loadJsonFromUrl
 from src.core.pipeline.downloaders.utils import filterMovieList
 from src.core.pipeline.frames.frameExtractor import extractMovieFrames
 from src.core.pipeline.visual_features.utils import initMovieFramesFolders
+from src.core.pipeline.shots.utils import initFramesFoldersForShotDetection
+from src.core.pipeline.shots.utils import initFeaturesFoldersForShotDetection
 from src.core.pipeline.visual_features.featureExtractor import extractMovieFeatures
 from src.core.pipeline.downloaders.movieTrailerDownloader import downloadMovieTrailers
 
@@ -73,6 +75,10 @@ def runShotDetectionFromFrames(configs: dict):
         The configurations dictionary
     """
     print("Running the pipeline for shot detection from given movie frames ...")
+    # Pre-check the input directory
+    movieFramesPaths = initFramesFoldersForShotDetection(configs)
+    if not movieFramesPaths:
+        return
 
 def runShotDetectionFromFeatures(configs: dict):
     """
@@ -84,3 +90,7 @@ def runShotDetectionFromFeatures(configs: dict):
         The configurations dictionary
     """
     print("Running the pipeline for shot detection from extracted movie features ...")
+    # Pre-check the input directory
+    movieFeaturesPaths = initFeaturesFoldersForShotDetection(configs)
+    if not movieFeaturesPaths:
+        return
