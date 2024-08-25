@@ -1,7 +1,6 @@
 import os
 import time
 import string
-import cv2 as cv
 import numpy as np
 import pandas as pd
 from glob import glob
@@ -26,7 +25,7 @@ def initMovieFramesFolders(configs: dict):
     # Variables
     framesFolders = []
     imageTypes = configs['image_formats']
-    movieFramesRootDir, vFeaturesDir = configs['movies_frames_path'], configs['features_path']
+    movieFramesRootDir, vFeaturesDir = configs['frames_path'], configs['features_path']
     # Check if the given directory exists
     if not os.path.exists(movieFramesRootDir):
         print(f"Input movie frames root directory '{movieFramesRootDir}' does not exist! Exiting ...")

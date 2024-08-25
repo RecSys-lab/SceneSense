@@ -11,6 +11,13 @@ from src.core.pipeline.downloaders.movieTrailerDownloader import downloadMovieTr
 def runTrailerDownloader(configs: dict, datasetInfo: dict):
     """
     Runs the trailer downloader pipeline
+
+    Parameters
+    ----------
+    configs :dict
+        The configurations dictionary
+    datasetInfo :dict
+        The dataset information dictionary
     """
     print("Running the trailer downloader pipeline ...")
     # Fetch JSON data from the URL
@@ -25,6 +32,11 @@ def runTrailerDownloader(configs: dict, datasetInfo: dict):
 def runMoviesFrameExtractor(configs: dict):
     """
     Runs the movies frame extractor pipeline
+
+    Parameters
+    ----------
+    configs :dict
+        The configurations dictionary
     """
     print("Running the movies frame extractor pipeline ...")
     # Pre-check the input directory
@@ -37,6 +49,11 @@ def runMoviesFrameExtractor(configs: dict):
 def runMoviesFramesFeatureExtractor(configs: dict):
     """
     Runs the feature extractor pipeline from the movie frames
+
+    Parameters
+    ----------
+    configs :dict
+        The configurations dictionary
     """
     print("Running the movies frames visual feature extractor pipeline ...")
     # Pre-check the input directory
@@ -45,3 +62,25 @@ def runMoviesFramesFeatureExtractor(configs: dict):
         return
     # Extract visual features from the fetched frames
     extractMovieFeatures(configs, fetchedMovieFramesPaths)
+
+def runShotDetectionFromFrames(configs: dict):
+    """
+    Runs the shot detection pipeline from the movie frames
+
+    Parameters
+    ----------
+    configs :dict
+        The configurations dictionary
+    """
+    print("Running the pipeline for shot detection from given movie frames ...")
+
+def runShotDetectionFromFeatures(configs: dict):
+    """
+    Runs the shot detection pipeline from the extracted movie features
+
+    Parameters
+    ----------
+    configs :dict
+        The configurations dictionary
+    """
+    print("Running the pipeline for shot detection from extracted movie features ...")

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from src.utils import readConfigs
+from src.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures
 from src.runCore import runTrailerDownloader, runMoviesFrameExtractor, runMoviesFramesFeatureExtractor
 
 def main():
@@ -16,7 +17,10 @@ def main():
     cfgDatasets = configs['config']['datasets']
     cfgPipeline = configs['config']['pipelines']
     # Run the movies frame extractor pipeline
-    runMoviesFramesFeatureExtractor(cfgPipeline['movie_frames_visual_features'])
+    runShotDetectionFromFrames(cfgPipeline['movie_shots'])
+    # runShotDetectionFromFeatures(cfgPipeline['movie_shots'])
+    # Run the movies frame extractor pipeline
+    # runMoviesFramesFeatureExtractor(cfgPipeline['movie_frames_visual_features'])
     # Run the movies frame extractor pipeline
     # runMoviesFrameExtractor(cfgPipeline['movie_frames'])
     # Run the trailer downloader pipeline
