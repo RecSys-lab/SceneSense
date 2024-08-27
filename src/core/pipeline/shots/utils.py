@@ -1,4 +1,5 @@
 import os
+import string
 from glob import glob
 
 def initFramesFoldersForShotDetection(configs: dict):
@@ -84,3 +85,34 @@ def initFeaturesFoldersForShotDetection(configs: dict):
     print(f"Found {len(featuresFolders)} folders containing features to process! (e.g., {featuresFolders[0]})\n")
     # Return the list of video files
     return featuresFolders
+
+def initShotsFolder(featuresDir: str, outputDir: str):
+    """
+    Pre-checks and generates the output shots visual features folder
+
+    Parameters
+    ----------
+    featuresDir: str
+        The features folder address to pick shots visual features from
+    outputDir: str
+        The shots visual features directory to save the extracted features packets
+    
+    Returns
+    -------
+    generatedPath: str
+        The generated shots visual features directory path
+    """
+    # Take the last part of the frames directory
+    folderName = os.path.basename(featuresDir)
+    # Normalizing the frames folder name to assign it to the output feature folder
+    folderName = string.capwords(folderName.replace("_", "")).replace(" ", "")
+    # Creating output folder
+    generatedPath = os.path.join(outputDir, folderName)
+    # Do not re-generate feature packets for movie features if there is a folder with their normalized name
+    if os.path.exists(generatedPath):
+        print(
+            f'- Skipping "{folderName}" due to finding an output folder with the same name!')
+        return
+    else:
+        os.mkdir(generatedPath)
+        return generatedPath
