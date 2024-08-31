@@ -1,7 +1,7 @@
 import os
 import time
 import cv2 as cv
-from src.core.pipeline.frames.utils import initFramesFolder, resizeFrame
+from src.pipelines.frames.utils import initFramesFolder, resizeFrame
 
 def extractMovieFrames(configs: dict, fetchedMoviesPaths: list):
     """

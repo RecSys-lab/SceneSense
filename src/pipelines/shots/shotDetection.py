@@ -1,7 +1,7 @@
 import os
 import time
 import pandas as pd
-from src.core.pipeline.shots.utils import initShotsFolder
+from src.pipelines.shots.utils import initShotsFolder
 
 def extractShotsFromMovieFrames(configs: dict, movieFramesPaths: list):
     """

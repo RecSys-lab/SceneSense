@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 from glob import glob
 from pandas.core.frame import DataFrame
-from src.core.pipeline.visual_features.models.vgg19 import getModelVariables as getVgg19Variables
-from src.core.pipeline.visual_features.models.inception3 import getModelVariables as getIncp3Variables
+from src.pipelines.visual_features.models.vgg19 import getModelVariables as getVgg19Variables
+from src.pipelines.visual_features.models.inception3 import getModelVariables as getIncp3Variables
 
 def initMovieFramesFolders(configs: dict):
     """

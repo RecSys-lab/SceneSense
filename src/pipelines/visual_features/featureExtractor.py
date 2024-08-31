@@ -1,7 +1,7 @@
 import os
-from src.core.pipeline.visual_features.models.vgg19 import initModelVgg19
-from src.core.pipeline.visual_features.models.inception3 import initModelInception3
-from src.core.pipeline.visual_features.utils import initFeaturesFolder, modelRunner
+from src.pipelines.visual_features.models.vgg19 import initModelVgg19
+from src.pipelines.visual_features.models.inception3 import initModelInception3
+from src.pipelines.visual_features.utils import initFeaturesFolder, modelRunner
 
 def extractMovieFeatures(configs: dict, movieFramesPaths: list):
     """

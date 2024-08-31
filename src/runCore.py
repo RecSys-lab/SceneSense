@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
-from src.core.pipeline.frames.utils import initMovieVideos
-from src.core.datasets.scenesense.common import loadJsonFromUrl
-from src.core.pipeline.downloaders.utils import filterMovieList
-from src.core.pipeline.frames.frameExtractor import extractMovieFrames
-from src.core.pipeline.visual_features.utils import initMovieFramesFolders
-from src.core.pipeline.shots.utils import initFramesFoldersForShotDetection
-from src.core.pipeline.shots.utils import initFeaturesFoldersForShotDetection
-from src.core.pipeline.visual_features.featureExtractor import extractMovieFeatures
-from src.core.pipeline.downloaders.movieTrailerDownloader import downloadMovieTrailers
-from src.core.pipeline.shots.shotDetection import extractShotsFromMovieFrames, extractShotsFromMovieFeatures
+from src.pipelines.frames.utils import initMovieVideos
+from src.datasets.scenesense.common import loadJsonFromUrl
+from src.pipelines.downloaders.utils import filterMovieList
+from src.pipelines.frames.frameExtractor import extractMovieFrames
+from src.pipelines.visual_features.utils import initMovieFramesFolders
+from src.pipelines.shots.utils import initFramesFoldersForShotDetection
+from src.pipelines.shots.utils import initFeaturesFoldersForShotDetection
+from src.pipelines.visual_features.featureExtractor import extractMovieFeatures
+from src.pipelines.downloaders.movieTrailerDownloader import downloadMovieTrailers
+from src.pipelines.shots.shotDetection import extractShotsFromMovieFrames, extractShotsFromMovieFeatures
 
 def runTrailerDownloader(configs: dict, datasetInfo: dict):
     """

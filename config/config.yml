@@ -1,7 +1,8 @@
 config:
   # General configuration of the framework
   general:
-    sample: 1
+    # Framework run mode
+    mode: "pipeline" # Possible values: ["ds", "pipeline", "recsys"]
   # Datasets
   datasets:
     # Text dataset (MovieLenz 25M)
