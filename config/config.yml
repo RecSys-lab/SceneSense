@@ -94,6 +94,11 @@ config:
           features_path: "E:/Datasets/Movies/MovieFeatures"
           # Output shot features path
           shot_features_path: "E:/Datasets/Movies/MovieShotsFeatures"
+          # Shot boundaries detection threshold
+          threshold: 0.7
+          # Packets size (number of frames in each packet)
+          # [Note] it is recommended to set it equal to the packet_size in the movie_frames_visual_features pipeline
+          packet_size: 25
   # Aggregations
   aggregations:
     # Pointwise aggregation

@@ -1,7 +1,7 @@
 import os
 import time
 import pandas as pd
-from src.pipelines.shots.utils import calculateCosineSimilarity, initShotsFolder, mergePacketsIntoDataFrame
+from src.pipelines.shots.utils import calculateCosineSimilarity, calculateShotBoundaries, initShotsFolder, mergePacketsIntoDataFrame
 
 def extractShotsFromMovieFrames(configs: dict, movieFramesPaths: list):
     """
@@ -60,10 +60,25 @@ def extractShotsFromMovieFeatures(configs: dict, movieFeaturesFolders: list):
             if featuresDF.empty:
                 print(f'- The DataFrame containing packets data of "{folderName}" is empty! Skipping ...')
                 continue
-            # Cosine Similarity Calculation
-            similarityDF = calculateCosineSimilarity(folderName, featuresDF)
             # Print the number of frames in the features dataframe
             print(f'- {len(featuresDF)} packets combined into a single DataFrame for processing!')
+            # Cosine similarity calculation
+            similarityDF = calculateCosineSimilarity(folderName, featuresDF)
+            # Find shot boundaries and select the middle frame of each shot
+            boundaryFrames = calculateShotBoundaries(similarityDF, configs['threshold'])
+            # Keep only the boundary frames from the features dataframe
+            boundaryDF = featuresDF[featuresDF.index.isin(boundaryFrames)]
+            print(f'- {len(boundaryDF)} shot boundaries found in "{folderName}"!')
+            # Iterate over the keyframes to save them in packets
+            remainingFramesCount = len(boundaryDF)
+            for index, row in boundaryDF.iterrows():
+                # Append rows to shotsDataFrame
+                shotsDataFrame = pd.concat([shotsDataFrame, 
+                                            {'frameId': row['frameId'], 'features': row['features']}], ignore_index=True)
+                packetCounter += 1
+                # Reset the counter only if packetCounter reaches the limit and there is no more frames for process
+                remainingFramesCount -= 1
+                resetCounter = (packetCounter == configs['packet_size']) or (remainingFramesCount == 0)
             # Inform the user
             elapsedTime = '{:.2f}'.format(time.time() - startTime)
             print(
@@ -73,15 +88,6 @@ def extractShotsFromMovieFeatures(configs: dict, movieFeaturesFolders: list):
             continue
 
 
-#             # Find shot boundaries and select the middle frame of each shot
-#             boundaryFrames, avgShotLength = shotBoundaryDetection(similarityDF)
-#             avgShotLength = round(avgShotLength, 2)
-#             # Create a dataframe with the middle frames
-#             keyframesDF = featuresDF[featuresDF.index.isin(boundaryFrames)]
-#             remainingNumberOfFrames = len(keyframesDF)
-#             # Save the keyframes
-#             movieBoundaryCountDF = movieBoundaryCountDF.append(
-#                 {'movieId': movieId, 'framesCount': len(featuresDF), 'avgShotLength': avgShotLength, 'shotBoundaryCount': len(keyframesDF)}, ignore_index=True)
 #             # Iterate over the keyframes to save them in packets
 #             for index, row in keyframesDF.iterrows():
 #                 # Append rows to dataFrame

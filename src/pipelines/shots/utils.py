@@ -191,3 +191,32 @@ def calculateCosineSimilarity(movieId: str, featuresDF: pd.DataFrame):
             'similarity': similarity}])], ignore_index=True)
     # Return the similarity dataframe
     return similarityDF
+
+def calculateShotBoundaries(similarityDF: pd.DataFrame, threshold: float = 0.7):
+    """
+    Detects shot boundaries in the similarity dataframe and returns the middle frames of the shots
+
+    Parameters
+    ----------
+    similarityDF : pd.DataFrame
+        The similarity dataframe containing the cosine similarity among sequential features
+
+    Returns
+    -------
+    boundaryFrames: list
+        List of the middle frames between sequential shot boundaries
+    """
+    # Variables
+    boundaryFrames = []
+    print("- Calculating shot boundaries based on the similarity DataFrame ...")
+    # Filter similarityDF to only include rows with similarity less than threshold (shot boundaries)
+    boundariesDF = similarityDF[similarityDF['similarity'] < threshold]
+    # Get the index of shot boundaries
+    boundariesList = boundariesDF.index.tolist()
+    boundariesList = [int(bndry) for bndry in boundariesList]
+    # Get the middle index of the shot boundaries
+    for item1, item2 in zip(boundariesList, boundariesList[1:]):
+        middleItem = int((item1 + item2)/2)
+        boundaryFrames.append(middleItem)
+    # Return the list of keyframes
+    return boundaryFrames
