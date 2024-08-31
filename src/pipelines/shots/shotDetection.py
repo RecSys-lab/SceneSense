@@ -1,7 +1,7 @@
 import os
 import time
 import pandas as pd
-from src.pipelines.shots.utils import initShotsFolder, mergePacketsIntoDataFrame
+from src.pipelines.shots.utils import calculateCosineSimilarity, initShotsFolder, mergePacketsIntoDataFrame
 
 def extractShotsFromMovieFrames(configs: dict, movieFramesPaths: list):
     """
@@ -60,8 +60,10 @@ def extractShotsFromMovieFeatures(configs: dict, movieFeaturesFolders: list):
             if featuresDF.empty:
                 print(f'- The DataFrame containing packets data of "{folderName}" is empty! Skipping ...')
                 continue
+            # Cosine Similarity Calculation
+            similarityDF = calculateCosineSimilarity(folderName, featuresDF)
             # Print the number of frames in the features dataframe
-            print(f'- {len(featuresDF)} packets got combined features into a single DataFrame for processing!')
+            print(f'- {len(featuresDF)} packets combined into a single DataFrame for processing!')
             # Inform the user
             elapsedTime = '{:.2f}'.format(time.time() - startTime)
             print(
@@ -70,9 +72,7 @@ def extractShotsFromMovieFeatures(configs: dict, movieFeaturesFolders: list):
             print(f'- Error while picking the shots of "{folderName}" in "{featuresFolder}": {str(error)}')
             continue
 
-#             # Cosine Similarity Calculation
-#             similarityDF = cosineSimilarityCalculation(
-#                 movieId, shotFolder, featuresDF)
+
 #             # Find shot boundaries and select the middle frame of each shot
 #             boundaryFrames, avgShotLength = shotBoundaryDetection(similarityDF)
 #             avgShotLength = round(avgShotLength, 2)

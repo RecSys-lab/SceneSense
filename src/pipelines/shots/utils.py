@@ -3,6 +3,7 @@ import json
 import string
 import pandas as pd
 from glob import glob
+from scipy import spatial
 
 def initFramesFoldersForShotDetection(configs: dict):
     """
@@ -152,3 +153,41 @@ def mergePacketsIntoDataFrame(packetsFolder: str):
         # Close the JSON file
         jsonFile.close()
     return mergedDataFrame
+
+def calculateCosineSimilarity(movieId: str, featuresDF: pd.DataFrame):
+    """
+    Calculates the cosine similarity between sequential features of a given feature-set
+
+    Parameters
+    ----------
+    movieId : str
+        The movie identifier to be used in the process
+    featuresDF : pd.DataFrame
+        The dataframe containing the visual features of the movie frames
+
+    Returns
+    -------
+    similarityDF: pd.DataFrame
+        The dataframe containing the cosine similarity among sequential features
+    """
+    # Variables
+    similarityDF = pd.DataFrame(
+        columns=['source', 'destination', 'similarity'])
+    # Inform the user about the process
+    print(
+        f'- Calculating cosine similarity among sequential frames of "{movieId}" ...')
+    # Calculate the cosine similarity between sequential features
+    for index in range(len(featuresDF)-1):
+        # Similarity calculation
+        similarity = 1 - spatial.distance.cosine(
+            featuresDF['features'][index],
+            featuresDF['features'][index + 1])
+        # Round the similarity value
+        similarity = round(similarity, 2)
+        # Append the similarity to the dataframe
+        similarityDF = pd.concat([similarityDF, pd.DataFrame([{
+            'source': featuresDF['frameId'][index],
+            'destination': featuresDF['frameId'][index + 1],
+            'similarity': similarity}])], ignore_index=True)
+    # Return the similarity dataframe
+    return similarityDF
