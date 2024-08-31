@@ -21,17 +21,27 @@ def main():
     # Check which mode to run
     mode = cfgGeneral['mode']
     if (mode == 'pipeline'):
-        # Run the movies frame extractor pipeline
-        # runShotDetectionFromFrames(cfgPipeline['movie_shots']['variants']['from_frames'])
-        runShotDetectionFromFeatures(cfgPipeline['movie_shots']['variants']['from_features'])
-        # Run the movies frame extractor pipeline
-        # runMoviesFramesFeatureExtractor(cfgPipeline['movie_frames_visual_features'])
-        # Run the movies frame extractor pipeline
-        # runMoviesFrameExtractor(cfgPipeline['movie_frames'])
-        # Run the trailer downloader pipeline
-        # datasetInfo = {'name': cfgDatasets['visual_dataset']['name'],
-        #                'jsonPath': cfgDatasets['visual_dataset']['path_metadata']}
-        # runTrailerDownloader(cfgPipeline['movie_trailers'], datasetInfo)
+        # Get the selected sub-mode
+        subMode = cfgGeneral['sub_mode_pipeline']
+        if (subMode == 'dl_trailers'):
+            # Run the trailer downloader pipeline
+            datasetInfo = {'name': cfgDatasets['visual_dataset']['name'],
+                           'jsonPath': cfgDatasets['visual_dataset']['path_metadata']}
+            runTrailerDownloader(cfgPipeline['movie_trailers'], datasetInfo)
+        elif (subMode == 'frame_extractor'):
+            # Run the movies frame extractor pipeline
+            runMoviesFrameExtractor(cfgPipeline['movie_frames'])
+        elif (subMode == 'feat_extractor'):
+            # Run the movies features extractor pipeline
+            runMoviesFramesFeatureExtractor(cfgPipeline['movie_frames_visual_features'])
+        elif (subMode == 'shot_from_frame'):
+            # Run the shot detection pipeline from the extracted features
+            runShotDetectionFromFeatures(cfgPipeline['movie_shots']['variants']['from_features'])
+        elif (subMode == 'shot_from_feat'):
+            # Run the shot detection pipeline from the extracted frames
+            runShotDetectionFromFrames(cfgPipeline['movie_shots']['variants']['from_frames'])
+        else:
+            print(f"Unsupported sub-mode '{subMode}' selected! Exiting ...")
     elif (mode == 'ds'):
         # Get the selected sub-mode
         subMode = cfgGeneral['sub_mode_ds']
@@ -42,7 +52,8 @@ def main():
         else:
             print(f"Unsupported sub-mode '{subMode}' selected! Exiting ...")
     elif (mode == 'recsys'):
-        pass
+        # Get the selected sub-mode
+        subMode = cfgGeneral['sub_mode_recsys']
     else:
         print(f"Unsupported mode '{mode}' selected! Exiting ...")
     # Finish the program
