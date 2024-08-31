@@ -2,7 +2,14 @@ config:
   # General configuration of the framework
   general:
     # Framework run mode
-    mode: "pipeline" # Possible values: ["ds", "pipeline", "recsys"]
+    mode: "ds" # Possible values: ["ds", "pipeline", "recsys"]
+    # Framework sub-mode
+    # Sub-mode of the dataset mode - Possible values: ["scenesense_meta", "scenesense_visual"]
+    sub_mode_ds: "scenesense_meta"
+    # Sub-mode of the pipeline mode - Possible values: ["movie_trailers", "movie_frames", "movie_frames_visual_features", "movie_shots"]
+    sub_mode_pipeline: "movie_trailers"
+    # Sub-mode of the recommendation system mode - Possible values: ["pointwise", "distributional", "temporal"]
+    sub_mode_recsys: "pointwise"
   # Datasets
   datasets:
     # Text dataset (MovieLenz 25M)

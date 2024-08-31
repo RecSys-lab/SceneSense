@@ -2,6 +2,7 @@
 
 from src.utils import readConfigs
 from src.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures
+from src.datasets.example_scenesense import testMetadataProcess, testVisualDataProcess
 from src.runCore import runTrailerDownloader, runMoviesFrameExtractor, runMoviesFramesFeatureExtractor
 
 def main():
@@ -32,7 +33,14 @@ def main():
         #                'jsonPath': cfgDatasets['visual_dataset']['path_metadata']}
         # runTrailerDownloader(cfgPipeline['movie_trailers'], datasetInfo)
     elif (mode == 'ds'):
-        pass
+        # Get the selected sub-mode
+        subMode = cfgGeneral['sub_mode_ds']
+        if (subMode == 'scenesense_meta'):
+            testMetadataProcess()
+        elif (subMode == 'scenesense_visual'):
+            testVisualDataProcess()
+        else:
+            print(f"Unsupported sub-mode '{subMode}' selected! Exiting ...")
     elif (mode == 'recsys'):
         pass
     else:

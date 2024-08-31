@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-from scenesense.common import loadJsonFromUrl
-from scenesense.visualizer_metadata import visualizeGenresDictionary
-from scenesense.helper_visualfeats import packetAddressGenerator, fetchAllPackets
-from scenesense.helper_metadata import countNumberOfMovies, fetchRandomMovie, fetchMovieById
-from scenesense.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre, calculateAverageGenrePerMovie
+from src.datasets.scenesense.common import loadJsonFromUrl
+from src.datasets.scenesense.visualizer_metadata import visualizeGenresDictionary
+from src.datasets.scenesense.helper_visualfeats import packetAddressGenerator, fetchAllPackets
+from src.datasets.scenesense.helper_metadata import countNumberOfMovies, fetchRandomMovie, fetchMovieById
+from src.datasets.scenesense.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre, calculateAverageGenrePerMovie
 
 # Sample variables
 datasetName = "SceneSense-visual"
@@ -65,7 +65,3 @@ def testVisualDataProcess():
     print(f"- Fetching all packets of the movie #{givenMovieId}) ...")
     moviePackets = fetchAllPackets(datasetRawFilesUrl, featureSources[2], featureModels[0], givenMovieId)
     print(f"- Number of packets fetched (list): {len(moviePackets)}")
-
-# Run
-testMetadataProcess()
-testVisualDataProcess()

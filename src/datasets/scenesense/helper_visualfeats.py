@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from scenesense.common import loadJsonFromUrl
+from src.datasets.scenesense.common import loadJsonFromUrl
 
 def packetAddressGenerator(datasetUrl: str, gFeature: str, gModel: str, gMovieId, gPacketId):
   """
