@@ -1,5 +1,7 @@
 import os
+import json
 import string
+import pandas as pd
 from glob import glob
 
 def initFramesFoldersForShotDetection(configs: dict):
@@ -116,3 +118,37 @@ def initShotsFolder(featuresDir: str, outputDir: str):
     else:
         os.mkdir(generatedPath)
         return generatedPath
+
+def mergePacketsIntoDataFrame(packetsFolder: str):
+    """
+    Merges all the visual features in JSON files into a single DataFrame
+
+    Parameters
+    ----------
+    packetsFolder : str
+        Path to the folder containing the JSON files (packets) of extracted visual features
+
+    Returns
+    -------
+    mergedDataFrame : DataFrame
+        DataFrame containing all the visual features in JSON files
+
+    """
+    # Variables
+    mergedDataFrame = pd.DataFrame(columns=['frameId', 'features'])
+    # Iterate over the packet files to collect them all in a single dataframe
+    for packetIdx, packetFile in enumerate(glob(f'{packetsFolder}/*.json')):
+        # Inform the user about the processing packet
+        if (packetIdx % 50 == 0):
+            print(f'-- Fetching packet #{packetIdx} ...')
+        # Reading each packet's data
+        jsonFile = open(packetFile,)
+        # Load the JSON data
+        packetData = json.load(jsonFile)
+        # Iterate on each frames of array
+        for frameData in packetData:
+            mergedDataFrame = pd.concat([mergedDataFrame, pd.DataFrame([{'frameId': frameData['frameId'], 'features': frameData['features']}])],
+                                           ignore_index=True)
+        # Close the JSON file
+        jsonFile.close()
+    return mergedDataFrame
