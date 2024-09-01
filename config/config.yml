@@ -7,8 +7,8 @@ config:
     # Sub-mode of the dataset mode - Possible values: ["scenesense_meta", "scenesense_visual"]
     sub_mode_ds: "scenesense_meta"
     # Sub-mode of the pipeline mode
-    # Possible values: ["dl_trailers", "frame_extractor", "feat_extractor", "shot_from_frames", "shot_from_feat"]
-    sub_mode_pipeline: "shot_from_feat"
+    # Possible values: ["dl_trailers", "frame_extractor", "feat_extractor", "shot_from_frame", "shot_from_feat"]
+    sub_mode_pipeline: "shot_from_frame"
     # Sub-mode of the recommendation system mode - Possible values: ["pointwise", "distributional", "temporal"]
     sub_mode_recsys: "pointwise"
   # Datasets
@@ -88,6 +88,8 @@ config:
           image_formats: ["png", "jpg", "jpeg"]
           # Output file format
           output_format: "jpg"
+          # Shot boundaries detection threshold
+          threshold: 0.65
         # Shot detection from features
         from_features:
           # Input features path

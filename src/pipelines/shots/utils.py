@@ -1,6 +1,8 @@
 import os
 import json
 import string
+import cv2 as cv
+import numpy as np
 import pandas as pd
 from glob import glob
 from scipy import spatial
@@ -200,6 +202,50 @@ def calculateCosineSimilarity(movieId: str, featuresDF: pd.DataFrame):
             similarityDF = pd.concat([similarityDF, row], ignore_index=True)
     # Return the similarity dataframe
     return similarityDF
+
+def calculateCosineSimilarity(prevFrame: cv.Mat, currFrame: cv.Mat, threshold: float = 0.7):
+    """
+    Calculates the cosine similarity between sequential frames
+
+    Parameters
+    ----------
+    prevFrame : cv.Mat
+        The previous frame to compare
+    currFrame : cv.Mat
+        The current frame to compare
+    threshold : float, optional
+        The threshold value to consider the similarity as a shot boundary, by default 0.7
+
+    Returns
+    -------
+    isSimilar: bool
+        The boolean value indicating the similarity between the frames
+    """
+    # Variables
+    isSimilar = False
+    # Convert the frames to grayscale
+    pFrameGray = cv.cvtColor(prevFrame, cv.COLOR_BGR2GRAY)
+    cFrameGray = cv.cvtColor(currFrame, cv.COLOR_BGR2GRAY)
+    # Check if the frames are not blank
+    if (np.all(pFrameGray == 0) or np.all(cFrameGray == 0)):
+        return isSimilar
+    # Flatten the frames to a single dimension
+    pFrameFlatten = pFrameGray.flatten()
+    cFrameFlatten = cFrameGray.flatten()
+    try:
+        # Calculate the cosine similarity between the frames
+        similarity = 1 - spatial.distance.cosine(pFrameFlatten, cFrameFlatten)
+        # Round the similarity value
+        similarity = round(similarity, 2)
+        # Check if the similarity is greater than the threshold
+        if similarity > threshold:
+            isSimilar = True
+        # Return the similarity result
+        return isSimilar
+    except Exception as e:
+        print(f"- Error calculating the cosine similarity: {str(e)}")
+        return False
+
 
 def calculateShotBoundaries(similarityDF: pd.DataFrame, threshold: float = 0.7):
     """

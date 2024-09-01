@@ -1,5 +1,6 @@
 import os
 import time
+import cv2 as cv
 import pandas as pd
 from src.pipelines.visual_features.utils import packetManager
 from src.pipelines.shots.utils import calculateCosineSimilarity, calculateShotBoundaries, initShotsFolder, mergePacketsIntoDataFrame
@@ -24,6 +25,44 @@ def extractShotsFromMovieFrames(configs: dict, movieFramesPaths: list):
         if not outputDir:
             continue
         # Picking shot features from the given features folder
+        try:
+            # Variables
+            totalShots = 0
+            prevFrame = None
+            startTime = time.time()
+            folderName = os.path.basename(framesFolder)
+            totalFrames = len(os.listdir(framesFolder))
+            # Loop over the frames to pick the shots
+            if totalFrames < 1:
+                print(f'- No frames found in "{framesFolder}"! Skipping ...')
+                continue
+            print(f'- Processing {totalFrames} frames of movie "{folderName}" ...')
+            for frameFile in os.listdir(framesFolder):
+                # Read the frame file
+                framePath = os.path.join(framesFolder, frameFile)
+                currFrame = cv.imread(framePath)
+                # Check if the frame is read successfully
+                if currFrame is None:
+                    print(f'- Error reading frame file "{frameFile}" in "{framesFolder}"! Skipping ...')
+                    continue
+                # If the previous frame is not None, fill it with the current frame
+                if prevFrame is None:
+                    prevFrame = currFrame.copy()
+                    continue
+                # Check the cosine similarity of the frame with the next one
+                isShot = calculateCosineSimilarity(prevFrame, currFrame, configs['threshold'])
+                if isShot:
+                    # Save the current frame as a shot
+                    shotPath = os.path.join(outputDir, frameFile)
+                    cv.imwrite(shotPath, currFrame)
+                    totalShots += 1
+            # Inform the user
+            elapsedTime = '{:.2f}'.format(time.time() - startTime)
+            print(
+                f'- Extracted {totalShots} shots from {totalFrames} frames of "{folderName}" in {elapsedTime} seconds!')
+        except Exception as error:
+            print(f'- Error while picking the shots of "{folderName}" in "{framesFolder}": {str(error)}')
+            continue
 
 def extractShotsFromMovieFeatures(configs: dict, movieFeaturesFolders: list):
     """
