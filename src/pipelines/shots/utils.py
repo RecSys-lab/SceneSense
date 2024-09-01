@@ -173,6 +173,10 @@ def calculateCosineSimilarity(movieId: str, featuresDF: pd.DataFrame):
     # Variables
     similarityDF = pd.DataFrame(
         columns=['source', 'destination', 'similarity'])
+    # Ensure the similarityDF has a consistent data type for each column to avoid issues during concatenation
+    similarityDF['source'] = similarityDF['source'].astype('object')
+    similarityDF['destination'] = similarityDF['destination'].astype('object')
+    similarityDF['similarity'] = similarityDF['similarity'].astype('float64')
     # Inform the user about the process
     print(
         f'- Calculating cosine similarity among sequential frames of "{movieId}" ...')
@@ -184,11 +188,15 @@ def calculateCosineSimilarity(movieId: str, featuresDF: pd.DataFrame):
             featuresDF['features'][index + 1])
         # Round the similarity value
         similarity = round(similarity, 2)
-        # Append the similarity to the dataframe
-        similarityDF = pd.concat([similarityDF, pd.DataFrame([{
+        # Create a row for the similarity dataframe
+        row = pd.DataFrame([{
             'source': featuresDF['frameId'][index],
             'destination': featuresDF['frameId'][index + 1],
-            'similarity': similarity}])], ignore_index=True)
+            'similarity': similarity
+        }])
+        # Append the similarity to the dataframe
+        if not row.isna().all().all():
+            similarityDF = pd.concat([similarityDF, row], ignore_index=True)
     # Return the similarity dataframe
     return similarityDF
 

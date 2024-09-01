@@ -1,6 +1,7 @@
 import os
 import time
 import pandas as pd
+from src.pipelines.visual_features.utils import packetManager
 from src.pipelines.shots.utils import calculateCosineSimilarity, calculateShotBoundaries, initShotsFolder, mergePacketsIntoDataFrame
 
 def extractShotsFromMovieFrames(configs: dict, movieFramesPaths: list):
@@ -51,6 +52,9 @@ def extractShotsFromMovieFeatures(configs: dict, movieFeaturesFolders: list):
             folderName = os.path.basename(featuresFolder)
             packetIndex = 1  # Holds the name of the packet, e.g. Packet0001
             shotsDataFrame = pd.DataFrame(columns=['frameId', 'features'])
+            # Ensure the shotsDataFrame has a consistent data type for each column to avoid issues during concatenation
+            shotsDataFrame['frameId'] = shotsDataFrame['frameId'].astype('int32')
+            shotsDataFrame['features'] = shotsDataFrame['features'].astype('object')
             # Explore the folder containing JSON files (packets) of extracted visual features
             totalPackets = len(os.listdir(featuresFolder))
             print(f'- Processing {totalPackets} packets of movie "{folderName}" ...')
@@ -72,13 +76,26 @@ def extractShotsFromMovieFeatures(configs: dict, movieFeaturesFolders: list):
             # Iterate over the keyframes to save them in packets
             remainingFramesCount = len(boundaryDF)
             for index, row in boundaryDF.iterrows():
-                # Append rows to shotsDataFrame
-                shotsDataFrame = pd.concat([shotsDataFrame, 
-                                            {'frameId': row['frameId'], 'features': row['features']}], ignore_index=True)
+                # Create a row for the similarity dataframe
+                shotRow = pd.DataFrame([{
+                    'frameId': row['frameId'],
+                    'features': row['features']
+                }])
+                # Append the similarity to the dataframe
+                if not shotRow.isna().all().all():
+                    shotsDataFrame = pd.concat([shotsDataFrame, shotRow], ignore_index=True)
                 packetCounter += 1
                 # Reset the counter only if packetCounter reaches the limit and there is no more frames for process
                 remainingFramesCount -= 1
                 resetCounter = (packetCounter == configs['packet_size']) or (remainingFramesCount == 0)
+                if (resetCounter):
+                    # Save dataFrame as packet in a file
+                    packetManager(packetIndex, shotsDataFrame,
+                                    folderName, outputDir)
+                    # Clear dataFrame rows
+                    shotsDataFrame.drop(shotsDataFrame.index, inplace=True)
+                    packetCounter = 0
+                    packetIndex += 1
             # Inform the user
             elapsedTime = '{:.2f}'.format(time.time() - startTime)
             print(
@@ -86,23 +103,3 @@ def extractShotsFromMovieFeatures(configs: dict, movieFeaturesFolders: list):
         except Exception as error:
             print(f'- Error while picking the shots of "{folderName}" in "{featuresFolder}": {str(error)}')
             continue
-
-
-#             # Iterate over the keyframes to save them in packets
-#             for index, row in keyframesDF.iterrows():
-#                 # Append rows to dataFrame
-#                 dataFrame = dataFrame.append(
-#                     {'frameId': row['frameId'], 'features': row['features']}, ignore_index=True)
-#                 packetCounter += 1
-#                 # Reset the counter only if packetCounter reaches the limit (packetSize) and there is no more frames for process
-#                 remainingNumberOfFrames -= 1
-#                 resetCounter = (packetCounter == packetSize) or (
-#                     remainingNumberOfFrames == 0)
-#                 if (resetCounter):
-#                     # Save dataFrame as packet in a file
-#                     packetManager(packetIndex, dataFrame,
-#                                   movieId, shotFolder)
-#                     # Clear dataFrame rows
-#                     dataFrame.drop(dataFrame.index, inplace=True)
-#                     packetCounter = 0
-#                     packetIndex += 1
