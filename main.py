@@ -34,10 +34,10 @@ def main():
         elif (subMode == 'feat_extractor'):
             # Run the movies features extractor pipeline
             runMoviesFramesFeatureExtractor(cfgPipeline['movie_frames_visual_features'])
-        elif (subMode == 'shot_from_frame'):
+        elif (subMode == 'shot_from_feat'):
             # Run the shot detection pipeline from the extracted features
             runShotDetectionFromFeatures(cfgPipeline['movie_shots']['variants']['from_features'])
-        elif (subMode == 'shot_from_feat'):
+        elif (subMode == 'shot_from_frame'):
             # Run the shot detection pipeline from the extracted frames
             runShotDetectionFromFrames(cfgPipeline['movie_shots']['variants']['from_frames'])
         else:

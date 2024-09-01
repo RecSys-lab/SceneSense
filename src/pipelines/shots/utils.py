@@ -65,6 +65,8 @@ def initFeaturesFoldersForShotDetection(configs: dict):
     # Variables
     featuresFolders = []
     movieFeaturesRootDir, shotFeaturesRootDir = configs['features_path'], configs['shot_features_path']
+    movieFeaturesRootDir = os.path.normpath(movieFeaturesRootDir)
+    shotFeaturesRootDir = os.path.normpath(shotFeaturesRootDir)
     # Check if the given directory exists
     if not os.path.exists(movieFeaturesRootDir):
         print(f"Input movie features root directory '{movieFeaturesRootDir}' does not exist! Exiting ...")
@@ -80,7 +82,6 @@ def initFeaturesFoldersForShotDetection(configs: dict):
     for featureFolder in glob(f'{movieFeaturesRootDir}/*/'):
         if glob(f'{featureFolder}*.json'):
             featuresFolders.append(featureFolder)
-            break  # Exit inner loop if at least one json is found in this folder
     # Inform the user about the number of feature folders to process
     if len(featuresFolders) == 0:
         print(f"No movie feature folders found in the given directory '{movieFeaturesRootDir}'! Exiting ...")
