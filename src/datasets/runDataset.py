@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
+import os
 from src.datasets.scenesense.common import loadJsonFromUrl
+from src.datasets.movielens.downloader import downloadMovielens25m
 from src.datasets.scenesense.visualizer_metadata import visualizeGenresDictionary
 from src.datasets.scenesense.helper_visualfeats import packetAddressGenerator, fetchAllPackets
 from src.datasets.scenesense.helper_metadata import countNumberOfMovies, fetchRandomMovie, fetchMovieById
@@ -65,3 +67,32 @@ def testVisualDataProcess():
     print(f"- Fetching all packets of the movie #{givenMovieId}) ...")
     moviePackets = fetchAllPackets(datasetRawFilesUrl, featureSources[2], featureModels[0], givenMovieId)
     print(f"- Number of packets fetched (list): {len(moviePackets)}")
+
+def runMovieLens25(configs: dict):
+    """
+    Runs the text dataset pipeline (MovieLens 25M dataset)
+
+    Parameters
+    ----------
+    configs :dict
+        The configurations dictionary
+    """
+    print(f"Running the text dataset pipeline '{configs['name']}' ...")
+    # Variables
+    isDownloaded = configs['need_download']
+    datasetPath = os.path.normpath(configs['download_path'])
+    # Pre-check whether the dataset is already downloaded
+    if not isDownloaded:
+        print(f"The dataset needs to be downloaded! It will be downloaded in '{datasetPath}' ...")
+        isDownloadSuccessful = downloadMovielens25m(configs['url'], datasetPath)
+        if not isDownloadSuccessful:
+            return
+    # else:
+    #     print(f"The dataset is already downloaded! Trying to read from '{datasetPath}' ...")
+    
+    # Pre-check the input directory
+    # fetchedMoviesPaths = initMovieVideos(configs)
+    # if not fetchedMoviesPaths:
+    #     return
+    # # Extract frames from the fetched movies
+    # extractMovieFrames(configs, fetchedMoviesPaths)

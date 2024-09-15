@@ -18,7 +18,9 @@ It covers the datasets usable in the framework, including the followings:
 | Sub-Category     | Options           | Description                                                                       |
 | ---------------- | ----------------- | --------------------------------------------------------------------------------- |
 | `text_dataset`   | `name`            | the name of the text dataset (e.g., `movielens-25m`)                              |
+| `text_dataset`   | `need_download`   | the flag to check whether to download the text dataset or read from file          |
 | `text_dataset`   | `url`             | the url of the text dataset                                                       |
+| `text_dataset`   | `download_path`   | the path to download the text dataset                                             |
 | `visual_dataset` | `name`            | the name of the visual dataset (e.g., `SceneSense`)                               |
 | `visual_dataset` | `url`             | the url of the visual dataset                                                     |
 | `visual_dataset` | `path_metadata`   | the path to the metadata json file of SceneNet dataset                            |

@@ -2,10 +2,10 @@ config:
   # General configuration of the framework
   general:
     # Framework run mode
-    mode: "pipeline" # Possible values: ["ds", "pipeline", "recsys"]
+    mode: "ds" # Possible values: ["ds", "pipeline", "recsys"]
     # Framework sub-mode
-    # Sub-mode of the dataset mode - Possible values: ["scenesense_meta", "scenesense_visual"]
-    sub_mode_ds: "scenesense_meta"
+    # Sub-mode of the dataset mode - Possible values: ["scenesense_meta", "scenesense_visual", "movielens_25m"]
+    sub_mode_ds: "movielens_25m"
     # Sub-mode of the pipeline mode
     # Possible values: ["dl_trailers", "frame_extractor", "feat_extractor", "shot_from_frame", "shot_from_feat"]
     sub_mode_pipeline: "shot_from_frame"
@@ -16,9 +16,13 @@ config:
     # Text dataset (MovieLenz 25M)
     text_dataset:
       # Dataset name
-      name: movielens-25m
+      name: Movielens-25m
+      # Flag to download the dataset
+      need_download: true
       # Path to the dataset
       url: https://files.grouplens.org/datasets/movielens/ml-25m.zip
+      # Path to download the dataset
+      download_path: "~/Downloads"
     # Visual dataset (SceneSense)
     visual_dataset:
       # Dataset name

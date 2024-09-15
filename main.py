@@ -2,7 +2,7 @@
 
 from src.utils import readConfigs
 from src.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures
-from src.datasets.example_scenesense import testMetadataProcess, testVisualDataProcess
+from src.datasets.runDataset import testMetadataProcess, testVisualDataProcess, runMovieLens25
 from src.runCore import runTrailerDownloader, runMoviesFrameExtractor, runMoviesFramesFeatureExtractor
 
 def main():
@@ -49,6 +49,8 @@ def main():
             testMetadataProcess()
         elif (subMode == 'scenesense_visual'):
             testVisualDataProcess()
+        elif (subMode == 'movielens_25m'):
+            runMovieLens25(cfgDatasets['text_dataset'])
         else:
             print(f"Unsupported sub-mode '{subMode}' selected! Exiting ...")
     elif (mode == 'recsys'):
