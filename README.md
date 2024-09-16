@@ -17,7 +17,7 @@ As the framework supports multi-modal processing and covers **text**, **visual**
 - **Text Feed:** `MovieLenz-25M` ([link](https://grouplens.org/datasets/movielens/25m/)) is recommended to provide data about movies, user interactions, _etc._
 - **Visual Feed:** `SceneSense Dataset` ([link](https://huggingface.co/datasets/alitourani/moviefeats_visual)) is collected by the team and provides frame-level features for each movie using different Convolutional Neural Networks (CNNs).
 
-In order to use the datasets, some **helper functions** and **example codes** are provided in the `src/core/datasets` [path](https://github.com/RecSys-lab/SceneSense/tree/main/src/core/datasets).
+In order to use the datasets, some **helper functions** and **example codes** are provided in the `src/core/datasets` [path](/src/datasets/scenesense/).
 
 ## 🚀 Launching the Framework
 
@@ -27,22 +27,35 @@ To launch the framework, you need to take the below steps:
 
 The first step is to modify the configurations, adapting the framework towards what you target. Accordingly, you need to modify the [config.yml](/config/config.yml) file based on the [documentations provided for it](/config/README.md).
 
+### II. Run the Code
+
+After activating the `.venv` (if set), run the [`main.py`](/main.py) file and enjoy working with the framework!
+
 ## 🗄️ Code Structure
 
 You can find below where to search for the codes in the framework:
 
-```
-> [config]              ## framework configs & docs
+```bash
+> [config]                  ## framework configs & docs
     - config.yml
-> [src]                 ## framework codes
-    > [core]            ## core functionalities
-        > [datasets]    ## dataset connection & helpers
-    > [multimodal]      ## processing modules
+    - README.md
+> [src]                     ## framework codes
+    > [datasets]            ## dataset functions
+        > [movielens]
+        > [scenesense]
+        - runDataset.py
+    > [pipelines]           ## core functionalities and pipelines
+        > [downloaders]     ## YouTube downloader for trailers
+        > [frames]          ## frame extraction functions
+        > [shots]           ## shot detection functions
+        > [visual_feats]    ## visual feature extraction functions
+    > [multimodal]          ## processing modules
         > [textual]
         > [visual]
         > [fused]
-    - utils.py          ## general utilities
-    - main.py           ## main runner file
+    - utils.py              ## general utilities
+    - runCore.py            ## core runner
+- main.py                   ## main file
 ```
 
 ## 👨🏻‍💻 Contribution
