@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 
 import os
+from src.datasets.movielens.common import loadDataFromCSV
 from src.datasets.scenesense.common import loadJsonFromUrl
 from src.datasets.movielens.downloader import downloadMovielens25m
 from src.datasets.scenesense.visualizer_metadata import visualizeGenresDictionary
 from src.datasets.scenesense.helper_visualfeats import packetAddressGenerator, fetchAllPackets
 from src.datasets.scenesense.helper_metadata import countNumberOfMovies, fetchRandomMovie, fetchMovieById
+from src.datasets.movielens.helper_movies import binarizeMovieGenres, filterMoviesWithMainGenres, mainGenres
+from src.datasets.movielens.helper_movies import fetchAllUniqueGenres, fetchMoviesByGenre as fetchMoviesByGenreMovielens
 from src.datasets.scenesense.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre, calculateAverageGenrePerMovie
 
 # Sample variables
@@ -16,7 +19,7 @@ datasetRawFilesUrl = "https://huggingface.co/datasets/alitourani/moviefeats_visu
 datasetMetadataUrl = "https://huggingface.co/datasets/alitourani/moviefeats_visual/resolve/main/stats.json"
 
 def testMetadataProcess():
-    print(f"Hi! This is an example provided for you to work with the metadata (json) file of the '{datasetName}' dataset ... \n")
+    print(f"This is an example provided for you to work with the metadata (json) file of the '{datasetName}' dataset ... \n")
     # Fetch JSON data from the URL
     print(f"- Fetching URL from '{datasetMetadataUrl}' ...")
     jsonData = loadJsonFromUrl(datasetMetadataUrl)
@@ -57,7 +60,7 @@ def testMetadataProcess():
     print(f"End of the example for the '{datasetName}' dataset ...")
 
 def testVisualDataProcess():
-    print(f"Hi! This is an example provided for you to work with the visual packets of the '{datasetName}' dataset ... \n")
+    print(f"This is an example provided for you to work with the visual packets of the '{datasetName}' dataset ... \n")
     # Fetch JSON data from the URL
     givenMovieId = 6
     print(f"- Generating a sample packet address file from '{datasetRawFilesUrl}' ...")
@@ -87,12 +90,44 @@ def runMovieLens25(configs: dict):
         isDownloadSuccessful = downloadMovielens25m(configs['url'], datasetPath)
         if not isDownloadSuccessful:
             return
-    # else:
-    #     print(f"The dataset is already downloaded! Trying to read from '{datasetPath}' ...")
-    
-    # Pre-check the input directory
-    # fetchedMoviesPaths = initMovieVideos(configs)
-    # if not fetchedMoviesPaths:
+    # Else, the dataset is already downloaded
+    print(f"The dataset is already downloaded! Trying to read from '{datasetPath}' ...")
+    # Some test functions
+    print(f"\nLet's test some functionalities supported by the framework for the '{configs['name']}' dataset ...")
+    # Reading movies data
+    print(f"- Reading dataset's movies and fetching them into a DataFrame ...")
+    moviesDataFrame = loadDataFromCSV(os.path.join(datasetPath, "movies.csv"))
+    if moviesDataFrame is None:
+        return
+    # Counting the number of movies
+    moviesCount = len(moviesDataFrame)
+    print(f"- The dataset contains {moviesCount} movies!")
+    # Some samples of the movies
+    print(f"- The structure of the movies data is as below:")
+    print(moviesDataFrame.head(3))
+    # Get all genres from the dataset in a list
+    print(f"\n- Fetching all genres from the dataset ...")
+    allGenres = fetchAllUniqueGenres(moviesDataFrame)
+    print(f"- The dataset contains {len(allGenres)} genres, including: {allGenres}")
+    # Get movies by a specific genre
+    givenGenre = "Action"
+    print(f"\n- Fetching movies by a specific genre ({givenGenre}) ...")
+    moviesByGenre = fetchMoviesByGenreMovielens(moviesDataFrame, givenGenre)
+    print(f"- The dataset contains {len(moviesByGenre)} movies with the genre '{givenGenre}'!")
+    # Get movies by the main genres
+    print(f"\n- Fetching movies by the main genres {mainGenres} ...")
+    mainGenresMoviesDataFrame = filterMoviesWithMainGenres(moviesDataFrame)
+    print(f"- The dataset contains {len(mainGenresMoviesDataFrame)} movies with the main genres!")
+    print(f"- A sample of the movies with the main genres: \n{mainGenresMoviesDataFrame.head(3)}")
+    # Model movies data with binarized genres
+    moviesDFBinarizedGenres = binarizeMovieGenres(moviesDataFrame)
+    print(f"\n- The movies data with binarized genres is as below: \n{moviesDFBinarizedGenres.head(3)}")
+    # Reading user-driven data
+    print(f"\n- Reading dataset's user-driven data and fetching them into a DataFrame ...")
+    # ratingsDataFrame = loadDataFromCSV(os.path.join(datasetPath, "ratings.csv"))
+    # if ratingsDataFrame is None:
     #     return
-    # # Extract frames from the fetched movies
-    # extractMovieFrames(configs, fetchedMoviesPaths)
+    # # Counting the number of ratings
+    # ratingsCount = len(ratingsDataFrame)
+    # print(f"- The dataset contains {ratingsCount} ratings!")
+    
