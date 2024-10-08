@@ -89,3 +89,24 @@ def binarizeMovieGenres(dataFrame: pd.DataFrame):
     moviesDFBinarizedGenres['movieId'] = dataFrame['movieId']
     # Return the binarized DataFrame
     return moviesDFBinarizedGenres
+
+def augmentMoviesDFWithBinarizedGenres(moviesDataFrame: pd.DataFrame, binarizedGenresDataFrame: pd.DataFrame):
+    """
+    Augments the movies DataFrame with binarized genres.
+
+    Parameters:
+    ----------
+    moviesDataFrame: pd.DataFrame
+        The DataFrame containing the movie data.
+    binarizedGenresDataFrame: pd.DataFrame
+        The DataFrame containing the binarized genres.
+    
+    Returns:
+    -------
+    augmentedMoviesDataFrame: pd.DataFrame
+        The augmented DataFrame containing the movie data with binarized genres.
+    """
+    # Merge the movies DataFrame with the binarized genres DataFrame
+    augmentedMoviesDataFrame = pd.merge(moviesDataFrame, binarizedGenresDataFrame, on='movieId')
+    # Return the augmented DataFrame
+    return augmentedMoviesDataFrame

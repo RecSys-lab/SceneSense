@@ -5,10 +5,11 @@ from src.datasets.movielens.common import loadDataFromCSV
 from src.datasets.scenesense.common import loadJsonFromUrl
 from src.datasets.movielens.downloader import downloadMovielens25m
 from src.datasets.scenesense.visualizer_metadata import visualizeGenresDictionary
+from src.datasets.movielens.helper_ratings import mergeMainGenreMoviesDFWithRatingsDF
 from src.datasets.scenesense.helper_visualfeats import packetAddressGenerator, fetchAllPackets
 from src.datasets.scenesense.helper_metadata import countNumberOfMovies, fetchRandomMovie, fetchMovieById
-from src.datasets.movielens.helper_movies import binarizeMovieGenres, filterMoviesWithMainGenres, mainGenres
 from src.datasets.movielens.helper_movies import fetchAllUniqueGenres, fetchMoviesByGenre as fetchMoviesByGenreMovielens
+from src.datasets.movielens.helper_movies import augmentMoviesDFWithBinarizedGenres, binarizeMovieGenres, filterMoviesWithMainGenres, mainGenres
 from src.datasets.scenesense.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre, calculateAverageGenrePerMovie
 
 # Sample variables
@@ -122,12 +123,20 @@ def runMovieLens25(configs: dict):
     # Model movies data with binarized genres
     moviesDFBinarizedGenres = binarizeMovieGenres(moviesDataFrame)
     print(f"\n- The movies data with binarized genres is as below: \n{moviesDFBinarizedGenres.head(3)}")
+    # Augment the movies data with the binarized genres
+    augmentedMoviesDataFrame = augmentMoviesDFWithBinarizedGenres(moviesDataFrame, moviesDFBinarizedGenres)
+    print(f"\n- The augmented dataframe is as below: \n{augmentedMoviesDataFrame.head(3)}")
     # Reading user-driven data
     print(f"\n- Reading dataset's user-driven data and fetching them into a DataFrame ...")
-    # ratingsDataFrame = loadDataFromCSV(os.path.join(datasetPath, "ratings.csv"))
-    # if ratingsDataFrame is None:
-    #     return
-    # # Counting the number of ratings
-    # ratingsCount = len(ratingsDataFrame)
-    # print(f"- The dataset contains {ratingsCount} ratings!")
-    
+    ratingsDataFrame = loadDataFromCSV(os.path.join(datasetPath, "ratings.csv"))
+    if ratingsDataFrame is None:
+        return
+    # Counting the number of ratings
+    ratingsCount = len(ratingsDataFrame)
+    print(f"- The dataset contains {ratingsCount} ratings!")
+    # Some samples of the movies
+    print(f"- The structure of the user-ratings data is as below:\n{ratingsDataFrame.head(3)}")
+    # Merging the movies and ratings DataFrames
+    print(f"\n- Merging the movies (of the main genres) and ratings DataFrames ...")
+    mergedDataFrame = mergeMainGenreMoviesDFWithRatingsDF(augmentedMoviesDataFrame, ratingsDataFrame)
+    print(f"- The merged DataFrame has {len(mergedDataFrame)} items, such as:\n{mergedDataFrame.head(3)}")
