@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from src.utils import readConfigs
+from src.runRecSys import runSceneSenseLLMOverlapChecker
 from src.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures
 from src.datasets.runDataset import testMetadataProcess, testVisualDataProcess, runMovieLens25
 from src.runCore import runTrailerDownloader, runMoviesFrameExtractor, runMoviesFramesFeatureExtractor
@@ -17,6 +18,7 @@ def main():
     # Get common configurations
     cfgGeneral = configs['config']['general']
     cfgDatasets = configs['config']['datasets']
+    cfgRecSys = configs['config']['multimodal']
     cfgPipeline = configs['config']['pipelines']
     # Check which mode to run
     mode = cfgGeneral['mode']
@@ -55,7 +57,8 @@ def main():
             print(f"Unsupported sub-mode '{subMode}' selected! Exiting ...")
     elif (mode == 'recsys'):
         # Get the selected sub-mode
-        subMode = cfgGeneral['sub_mode_recsys']
+        # subMode = cfgGeneral['sub_mode_recsys']
+        runSceneSenseLLMOverlapChecker(cfgRecSys, cfgDatasets)
     else:
         print(f"Unsupported mode '{mode}' selected! Exiting ...")
     # Finish the program
