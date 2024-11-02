@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from src.utils import readConfigs
-from src.runRecSys import runSceneSenseLLMOverlapChecker
+from src.runRecSys import runVisualTextualDatasetsOverlapChecker
 from src.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures
 from src.datasets.runDataset import testMetadataProcess, testVisualDataProcess, runMovieLens25
 from src.runCore import runTrailerDownloader, runMoviesFrameExtractor, runMoviesFramesFeatureExtractor
@@ -27,8 +27,8 @@ def main():
         subMode = cfgGeneral['sub_mode_pipeline']
         if (subMode == 'dl_trailers'):
             # Run the trailer downloader pipeline
-            datasetInfo = {'name': cfgDatasets['visual_dataset']['name'],
-                           'jsonPath': cfgDatasets['visual_dataset']['path_metadata']}
+            datasetInfo = {'name': cfgDatasets['visual_dataset']['scenesense']['name'],
+                           'jsonPath': cfgDatasets['visual_dataset']['scenesense']['path_metadata']}
             runTrailerDownloader(cfgPipeline['movie_trailers'], datasetInfo)
         elif (subMode == 'frame_extractor'):
             # Run the movies frame extractor pipeline
@@ -57,8 +57,10 @@ def main():
             print(f"Unsupported sub-mode '{subMode}' selected! Exiting ...")
     elif (mode == 'recsys'):
         # Get the selected sub-mode
-        # subMode = cfgGeneral['sub_mode_recsys']
-        runSceneSenseLLMOverlapChecker(cfgRecSys, cfgDatasets)
+        subMode = cfgGeneral['sub_mode_recsys']
+        if (subMode == 'overlap_checker'):
+            # Check the overlap between the SceneSense, MMTF, and the LLM-enriched dataset for recommendation
+            runVisualTextualDatasetsOverlapChecker(cfgRecSys, cfgDatasets)
     else:
         print(f"Unsupported mode '{mode}' selected! Exiting ...")
     # Finish the program

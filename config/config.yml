@@ -4,13 +4,13 @@ config:
     # Framework run mode
     mode: "recsys" # Possible values: ["ds", "pipeline", "recsys"]
     # Framework sub-mode
-    # Sub-mode of the dataset mode - Possible values: ["scenesense_meta", "scenesense_visual", "movielens_25m"]
+    # Sub-mode of the dataset mode - Possible values: ["scenesense_meta", "scenesense_visual", "movielens_25m", "mmtf_14k"]
     sub_mode_ds: "movielens_25m"
     # Sub-mode of the pipeline mode
     # Possible values: ["dl_trailers", "frame_extractor", "feat_extractor", "shot_from_frame", "shot_from_feat"]
     sub_mode_pipeline: "shot_from_frame"
-    # Sub-mode of the recommendation system mode - Possible values: ["pointwise", "distributional", "temporal"]
-    sub_mode_recsys: "pointwise"
+    # Sub-mode of the recommendation system mode - Possible values: ["overlap_checker"]
+    sub_mode_recsys: "overlap_checker"
   # Datasets
   datasets:
     # Text dataset (MovieLenz 25M)
@@ -25,22 +25,28 @@ config:
       download_path: "~/Downloads"
     # Visual dataset (SceneSense)
     visual_dataset:
-      # Dataset name
-      name: SceneSense-visual
-      # Path to the dataset
-      path_metadata: https://huggingface.co/datasets/alitourani/moviefeats_visual/resolve/main/stats.json
-      # Path to the features
-      path_raw: https://huggingface.co/datasets/alitourani/moviefeats_visual/blob/main/
-      # Feature sources to be used (in an array)
-      # Possible values: ["full_movies", "movie_shots", "movie_trailers"]
-      feature_sources: ["full_movies", "movie_shots", "movie_trailers"]
-      # Aggregated feature sources to be used (in an array)
-      # Possible values: ["full_movies_agg", "movie_shots_agg", "movie_trailers_agg"]
-      agg_feature_sources:
-        ["full_movies_agg", "movie_shots_agg", "movie_trailers_agg"]
-      # Feature extraction models to be used (in an array)
-      # Possible values: ["incp3", "vgg19"]
-      feature_models: ["incp3", "vgg19"]
+      scenesense:
+        # Dataset name
+        name: SceneSense-visual
+        # Path to the dataset
+        path_metadata: https://huggingface.co/datasets/alitourani/moviefeats_visual/resolve/main/stats.json
+        # Path to the features
+        path_raw: https://huggingface.co/datasets/alitourani/moviefeats_visual/blob/main/
+        # Feature sources to be used (in an array)
+        # Possible values: ["full_movies", "movie_shots", "movie_trailers"]
+        feature_sources: ["full_movies", "movie_shots", "movie_trailers"]
+        # Aggregated feature sources to be used (in an array)
+        # Possible values: ["full_movies_agg", "movie_shots_agg", "movie_trailers_agg"]
+        agg_feature_sources:
+          ["full_movies_agg", "movie_shots_agg", "movie_trailers_agg"]
+        # Feature extraction models to be used (in an array)
+        # Possible values: ["incp3", "vgg19"]
+        feature_models: ["incp3", "vgg19"]
+      mmtf:
+        # Dataset name
+        name: MMTF-14K
+        # Path to the dataset root directory
+        path_root: H:/Datasets/MMTF-14k
   pipelines:
     # Movie trailers finder and downloader pipeline
     movie_trailers:
