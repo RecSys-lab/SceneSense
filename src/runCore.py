@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
+from src.utils import loadJsonFromUrl
 from src.pipelines.frames.utils import initMovieVideos
-from src.datasets.scenesense.common import loadJsonFromUrl
 from src.pipelines.downloaders.utils import filterMovieList
 from src.pipelines.frames.frameExtractor import extractMovieFrames
 from src.pipelines.visual_features.utils import initMovieFramesFolders

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 import os
-from src.datasets.movielens.common import loadDataFromCSV
-from src.datasets.scenesense.common import loadJsonFromUrl
+from src.utils import loadDataFromCSV, loadJsonFromUrl
 from src.datasets.movielens.downloader import downloadMovielens25m
 from src.datasets.scenesense.visualizer_metadata import visualizeGenresDictionary
 from src.datasets.movielens.helper_ratings import mergeMainGenreMoviesDFWithRatingsDF

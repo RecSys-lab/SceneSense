@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
+import os
 import yaml
+import json
+import requests
+import pandas as pd
 
 def readConfigs(configPath: str):
     """
@@ -22,3 +26,48 @@ def readConfigs(configPath: str):
             return yaml.safe_load(cfg)
         except yaml.YAMLError as err:
             print(f"[Error] Error while reading the configuration file: {err}")
+
+def loadDataFromCSV(csvPath: str):
+    """
+    Load `CSV` data from a given local CSV file and return it.
+
+    Parameters:
+        csvPath (str): The path to the local CSV file.
+
+    Returns:
+        dict: The loaded CSV data.
+    """
+    try:
+        # Check if the file exists
+        if not os.path.exists(csvPath):
+            raise FileNotFoundError(f"File '{csvPath}' not found! Exiting ...")
+        # Load the CSV data
+        csvData = pd.read_csv(csvPath)
+        return csvData
+    except Exception as e:
+        print(f"An error occurred while loading the CSV data: {e}")
+        return None
+
+def loadJsonFromUrl(jsonUrl: str):
+    """
+    Load `json` data from a given URL and return it.
+
+    Parameters:
+        jsonUrl (str): The root address to load JSON data from.
+
+    Returns:
+        dict: The JSON data loaded from the URL.
+    """
+    try:
+        # Load JSON data from the URL
+        response = requests.get(jsonUrl)
+        response.raise_for_status()  # Raise an error for bad status codes
+        data = response.json()  # Parse JSON data'
+        print("JSON data loaded successfully!\n")
+        return data
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data from {jsonUrl}: {e}\n")
+        return None
+    except json.JSONDecodeError as e:
+        print(f"Error parsing JSON data: {e}")
+        return None

@@ -2,8 +2,7 @@
 
 import os
 import pandas as pd
-from src.multimodal.utils import loadDataFromCSV
-from src.datasets.scenesense.common import loadJsonFromUrl
+from src.utils import loadDataFromCSV, loadJsonFromUrl
 
 def runSceneSenseLLMOverlapChecker(cfgRecSys: dict, cfgDatasets: dict):
     """
