@@ -9,8 +9,8 @@ config:
     # Sub-mode of the pipeline mode
     # Possible values: ["dl_trailers", "frame_extractor", "feat_extractor", "shot_from_frame", "shot_from_feat"]
     sub_mode_pipeline: "shot_from_frame"
-    # Sub-mode of the recommendation system mode - Possible values: ["overlap_checker"]
-    sub_mode_recsys: "overlap_checker"
+    # Sub-mode of the recommendation system mode - Possible values: ["overlap_checker", "visual_text_fusion"]
+    sub_mode_recsys: "visual_text_fusion"
   # Datasets
   datasets:
     # Text dataset (MovieLenz 25M)
@@ -131,3 +131,6 @@ config:
     textual:
       # Path to the enriched dataset file
       llm_enriched_file_path: "E:/Datasets/LLM-Enriched/Enriched.csv"
+    fused:
+      # Path to the output directory
+      output_dir: "H:/Datasets/Fused-Tex-Vis-Features"

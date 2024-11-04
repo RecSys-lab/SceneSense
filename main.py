@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 from src.utils import readConfigs
-from src.runRecSys import runVisualTextualDatasetsOverlapChecker
+from src.multimodal.fused.fuse_visual_textual import fuseTextualWithMMTF
 from src.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures
+from src.multimodal.fused.overlap_checker import runVisualTextualDatasetsOverlapChecker
 from src.datasets.runDataset import testMetadataProcess, testVisualDataProcess, runMovieLens25
 from src.runCore import runTrailerDownloader, runMoviesFrameExtractor, runMoviesFramesFeatureExtractor
 
@@ -61,6 +62,9 @@ def main():
         if (subMode == 'overlap_checker'):
             # Check the overlap between the SceneSense, MMTF, and the LLM-enriched dataset for recommendation
             runVisualTextualDatasetsOverlapChecker(cfgRecSys, cfgDatasets)
+        elif (subMode == 'visual_text_fusion'):
+            # Fusion of the visual (MMTF) and textual features for recommendation
+            fuseTextualWithMMTF(cfgRecSys, cfgDatasets)
     else:
         print(f"Unsupported mode '{mode}' selected! Exiting ...")
     # Finish the program
