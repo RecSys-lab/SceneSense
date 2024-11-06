@@ -154,6 +154,7 @@ def fuseTextualWithSceneSense(cfgRecSys: dict, cfgDatasets: dict):
     outputFile = os.path.join(outputDir, 'fused_llm_scenesense_fmovie_incp3_mean.csv')
     outputFile = os.path.normpath(outputFile)
     print(f"- Saving the fused dataset to '{outputFile}' ...")
+    fusedDataset.to_csv(outputFile, index=False)
 
 def loadVisualFeaturesCSVIntoDataFrame(givenCSVFilePath: str):
     """

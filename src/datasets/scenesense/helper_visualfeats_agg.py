@@ -103,12 +103,10 @@ def loadAggregatedFeaturesIntoDataFrame(aggFeatureAddresses: list):
     # Convert the list to a string, like "0.1,0.2,0.3"
     aggFeatMax = ','.join(map(str, aggFeatMax))
     aggFeatMean = ','.join(map(str, aggFeatMean))
-    # Add "" to the string, making it similar to MMTF format
-    aggFeatMax, aggFeatMean = f'"{aggFeatMax}"', f'"{aggFeatMean}"'
     # Append to the DataFrames
     dfAggFeaturesMax = pd.concat([dfAggFeaturesMax, pd.DataFrame([{'itemId': int(itemId), 'embedding': aggFeatMax}])],
                                            ignore_index=True)
-    dfAggFeaturesMean = pd.concat([dfAggFeaturesMean, pd.DataFrame([{'itemId': itemId, 'embedding': aggFeatMean}])],
+    dfAggFeaturesMean = pd.concat([dfAggFeaturesMean, pd.DataFrame([{'itemId': int(itemId), 'embedding': aggFeatMean}])],
                                             ignore_index=True)
     # Better logging for the user
     counter += 1
