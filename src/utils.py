@@ -40,12 +40,12 @@ def loadDataFromCSV(csvPath: str):
     try:
         # Check if the file exists
         if not os.path.exists(csvPath):
-            raise FileNotFoundError(f"File '{csvPath}' not found! Exiting ...")
+            raise FileNotFoundError(f"- File '{csvPath}' not found! Exiting ...")
         # Load the CSV data
         csvData = pd.read_csv(csvPath)
         return csvData
     except Exception as e:
-        print(f"An error occurred while loading the CSV data: {e}")
+        print(f"- An error occurred while loading the CSV data: {e}")
         return None
 
 def loadJsonFromUrl(jsonUrl: str):
@@ -63,11 +63,11 @@ def loadJsonFromUrl(jsonUrl: str):
         response = requests.get(jsonUrl)
         response.raise_for_status()  # Raise an error for bad status codes
         data = response.json()  # Parse JSON data'
-        print("JSON data loaded successfully!\n")
+        # print("- JSON data loaded successfully!\n")
         return data
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching data from {jsonUrl}: {e}\n")
+        print(f"- Error fetching data from {jsonUrl}: {e}\n")
         return None
     except json.JSONDecodeError as e:
-        print(f"Error parsing JSON data: {e}")
+        print(f"- Error parsing JSON data: {e}")
         return None

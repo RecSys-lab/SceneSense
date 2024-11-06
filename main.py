@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 from src.utils import readConfigs
-from src.multimodal.fused.fuse_visual_textual import fuseTextualWithMMTF
 from src.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures
 from src.multimodal.fused.overlap_checker import runVisualTextualDatasetsOverlapChecker
 from src.datasets.runDataset import testMetadataProcess, testVisualDataProcess, runMovieLens25
+from src.multimodal.fused.fuse_visual_textual import fuseTextualWithMMTF, fuseTextualWithSceneSense
 from src.runCore import runTrailerDownloader, runMoviesFrameExtractor, runMoviesFramesFeatureExtractor
 
 def main():
@@ -64,7 +64,9 @@ def main():
             runVisualTextualDatasetsOverlapChecker(cfgRecSys, cfgDatasets)
         elif (subMode == 'visual_text_fusion'):
             # Fusion of the visual (MMTF) and textual features for recommendation
-            fuseTextualWithMMTF(cfgRecSys, cfgDatasets)
+            # fuseTextualWithMMTF(cfgRecSys, cfgDatasets)
+            # Fusion of the visual (SceneSense) and textual features for recommendation
+            fuseTextualWithSceneSense(cfgRecSys, cfgDatasets)
     else:
         print(f"Unsupported mode '{mode}' selected! Exiting ...")
     # Finish the program

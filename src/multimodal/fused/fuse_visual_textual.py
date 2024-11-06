@@ -4,6 +4,7 @@ import os
 import numpy as np
 import pandas as pd
 from src.utils import loadDataFromCSV
+from src.datasets.scenesense.helper_visualfeats_agg import generatedAggFeatureAddresses, loadAggregatedFeaturesIntoDataFrame
 
 def fuseTextualWithMMTF(cfgRecSys: dict, cfgDatasets: dict):
     """
@@ -97,6 +98,62 @@ def fuseTextualWithMMTF(cfgRecSys: dict, cfgDatasets: dict):
     print(f"- Saving the fused dataset to '{outputFile}' ...")
     fusedDataset.to_csv(outputFile, index=False)
     print("\nFusion completed successfully!")
+
+def fuseTextualWithSceneSense(cfgRecSys: dict, cfgDatasets: dict):
+    """
+    Fuse the textual data with the SceneSense dataset (aggregated) for recommendation, generating the fused dataset as pandas DataFrame
+
+    Parameters
+    ----------
+    cfgRecSys :dict
+        The configurations dictionary for the recommendation system
+    cfgDatasets :dict
+        The configurations dictionary for the datasets
+    """
+    # Variables
+    outputDir = os.path.normpath(cfgRecSys['fused']['output_dir'])
+    if not os.path.exists(outputDir):
+        os.makedirs(outputDir)
+    # (A) Read the LLM-enriched dataset
+    textCSVFilePath = os.path.normpath(cfgRecSys['textual']['llm_enriched_file_path'])
+    print(f"I. Reading the enriched text dataset CSV file from '{textCSVFilePath}' ...")
+    # Load the CSV data
+    enrichedLLMDataset = loadDataFromCSV(textCSVFilePath)
+    if enrichedLLMDataset is None:
+        return
+    print(f"- Loaded {len(enrichedLLMDataset)} records from the LLM-enriched dataset!")
+    # print(enrichedLLMDataset.head())
+    # Filter only the 'itemId' and 'title' columns
+    enrichedLLMDataset = enrichedLLMDataset[['itemId', 'title', 'genres']]
+    print(f"- Filtered the dataset to contain only 'itemId' and 'title' columns! Check the first 3 records:")
+    print(enrichedLLMDataset.head(3))
+    # (2) Read the SceneSense (aggregated) dataset
+    aggFeatureAddresses = generatedAggFeatureAddresses(cfgDatasets)
+    # Round#1: Load the 'full_movies_agg' dataset, 'incp3' model
+    print(f"\nII-A. Reading the Aggregated SceneSense data for 'Full-Movies', 'Inception-3' Model ...")
+    tmpVisualDFMax, tmpVisualDFMean = loadAggregatedFeaturesIntoDataFrame(aggFeatureAddresses['full_movies_agg']['incp3'])
+    if tmpVisualDFMax is None or tmpVisualDFMean is None:
+        return
+    # Inform the user
+    print(f"- Loaded {len(tmpVisualDFMax)} records for 'Max' aggregated features! Check the first 3 records:")
+    print(tmpVisualDFMax.head(3))
+    # Merging the textual and visual data (Max)
+    fusedDataset = pd.merge(enrichedLLMDataset, tmpVisualDFMax, on='itemId', how='inner')
+    print(f"- Merging Textual and Visual (full-movie, inception3, max) data based on the 'itemId' resulted in '{len(fusedDataset)}' items! Check the first 3 records:")
+    print(fusedDataset.head(3))
+    # Save the fused dataset to a CSV file
+    outputFile = os.path.join(outputDir, 'fused_llm_scenesense_fmovie_incp3_max.csv')
+    outputFile = os.path.normpath(outputFile)
+    print(f"- Saving the fused dataset to '{outputFile}' ...")
+    fusedDataset.to_csv(outputFile, index=False)
+    # Merging the textual and visual data (Mean)
+    fusedDataset = pd.merge(enrichedLLMDataset, tmpVisualDFMean, on='itemId', how='inner')
+    print(f"- Merging Textual and Visual (full-movie, inception3, mean) data based on the 'itemId' resulted in '{len(fusedDataset)}' items! Check the first 3 records:")
+    print(fusedDataset.head(3))
+    # Save the fused dataset to a CSV file
+    outputFile = os.path.join(outputDir, 'fused_llm_scenesense_fmovie_incp3_mean.csv')
+    outputFile = os.path.normpath(outputFile)
+    print(f"- Saving the fused dataset to '{outputFile}' ...")
 
 def loadVisualFeaturesCSVIntoDataFrame(givenCSVFilePath: str):
     """

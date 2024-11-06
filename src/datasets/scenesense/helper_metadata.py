@@ -22,6 +22,22 @@ def countNumberOfMovies(data):
         print("Data is empty or not loaded.")
         return -1
 
+def fetchAllMovieIds(data):
+    """
+    Fetches all the movie IDs from the given data.
+
+    Parameters:
+        data (dict): The JSON data containing the movies.
+
+    Returns:
+        list: A list of all movie IDs in the dataset.
+    """
+    if data:
+        movieIds = [movie['id'] for movie in data]
+        return movieIds
+    else:
+        print("Data is empty or not loaded.")
+        return []
 
 def fetchRandomMovie(data):
     """
