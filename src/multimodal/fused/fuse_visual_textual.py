@@ -155,6 +155,137 @@ def fuseTextualWithSceneSense(cfgRecSys: dict, cfgDatasets: dict):
     outputFile = os.path.normpath(outputFile)
     print(f"- Saving the fused dataset to '{outputFile}' ...")
     fusedDataset.to_csv(outputFile, index=False)
+    # Round#2: Load the 'full_movies_agg' dataset, 'vgg19' model
+    print(f"\nII-B. Reading the Aggregated SceneSense data for 'Full-Movies', 'VGG-19' Model ...")
+    tmpVisualDFMax, tmpVisualDFMean = loadAggregatedFeaturesIntoDataFrame(aggFeatureAddresses['full_movies_agg']['vgg19'])
+    if tmpVisualDFMax is None or tmpVisualDFMean is None:
+        return
+    # Inform the user
+    print(f"- Loaded {len(tmpVisualDFMax)} records for 'Max' aggregated features! Check the first 3 records:")
+    print(tmpVisualDFMax.head(3))
+    # Merging the textual and visual data (Max)
+    fusedDataset = pd.merge(enrichedLLMDataset, tmpVisualDFMax, on='itemId', how='inner')
+    print(f"- Merging Textual and Visual (full-movie, vgg19, max) data based on the 'itemId' resulted in '{len(fusedDataset)}' items! Check the first 3 records:")
+    print(fusedDataset.head(3))
+    # Save the fused dataset to a CSV file
+    outputFile = os.path.join(outputDir, 'fused_llm_scenesense_fmovie_vgg19_max.csv')
+    outputFile = os.path.normpath(outputFile)
+    print(f"- Saving the fused dataset to '{outputFile}' ...")
+    fusedDataset.to_csv(outputFile, index=False)
+    # Merging the textual and visual data (Mean)
+    fusedDataset = pd.merge(enrichedLLMDataset, tmpVisualDFMean, on='itemId', how='inner')
+    print(f"- Merging Textual and Visual (full-movie, vgg19, mean) data based on the 'itemId' resulted in '{len(fusedDataset)}' items! Check the first 3 records:")
+    print(fusedDataset.head(3))
+    # Save the fused dataset to a CSV file
+    outputFile = os.path.join(outputDir, 'fused_llm_scenesense_fmovie_vgg19_mean.csv')
+    outputFile = os.path.normpath(outputFile)
+    print(f"- Saving the fused dataset to '{outputFile}' ...")
+    fusedDataset.to_csv(outputFile, index=False)
+    # Round#3: Load the 'movie_shots_agg' dataset, 'incp3' model
+    print(f"\nII-C. Reading the Aggregated SceneSense data for 'Movie-Shots', 'Inception-3' Model ...")
+    tmpVisualDFMax, tmpVisualDFMean = loadAggregatedFeaturesIntoDataFrame(aggFeatureAddresses['movie_shots_agg']['incp3'])
+    if tmpVisualDFMax is None or tmpVisualDFMean is None:
+        return
+    # Inform the user
+    print(f"- Loaded {len(tmpVisualDFMax)} records for 'Max' aggregated features! Check the first 3 records:")
+    print(tmpVisualDFMax.head(3))
+    # Merging the textual and visual data (Max)
+    fusedDataset = pd.merge(enrichedLLMDataset, tmpVisualDFMax, on='itemId', how='inner')
+    print(f"- Merging Textual and Visual (movie-shots, inception3, max) data based on the 'itemId' resulted in '{len(fusedDataset)}' items! Check the first 3 records:")
+    print(fusedDataset.head(3))
+    # Save the fused dataset to a CSV file
+    outputFile = os.path.join(outputDir, 'fused_llm_scenesense_mshots_incp3_max.csv')
+    outputFile = os.path.normpath(outputFile)
+    print(f"- Saving the fused dataset to '{outputFile}' ...")
+    fusedDataset.to_csv(outputFile, index=False)
+    # Merging the textual and visual data (Mean)
+    fusedDataset = pd.merge(enrichedLLMDataset, tmpVisualDFMean, on='itemId', how='inner')
+    print(f"- Merging Textual and Visual (movie-shots, inception3, mean) data based on the 'itemId' resulted in '{len(fusedDataset)}' items! Check the first 3 records:")
+    print(fusedDataset.head(3))
+    # Save the fused dataset to a CSV file
+    outputFile = os.path.join(outputDir, 'fused_llm_scenesense_mshots_incp3_mean.csv')
+    outputFile = os.path.normpath(outputFile)
+    print(f"- Saving the fused dataset to '{outputFile}' ...")
+    fusedDataset.to_csv(outputFile, index=False)
+    # Round#4: Load the 'movie_shots_agg' dataset, 'vgg19' model
+    print(f"\nII-D. Reading the Aggregated SceneSense data for 'Movie-Shots', 'VGG-19' Model ...")
+    tmpVisualDFMax, tmpVisualDFMean = loadAggregatedFeaturesIntoDataFrame(aggFeatureAddresses['movie_shots_agg']['vgg19'])
+    if tmpVisualDFMax is None or tmpVisualDFMean is None:
+        return
+    # Inform the user
+    print(f"- Loaded {len(tmpVisualDFMax)} records for 'Max' aggregated features! Check the first 3 records:")
+    print(tmpVisualDFMax.head(3))
+    # Merging the textual and visual data (Max)
+    fusedDataset = pd.merge(enrichedLLMDataset, tmpVisualDFMax, on='itemId', how='inner')
+    print(f"- Merging Textual and Visual (movie-shots, vgg19, max) data based on the 'itemId' resulted in '{len(fusedDataset)}' items! Check the first 3 records:")
+    print(fusedDataset.head(3))
+    # Save the fused dataset to a CSV file
+    outputFile = os.path.join(outputDir, 'fused_llm_scenesense_mshots_vgg19_max.csv')
+    outputFile = os.path.normpath(outputFile)
+    print(f"- Saving the fused dataset to '{outputFile}' ...")
+    fusedDataset.to_csv(outputFile, index=False)
+    # Merging the textual and visual data (Mean)
+    fusedDataset = pd.merge(enrichedLLMDataset, tmpVisualDFMean, on='itemId', how='inner')
+    print(f"- Merging Textual and Visual (movie-shots, vgg19, mean) data based on the 'itemId' resulted in '{len(fusedDataset)}' items! Check the first 3 records:")
+    print(fusedDataset.head(3))
+    # Save the fused dataset to a CSV file
+    outputFile = os.path.join(outputDir, 'fused_llm_scenesense_mshots_vgg19_mean.csv')
+    outputFile = os.path.normpath(outputFile)
+    print(f"- Saving the fused dataset to '{outputFile}' ...")
+    fusedDataset.to_csv(outputFile, index=False)
+    # Round#5: Load the 'movie_trailers_agg' dataset, 'incp3' model
+    print(f"\nII-E. Reading the Aggregated SceneSense data for 'Movie-Trailers', 'Inception-3' Model ...")
+    tmpVisualDFMax, tmpVisualDFMean = loadAggregatedFeaturesIntoDataFrame(aggFeatureAddresses['movie_trailers_agg']['incp3'])
+    if tmpVisualDFMax is None or tmpVisualDFMean is None:
+        return
+    # Inform the user
+    print(f"- Loaded {len(tmpVisualDFMax)} records for 'Max' aggregated features! Check the first 3 records:")
+    print(tmpVisualDFMax.head(3))
+    # Merging the textual and visual data (Max)
+    fusedDataset = pd.merge(enrichedLLMDataset, tmpVisualDFMax, on='itemId', how='inner')
+    print(f"- Merging Textual and Visual (movie-trailers, inception3, max) data based on the 'itemId' resulted in '{len(fusedDataset)}' items! Check the first 3 records:")
+    print(fusedDataset.head(3))
+    # Save the fused dataset to a CSV file
+    outputFile = os.path.join(outputDir, 'fused_llm_scenesense_mtrailer_incp3_max.csv')
+    outputFile = os.path.normpath(outputFile)
+    print(f"- Saving the fused dataset to '{outputFile}' ...")
+    fusedDataset.to_csv(outputFile, index=False)
+    # Merging the textual and visual data (Mean)
+    fusedDataset = pd.merge(enrichedLLMDataset, tmpVisualDFMean, on='itemId', how='inner')
+    print(f"- Merging Textual and Visual (movie-trailers, inception3, mean) data based on the 'itemId' resulted in '{len(fusedDataset)}' items! Check the first 3 records:")
+    print(fusedDataset.head(3))
+    # Save the fused dataset to a CSV file
+    outputFile = os.path.join(outputDir, 'fused_llm_scenesense_mtrailer_incp3_mean.csv')
+    outputFile = os.path.normpath(outputFile)
+    print(f"- Saving the fused dataset to '{outputFile}' ...")
+    fusedDataset.to_csv(outputFile, index=False)
+    # Round#6: Load the 'movie_trailers_agg' dataset, 'vgg19' model
+    print(f"\nII-F. Reading the Aggregated SceneSense data for 'Movie-Trailers', 'VGG-19' Model ...")
+    tmpVisualDFMax, tmpVisualDFMean = loadAggregatedFeaturesIntoDataFrame(aggFeatureAddresses['movie_trailers_agg']['vgg19'])
+    if tmpVisualDFMax is None or tmpVisualDFMean is None:
+        return
+    # Inform the user
+    print(f"- Loaded {len(tmpVisualDFMax)} records for 'Max' aggregated features! Check the first 3 records:")
+    print(tmpVisualDFMax.head(3))
+    # Merging the textual and visual data (Max)
+    fusedDataset = pd.merge(enrichedLLMDataset, tmpVisualDFMax, on='itemId', how='inner')
+    print(f"- Merging Textual and Visual (movie-trailers, vgg19, max) data based on the 'itemId' resulted in '{len(fusedDataset)}' items! Check the first 3 records:")
+    print(fusedDataset.head(3))
+    # Save the fused dataset to a CSV file
+    outputFile = os.path.join(outputDir, 'fused_llm_scenesense_mtrailer_vgg19_max.csv')
+    outputFile = os.path.normpath(outputFile)
+    print(f"- Saving the fused dataset to '{outputFile}' ...")
+    fusedDataset.to_csv(outputFile, index=False)
+    # Merging the textual and visual data (Mean)
+    fusedDataset = pd.merge(enrichedLLMDataset, tmpVisualDFMean, on='itemId', how='inner')
+    print(f"- Merging Textual and Visual (movie-trailers, vgg19, mean) data based on the 'itemId' resulted in '{len(fusedDataset)}' items! Check the first 3 records:")
+    print(fusedDataset.head(3))
+    # Save the fused dataset to a CSV file
+    outputFile = os.path.join(outputDir, 'fused_llm_scenesense_mtrailer_vgg19_mean.csv')
+    outputFile = os.path.normpath(outputFile)
+    print(f"- Saving the fused dataset to '{outputFile}' ...")
+    fusedDataset.to_csv(outputFile, index=False)
+    print("\nFusion completed successfully!")
 
 def loadVisualFeaturesCSVIntoDataFrame(givenCSVFilePath: str):
     """
