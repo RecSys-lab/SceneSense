@@ -2,13 +2,13 @@ config:
   # General configuration of the framework
   general:
     # Framework run mode
-    mode: "recsys" # Possible values: ["ds", "pipeline", "recsys"]
+    mode: "pipeline" # Possible values: ["ds", "pipeline", "recsys"]
     # Framework sub-mode
     # Sub-mode of the dataset mode - Possible values: ["scenesense_meta", "scenesense_visual", "movielens_25m", "mmtf_14k"]
     sub_mode_ds: "movielens_25m"
     # Sub-mode of the pipeline mode
-    # Possible values: ["dl_trailers", "frame_extractor", "feat_extractor", "shot_from_frame", "shot_from_feat"]
-    sub_mode_pipeline: "shot_from_frame"
+    # Possible values: ["dl_trailers", "frame_extractor", "feat_extractor", "shot_from_frame", "shot_from_feat", "agg_features"]
+    sub_mode_pipeline: "agg_features"
     # Sub-mode of the recommendation system mode - Possible values: ["overlap_checker", "visual_text_fusion"]
     sub_mode_recsys: "visual_text_fusion"
   # Datasets
@@ -118,17 +118,14 @@ config:
           # Packets size (number of frames in each packet)
           # [Note] it is recommended to set it equal to the packet_size in the movie_frames_visual_features pipeline
           packet_size: 25
-  # Aggregations
-  aggregations:
-    # Pointwise aggregation
-    pointwise:
-      include: true
-    # Distributional aggregation
-    distributional:
-      include: true
-    # Temporal aggregation
-    temporal:
-      include: true
+    # Visual feature aggregation pipeline
+    feature_aggregation:
+      # Pipeline name
+      name: Feature-aggregator
+      # Features path (downloaded features)
+      features_path: "E:/Datasets/Movies/MovieFeatures"
+      # Aggregated features path
+      agg_features_path: "E:/Datasets/Movies/MovieAggFeatures"
   # Multi-Modal Recommendation Systems
   multimodal:
     textual:

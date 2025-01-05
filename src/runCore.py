@@ -9,6 +9,7 @@ from src.pipelines.shots.utils import initFramesFoldersForShotDetection
 from src.pipelines.shots.utils import initFeaturesFoldersForShotDetection
 from src.pipelines.visual_features.featureExtractor import extractMovieFeatures
 from src.pipelines.downloaders.movieTrailerDownloader import downloadMovieTrailers
+from src.pipelines.visual_features.featureAggregator import aggregateMovieFeatures
 from src.pipelines.shots.shotDetection import extractShotsFromMovieFrames, extractShotsFromMovieFeatures
 
 def runTrailerDownloader(configs: dict, datasetInfo: dict):
@@ -99,3 +100,16 @@ def runShotDetectionFromFeatures(configs: dict):
         return
     # Extract shots from the fetched features
     extractShotsFromMovieFeatures(configs, movieFeaturesPaths)
+
+def runAggFeatures(configs: dict):
+    """
+    Runs the feature aggregation pipeline
+
+    Parameters
+    ----------
+    configs: dict
+        The configurations dictionary
+    """
+    print("Running the feature aggregation pipeline ...")
+    # Aggregate features from the given set of extracted movie features
+    aggregateMovieFeatures(configs)

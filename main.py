@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 from src.utils import readConfigs
-from src.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures
 from src.multimodal.fused.overlap_checker import runVisualTextualDatasetsOverlapChecker
 from src.datasets.runDataset import testMetadataProcess, testVisualDataProcess, runMovieLens25
+from src.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures, runAggFeatures
 from src.multimodal.fused.fuse_visual_textual import fuseTextualWithMMTF, fuseTextualWithSceneSense
 from src.runCore import runTrailerDownloader, runMoviesFrameExtractor, runMoviesFramesFeatureExtractor
 
@@ -43,6 +43,9 @@ def main():
         elif (subMode == 'shot_from_frame'):
             # Run the shot detection pipeline from the extracted frames
             runShotDetectionFromFrames(cfgPipeline['movie_shots']['variants']['from_frames'])
+        elif (subMode == 'agg_features'):
+            # Run the feature aggregation pipeline
+            runAggFeatures(cfgPipeline['feature_aggregation'])
         else:
             print(f"Unsupported sub-mode '{subMode}' selected! Exiting ...")
     elif (mode == 'ds'):
