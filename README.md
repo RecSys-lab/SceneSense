@@ -1,6 +1,6 @@
-# SceneSense
+# MoVieFex: A Multi-Faceted Movie Recommendation Framework
 
-This repository provides a multi-modal movie recommendation framework titled `SceneSense` that benefits from **Generative AI** for providing enhanced suggestions.
+This repository provides a multi-modal movie recommendation framework titled `MoVieFex` that integrates **Computer Vision**, **Generative AI**, and **Recommender Systems** to provide enhanced suggestions.
 
 ## 🛠️ Getting Started
 
@@ -15,9 +15,9 @@ pip install -r requirements.txt
 As the framework supports multi-modal processing and covers **text**, **visual**, and **fused data**, varios datasets can be fed for reproducibility, evaluation, and experiments purposes:
 
 - **Text Feed:** `MovieLenz-25M` ([link](https://grouplens.org/datasets/movielens/25m/)) is recommended to provide data about movies, user interactions, _etc._
-- **Visual Feed:** `SceneSense Dataset` ([link](https://huggingface.co/datasets/alitourani/moviefeats_visual)) is collected by the team and provides frame-level features for each movie using different Convolutional Neural Networks (CNNs).
+- **Visual Feed:** `MoVieFex Dataset` ([link](https://huggingface.co/datasets/alitourani/MoViFex_Dataset)) is collected by the team and provides frame-level features for each movie using different Convolutional Neural Networks (CNNs).
 
-In order to use the datasets, some **helper functions** and **example codes** are provided in the `src/core/datasets` [path](/src/datasets/scenesense/).
+In order to use the datasets, some **helper functions** and **example colabs** are provided in the [`examples` path](/examples/).
 
 ## 🚀 Launching the Framework
 
