@@ -126,6 +126,9 @@ config:
       features_path: "E:/Datasets/Movies/MovieFeatures"
       # Aggregated features path
       agg_features_path: "E:/Datasets/Movies/MovieAggFeatures"
+      # Aggregation models to be used (in an array)
+      # Possible values: ["Max", "Mean"]
+      aggregation_models: ["Max", "Mean"]
   # Multi-Modal Recommendation Systems
   multimodal:
     textual:

@@ -71,3 +71,25 @@ def loadJsonFromUrl(jsonUrl: str):
     except json.JSONDecodeError as e:
         print(f"- Error parsing JSON data: {e}")
         return None
+    
+def loadJsonFromFilePath(jsonPath: str):
+    """
+    Load `json` data from a given file path and return it.
+
+    Parameters:
+        jsonPath (str): The path to the JSON file.
+
+    Returns:
+        dict: The JSON data loaded from the file.
+    """
+    try:
+        # Check if the file exists
+        if not os.path.exists(jsonPath):
+            raise FileNotFoundError(f"- File '{jsonPath}' not found! Exiting ...")
+        # Load the JSON data
+        with open(jsonPath, 'r') as jsonFile:
+            jsonData = json.load(jsonFile)
+        return jsonData
+    except Exception as e:
+        print(f"- An error occurred while loading the JSON data: {e}")
+        return None
