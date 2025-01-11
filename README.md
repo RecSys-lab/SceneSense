@@ -4,7 +4,13 @@ This repository provides a multi-modal movie recommendation framework titled `Mo
 
 ## 🛠️ Getting Started
 
-After cloning the repository, you need to install the required dependencies. The Python version used while developing the framework is `3.10.4`. It is highly recommended to create a Python virtual environment using `python -m venv .venv`, activate it using `source .venv/bin/activate` (Linux) or `.\.venv\Scripts\activate` (Windows), and then, install the required dependencies in the `requirements.txt` using the below command:
+After cloning the repository, you need to install the required dependencies. The Python version used while developing the framework is `3.10.4`. It is highly recommended to create a Python virtual environment using `python -m venv .venv`, activate it using `source .venv/bin/activate` (Linux) or `.\.venv\Scripts\activate` (Windows). The next step is running the `setup.py` inside the root directory using the command below:
+
+```
+pip install -e .
+```
+
+You can also install the required dependencies in the `requirements.txt` using the below command:
 
 ```
 pip install -r requirements.txt
