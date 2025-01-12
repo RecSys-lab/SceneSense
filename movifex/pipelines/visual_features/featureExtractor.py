@@ -1,7 +1,7 @@
 import os
-from moviefex.pipelines.visual_features.models.vgg19 import initModelVgg19
-from moviefex.pipelines.visual_features.models.inception3 import initModelInception3
-from moviefex.pipelines.visual_features.utils import initFeaturesFolder, modelRunner
+from movifex.pipelines.visual_features.models.vgg19 import initModelVgg19
+from movifex.pipelines.visual_features.models.inception3 import initModelInception3
+from movifex.pipelines.visual_features.utils import initFeaturesFolder, modelRunner
 
 def extractMovieFeatures(configs: dict, movieFramesPaths: list):
     """

@@ -2,8 +2,8 @@ import os
 import time
 import cv2 as cv
 import pandas as pd
-from moviefex.pipelines.visual_features.utils import packetManager
-from moviefex.pipelines.shots.utils import calculateCosineSimilarity, calculateShotBoundaries, initShotsFolder, mergePacketsIntoDataFrame
+from movifex.pipelines.visual_features.utils import packetManager
+from movifex.pipelines.shots.utils import calculateCosineSimilarity, calculateShotBoundaries, initShotsFolder, mergePacketsIntoDataFrame
 
 def extractShotsFromMovieFrames(configs: dict, movieFramesPaths: list):
     """

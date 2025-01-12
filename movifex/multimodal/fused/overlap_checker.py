@@ -2,7 +2,7 @@
 
 import os
 import pandas as pd
-from moviefex.utils import loadDataFromCSV, loadJsonFromUrl
+from movifex.utils import loadDataFromCSV, loadJsonFromUrl
 
 def runVisualTextualDatasetsOverlapChecker(cfgRecSys: dict, cfgDatasets: dict):
     """

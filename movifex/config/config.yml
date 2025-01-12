@@ -7,7 +7,7 @@ config:
     # "pipeline": working with various pipelines and processing them
     # "recsys": working with recommendation systems integrated with the framework
     # Framework sub-mode
-    # Sub-mode of the dataset mode - Possible values: ["movielens_25m", "scenesense_meta", "scenesense_visual", "mmtf_14k"]
+    # Sub-mode of the dataset mode - Possible values: ["movielens_25m", "movifex_meta", "scenesense_visual", "mmtf_14k"]
     sub_mode_ds: "movielens_25m"
     # Sub-mode of the pipeline mode
     # Possible values: ["dl_trailers", "frame_extractor", "feat_extractor", "shot_from_frame", "shot_from_feat", "agg_features"]
@@ -26,7 +26,7 @@ config:
       url: https://files.grouplens.org/datasets/movielens/ml-25m.zip
       # Path to download the dataset (note: it will create a folder with the name 'ml-25m' in the specified path)
       download_path: "E:/Datasets/MovieLens-25M"
-    # Visual dataset (SceneSense)
+    # Visual dataset (MoViFex)
     visual_dataset:
       scenesense:
         # Dataset name

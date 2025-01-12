@@ -1,6 +1,6 @@
-# MoVieFex: A Multi-Faceted Movie Recommendation Framework
+# MoViFex: A Multi-Faceted Movie Recommendation Framework
 
-This repository provides a multi-modal movie recommendation framework titled `MoVieFex` that integrates **Computer Vision**, **Generative AI**, and **Recommender Systems** to provide enhanced suggestions.
+This repository provides a multi-modal movie recommendation framework titled `MoViFex` that integrates **Computer Vision**, **Generative AI**, and **Recommender Systems** to provide enhanced suggestions.
 
 ## 🛠️ Getting Started
 
@@ -21,7 +21,7 @@ pip install -r requirements.txt
 As the framework supports multi-modal processing and covers **text**, **visual**, and **fused data**, varios datasets can be fed for reproducibility, evaluation, and experiments purposes:
 
 - **Text Feed:** `MovieLenz-25M` ([link](https://grouplens.org/datasets/movielens/25m/)) is recommended to provide data about movies, user interactions, _etc._
-- **Visual Feed:** `MoVieFex Dataset` ([link](https://huggingface.co/datasets/alitourani/MoViFex_Dataset)) is collected by the team and provides frame-level features for each movie using different Convolutional Neural Networks (CNNs).
+- **Visual Feed:** `MoViFex Dataset` ([link](https://huggingface.co/datasets/alitourani/MoViFex_Dataset)) is collected by the team and provides frame-level features for each movie using different Convolutional Neural Networks (CNNs).
 
 In order to use the datasets, some **helper functions** and **example colabs** are provided in the [`examples` path](/examples/).
 
@@ -39,7 +39,7 @@ After activating the `.venv` (if set), run the [`main.py`](/main.py) file and en
 
 ## 🗄️ Code Structure
 
-You can find below where to search for the codes in the framework:
+You can find below where to search for the codes in the framework inside the `movifex` folder:
 
 ```bash
 > [config]                  ## framework configs & docs
@@ -48,7 +48,7 @@ You can find below where to search for the codes in the framework:
 > [src]                     ## framework codes
     > [datasets]            ## dataset functions
         > [movielens]
-        > [scenesense]
+        > [movifex]
         - runDataset.py
     > [pipelines]           ## core functionalities and pipelines
         > [downloaders]     ## YouTube downloader for trailers

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from moviefex.utils import loadJsonFromUrl
+from movifex.utils import loadJsonFromUrl
 
 def packetAddressGenerator(datasetUrl: str, gFeature: str, gModel: str, gMovieId, gPacketId):
   """

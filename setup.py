@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="MoVieFex",
+    name="MoViFex",
     version="1.0.0",
     maintainer='Ali Tourani',
     author="Ali Tourani, Yashar Deldjoo",
@@ -10,7 +10,7 @@ setup(
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/RecSys-lab/MoVieFext",
-    packages=find_packages(include=["moviefex", "moviefex.*"], exclude=['docs', 'examples', 'rtd']),
+    packages=find_packages(include=["movifex", "movifex.*"], exclude=['docs', 'examples', 'rtd']),
     include_package_data=True,
     python_requires=">=3.10",
     entry_points={

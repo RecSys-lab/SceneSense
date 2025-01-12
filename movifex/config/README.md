@@ -1,13 +1,13 @@
 # SceneSense - Configurations
 
-The first recommended step to use the framework is setting the configuration parameters. You can find below the configurations modifiable in [`config.yml`](/moviefex/config/config.yml):
+The first recommended step to use the framework is setting the configuration parameters. You can find below the configurations modifiable in [`config.yml`](/movifex/config/config.yml):
 
 ## I. General
 
 It covers the general configurations of the system, including the followings:
 
 - **mode**: what is the expected functionality of the framework? It can be `ds` to run dataset-related modules, `pipeline` to run an available pipeline, or `recsys` to run the recommender system.
-- **sub_mode_ds**: if `ds` is selected as the `mode`, which dataset-related functionality is expected? Choose from `scenesense_meta` to process based on **SceneSense**'s metadata, or `scenesense_visual` to process its visual features.
+- **sub_mode_ds**: if `ds` is selected as the `mode`, which dataset-related functionality is expected? Choose from `movifex_meta` to process based on **MoViFex**'s metadata, or `scenesense_visual` to process its visual features.
 - **sub_mode_pipeline**: if `pipeline` is selected as the `mode`, which pipeline functionality is desired? Choose from `dl_trailers` to download trailers for a list of given movies from YouTube, `frame_extractor` to extract frames of a video, `feat_extractor` to extract features of a frame, `shot_from_frame` to extract shots from a set of frames, or `shot_from_feat` to extract shots from features.
 - **sub_mode_recsys**: if `recsys` is selected as the `mode`, which recommender system is expected?
 

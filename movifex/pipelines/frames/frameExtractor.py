@@ -1,7 +1,7 @@
 import os
 import time
 import cv2 as cv
-from moviefex.pipelines.frames.utils import initFramesFolder, resizeFrame
+from movifex.pipelines.frames.utils import initFramesFolder, resizeFrame
 
 def extractMovieFrames(configs: dict, fetchedMoviesPaths: list):
     """

@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
 import os
-from moviefex.utils import loadDataFromCSV, loadJsonFromUrl
-from moviefex.datasets.movielens.downloader import downloadMovielens25m
-from moviefex.datasets.scenesense.visualizer_metadata import visualizeGenresDictionary
-from moviefex.datasets.movielens.helper_ratings import mergeMainGenreMoviesDFWithRatingsDF
-from moviefex.datasets.scenesense.helper_visualfeats import packetAddressGenerator, fetchAllPackets
-from moviefex.datasets.scenesense.helper_metadata import countNumberOfMovies, fetchRandomMovie, fetchMovieById
-from moviefex.datasets.movielens.helper_movies import fetchAllUniqueGenres, fetchMoviesByGenre as fetchMoviesByGenreMovielens
-from moviefex.datasets.movielens.helper_movies import augmentMoviesDFWithBinarizedGenres, binarizeMovieGenres, filterMoviesWithMainGenres, mainGenres
-from moviefex.datasets.scenesense.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre, calculateAverageGenrePerMovie
+from movifex.utils import loadDataFromCSV, loadJsonFromUrl
+from movifex.datasets.movielens.downloader import downloadMovielens25m
+from movifex.datasets.scenesense.visualizer_metadata import visualizeGenresDictionary
+from movifex.datasets.movielens.helper_ratings import mergeMainGenreMoviesDFWithRatingsDF
+from movifex.datasets.scenesense.helper_visualfeats import packetAddressGenerator, fetchAllPackets
+from movifex.datasets.scenesense.helper_metadata import countNumberOfMovies, fetchRandomMovie, fetchMovieById
+from movifex.datasets.movielens.helper_movies import fetchAllUniqueGenres, fetchMoviesByGenre as fetchMoviesByGenreMovielens
+from movifex.datasets.movielens.helper_movies import augmentMoviesDFWithBinarizedGenres, binarizeMovieGenres, filterMoviesWithMainGenres, mainGenres
+from movifex.datasets.scenesense.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre, calculateAverageGenrePerMovie
 
 # Sample variables
 datasetName = "SceneSense-visual"
@@ -18,7 +18,7 @@ featureSources = ["full_movies", "movie_shots", "movie_trailers"]
 datasetRawFilesUrl = "https://huggingface.co/datasets/alitourani/moviefeats_visual/raw/main/"
 datasetMetadataUrl = "https://huggingface.co/datasets/alitourani/moviefeats_visual/resolve/main/stats.json"
 
-def testMetadataProcess():
+def testMetadataProcess(configs: dict):
     print(f"This is an example provided for you to work with the metadata (json) file of the '{datasetName}' dataset ... \n")
     # Fetch JSON data from the URL
     print(f"- Fetching URL from '{datasetMetadataUrl}' ...")

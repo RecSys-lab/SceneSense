@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 
-from moviefex.utils import readConfigs
-from moviefex.multimodal.fused.overlap_checker import runVisualTextualDatasetsOverlapChecker
-from moviefex.datasets.runDataset import testMetadataProcess, testVisualDataProcess, testMovieLens25M
-from moviefex.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures, runAggFeatures
-from moviefex.multimodal.fused.fuse_visual_textual import fuseTextualWithMMTF, fuseTextualWithSceneSense
-from moviefex.runCore import runTrailerDownloader, runMoviesFrameExtractor, runMoviesFramesFeatureExtractor
+from movifex.utils import readConfigs
+from movifex.multimodal.fused.overlap_checker import runVisualTextualDatasetsOverlapChecker
+from movifex.datasets.runDataset import testMetadataProcess, testVisualDataProcess, testMovieLens25M
+from movifex.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures, runAggFeatures
+from movifex.multimodal.fused.fuse_visual_textual import fuseTextualWithMMTF, fuseTextualWithSceneSense
+from movifex.runCore import runTrailerDownloader, runMoviesFrameExtractor, runMoviesFramesFeatureExtractor
 
 def main():
-    print("Welcome! Starting 'MoVieFex'!\n")
+    print("Welcome! Starting 'MoViFex'!\n")
     # Read the configuration file
     configs = {}
-    configs = readConfigs("moviefex/config/config.yml")
+    configs = readConfigs("movifex/config/config.yml")
     # If properly read, print the configurations
     if not configs:
         print("Error loading configuration parameters!")
@@ -52,7 +52,7 @@ def main():
     elif (mode == 'ds'):
         # Get the selected sub-mode
         subMode = cfgGeneral['sub_mode_ds']
-        if (subMode == 'scenesense_meta'):
+        if (subMode == 'movifex_meta'):
             testMetadataProcess()
         elif (subMode == 'scenesense_visual'):
             testVisualDataProcess()
@@ -74,7 +74,7 @@ def main():
     else:
         print(f"Unsupported mode '{mode}' selected! Exiting ...")
     # Finish the program
-    print("\nStopping 'MoVieFex'!")
+    print("\nStopping 'MoViFex'!")
 
 if __name__ == "__main__":
     main()

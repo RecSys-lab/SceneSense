@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 
-from moviefex.utils import loadJsonFromUrl
-from moviefex.pipelines.frames.utils import initMovieVideos
-from moviefex.pipelines.downloaders.utils import filterMovieList
-from moviefex.pipelines.frames.frameExtractor import extractMovieFrames
-from moviefex.pipelines.visual_features.utils import initMovieFramesFolders
-from moviefex.pipelines.shots.utils import initFramesFoldersForShotDetection
-from moviefex.pipelines.shots.utils import initFeaturesFoldersForShotDetection
-from moviefex.pipelines.visual_features.featureExtractor import extractMovieFeatures
-from moviefex.pipelines.downloaders.movieTrailerDownloader import downloadMovieTrailers
-from moviefex.pipelines.visual_features.featureAggregator import aggregateMovieFeatures
-from moviefex.pipelines.shots.shotDetection import extractShotsFromMovieFrames, extractShotsFromMovieFeatures
+from movifex.utils import loadJsonFromUrl
+from movifex.pipelines.frames.utils import initMovieVideos
+from movifex.pipelines.downloaders.utils import filterMovieList
+from movifex.pipelines.frames.frameExtractor import extractMovieFrames
+from movifex.pipelines.visual_features.utils import initMovieFramesFolders
+from movifex.pipelines.shots.utils import initFramesFoldersForShotDetection
+from movifex.pipelines.shots.utils import initFeaturesFoldersForShotDetection
+from movifex.pipelines.visual_features.featureExtractor import extractMovieFeatures
+from movifex.pipelines.downloaders.movieTrailerDownloader import downloadMovieTrailers
+from movifex.pipelines.visual_features.featureAggregator import aggregateMovieFeatures
+from movifex.pipelines.shots.shotDetection import extractShotsFromMovieFrames, extractShotsFromMovieFeatures
 
 def runTrailerDownloader(configs: dict, datasetInfo: dict):
     """
