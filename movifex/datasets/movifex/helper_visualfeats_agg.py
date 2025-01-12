@@ -2,7 +2,7 @@
 
 import pandas as pd
 from movifex.utils import loadJsonFromUrl
-from movifex.datasets.scenesense.helper_metadata import fetchAllMovieIds
+from movifex.datasets.movifex.helper_metadata import fetchAllMovieIds
 
 def allAggregatedFeatureAddresses(datasetUrl: str, featureModels: list, movieIds: list, aggFeatureSources: list):
   """

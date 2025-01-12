@@ -3,13 +3,13 @@
 import os
 from movifex.utils import loadDataFromCSV, loadJsonFromUrl
 from movifex.datasets.movielens.downloader import downloadMovielens25m
-from movifex.datasets.scenesense.visualizer_metadata import visualizeGenresDictionary
+from movifex.datasets.movifex.visualizer_metadata import visualizeGenresDictionary
 from movifex.datasets.movielens.helper_ratings import mergeMainGenreMoviesDFWithRatingsDF
-from movifex.datasets.scenesense.helper_visualfeats import packetAddressGenerator, fetchAllPackets
-from movifex.datasets.scenesense.helper_metadata import countNumberOfMovies, fetchRandomMovie, fetchMovieById
+from movifex.datasets.movifex.helper_visualfeats import packetAddressGenerator, fetchAllPackets
+from movifex.datasets.movifex.helper_metadata import countNumberOfMovies, fetchRandomMovie, fetchMovieById
 from movifex.datasets.movielens.helper_movies import fetchAllUniqueGenres, fetchMoviesByGenre as fetchMoviesByGenreMovielens
 from movifex.datasets.movielens.helper_movies import augmentMoviesDFWithBinarizedGenres, binarizeMovieGenres, filterMoviesWithMainGenres, mainGenres
-from movifex.datasets.scenesense.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre, calculateAverageGenrePerMovie
+from movifex.datasets.movifex.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre, calculateAverageGenrePerMovie
 
 # Sample variables
 datasetName = "SceneSense-visual"

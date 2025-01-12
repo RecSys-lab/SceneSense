@@ -4,7 +4,7 @@ import os
 import numpy as np
 import pandas as pd
 from movifex.utils import loadDataFromCSV
-from movifex.datasets.scenesense.helper_visualfeats_agg import generatedAggFeatureAddresses, loadAggregatedFeaturesIntoDataFrame
+from movifex.datasets.movifex.helper_visualfeats_agg import generatedAggFeatureAddresses, loadAggregatedFeaturesIntoDataFrame
 
 def fuseTextualWithMMTF(cfgRecSys: dict, cfgDatasets: dict):
     """

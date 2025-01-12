@@ -51,7 +51,7 @@ def fetchRandomMovie(data):
     """
     if data:
         randomMovie = random.choice(data)
-        print("Randomly fetched movie:")
+        # print("Randomly fetched movie:")
         # print(json.dumps(randomMovie, indent=4))
         return randomMovie
     else:
@@ -72,7 +72,7 @@ def fetchMovieById(data, movieId):
         # Find the movie with the given ID
         for movie in data:
             if movie.get('id') == standardizedId:
-                print("Fetched movie by ID:")
+                # print("Fetched movie by ID:")
                 # print(json.dumps(movie, indent=4))
                 return movie
         # If no movie is found with the given ID
