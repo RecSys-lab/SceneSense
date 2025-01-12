@@ -8,7 +8,7 @@ config:
     # "recsys": working with recommendation systems integrated with the framework
     # Framework sub-mode
     # Sub-mode of the dataset mode - Possible values: ["movielens_25m", "movifex_meta", "scenesense_visual", "mmtf_14k"]
-    sub_mode_ds: "movielens_25m"
+    sub_mode_ds: "movifex_meta"
     # Sub-mode of the pipeline mode
     # Possible values: ["dl_trailers", "frame_extractor", "feat_extractor", "shot_from_frame", "shot_from_feat", "agg_features"]
     sub_mode_pipeline: "agg_features"
@@ -28,13 +28,13 @@ config:
       download_path: "E:/Datasets/MovieLens-25M"
     # Visual dataset (MoViFex)
     visual_dataset:
-      scenesense:
+      movifex:
         # Dataset name
-        name: SceneSense-visual
+        name: MoViFex-visual
         # Path to the dataset
-        path_metadata: https://huggingface.co/datasets/alitourani/moviefeats_visual/resolve/main/stats.json
+        path_metadata: https://huggingface.co/datasets/alitourani/MoViFex_Dataset/resolve/main/stats.json
         # Path to the features
-        path_raw: https://huggingface.co/datasets/alitourani/moviefeats_visual/raw/main/
+        path_raw: https://huggingface.co/datasets/alitourani/MoViFex_Dataset/raw/main/
         # Feature sources to be used (in an array)
         # Possible values: ["full_movies", "movie_shots", "movie_trailers"]
         feature_sources: ["full_movies", "movie_shots", "movie_trailers"]

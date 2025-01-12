@@ -16,48 +16,56 @@ datasetName = "SceneSense-visual"
 featureModels = ["incp3", "vgg19"]
 featureSources = ["full_movies", "movie_shots", "movie_trailers"]
 datasetRawFilesUrl = "https://huggingface.co/datasets/alitourani/moviefeats_visual/raw/main/"
-datasetMetadataUrl = "https://huggingface.co/datasets/alitourani/moviefeats_visual/resolve/main/stats.json"
 
-def testMetadataProcess(configs: dict):
-    print(f"This is an example provided for you to work with the metadata (json) file of the '{datasetName}' dataset ... \n")
-    # Fetch JSON data from the URL
-    print(f"- Fetching URL from '{datasetMetadataUrl}' ...")
+def testMoViFexMetadata(configs: dict):
+    """
+    Runs the visual dataset pipeline (MoViFex dataset) for metadata processing
+
+    Parameters
+    ----------
+    configs :dict
+        The configurations dictionary
+    """
+    # Variables
+    datasetName = configs['name']
+    datasetMetadataUrl = configs['path_metadata']
+    print(f"Running the visual dataset functions of '{datasetName}' for metadata (json) processing ...")
+    # Pre-check fetch JSON data from the URL
+    print(f"- Fetching the dataset metadata from '{datasetMetadataUrl}' ...")
     jsonData = loadJsonFromUrl(datasetMetadataUrl)
-    # Count the number of movies in the dataset
-    print(f"\n- Testing Movie Count ...")
+    # Test#1 - Movie Counting
+    print(f"\n- Counting the number of movies in the dataset ...")
     moviesCount = countNumberOfMovies(jsonData)
-    print(f"- Returned variable (int): {moviesCount}\n")
-    # Fetch a random movie from the dataset
-    print(f"\n- Testing Random Movie Fetcher ...")
+    print(f"- The dataset contains '{moviesCount}' movies!")
+    # Test#2 - Testing Random Movie Fetcher
+    print(f"\n- Fetching a random movie from the dataset ...")
     randomMovie = fetchRandomMovie(jsonData)
-    print(f"- Returned variable (dict): {randomMovie}\n")
-    # Fetch a movie by ID
+    print(f"- The random movie:\n{randomMovie}")
+    # Test#3 - Fetching a movie by ID
     givenMovieId = 6
-    print(f"\n- Testing Movie by ID Fetcher (input: {givenMovieId}) ...")
+    print(f"\n- Fetching a given movie by ID (given: {givenMovieId}) ...")
     movieById = fetchMovieById(jsonData, givenMovieId)
-    print(f"- Returned variable (dict): {movieById}\n")
-    # Fetch movies by genre
+    print(f"- The fetched movie:\n{movieById}")
+    # Test#4 - Fetching movies by genre
     givenGenre = "Romance"
-    print(f"\n- Testing Movie by Genre Fetcher (input: {givenGenre}) ...")
+    print(f"\n- Fetching all movie with the given genre (input: {givenGenre}) ...")
     moviesByGenre = fetchMoviesByGenre(jsonData, givenGenre)
-    print(f"- Returned variable (list): {moviesByGenre}\n")
-    # Classify release years by count
-    print(f"\n- Testing Year Classification ...")
+    print(f"- Returned variable (list): {moviesByGenre}")
+    # Test#5 - Year classification
+    print(f"\n- Classifying release dates by count ...")
     yearsCount = classifyYearsByCount(jsonData)
-    print(f"- Returned variable (dict): {yearsCount}\n")
-    # Classify movies by genre
-    print(f"\n- Testing Movie Classification by Genre ...")
+    print(f"- Returned variable (dict): {yearsCount}")
+    # Test#6 - Genre classification
+    print(f"\n- Classifying movies by genre ...")
     moviesByGenre = classifyMoviesByGenre(jsonData)
-    print(f"- Returned variable (dict): {moviesByGenre}\n")
-    # Calculate the average genre per movie
-    print(f"\n- Testing Average Genre per Movie ...")
+    print(f"- Returned variable (dict): {moviesByGenre}")
+    # Test#7 - Average genre per movie calculation
+    print(f"\n- Calculating the average genre per movie ...")
     averageGenrePerMovie = calculateAverageGenrePerMovie(moviesByGenre, moviesCount)
-    print(f"- Returned variable (float): {averageGenrePerMovie}\n")
-    # Show the classification results in a bar chart
-    print(f"\n- Visualizing Movie Classification by Genre ...")
+    print(f"- Returned variable (float): {averageGenrePerMovie}")
+    # Test#8 - Visualizations
+    print(f"\n- Visualizing the classification results in a bar chart ...")
     visualizeGenresDictionary(moviesByGenre)
-    # End of the example
-    print(f"End of the example for the '{datasetName}' dataset ...")
 
 def testVisualDataProcess():
     print(f"This is an example provided for you to work with the visual packets of the '{datasetName}' dataset ... \n")
