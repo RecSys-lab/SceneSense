@@ -2,20 +2,21 @@
 
 from moviefex.utils import readConfigs
 from moviefex.multimodal.fused.overlap_checker import runVisualTextualDatasetsOverlapChecker
-from moviefex.datasets.runDataset import testMetadataProcess, testVisualDataProcess, runMovieLens25
+from moviefex.datasets.runDataset import testMetadataProcess, testVisualDataProcess, testMovieLens25M
 from moviefex.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures, runAggFeatures
 from moviefex.multimodal.fused.fuse_visual_textual import fuseTextualWithMMTF, fuseTextualWithSceneSense
 from moviefex.runCore import runTrailerDownloader, runMoviesFrameExtractor, runMoviesFramesFeatureExtractor
 
 def main():
-    print("Welcome! Starting 'SceneSense'!\n")
+    print("Welcome! Starting 'MoVieFex'!\n")
     # Read the configuration file
     configs = {}
     configs = readConfigs("moviefex/config/config.yml")
     # If properly read, print the configurations
     if not configs:
-        print("Error reading the configurations!")
+        print("Error loading configuration parameters!")
         return
+    print("Configuration file loaded successfully!\n")
     # Get common configurations
     cfgGeneral = configs['config']['general']
     cfgDatasets = configs['config']['datasets']
@@ -56,7 +57,7 @@ def main():
         elif (subMode == 'scenesense_visual'):
             testVisualDataProcess()
         elif (subMode == 'movielens_25m'):
-            runMovieLens25(cfgDatasets['text_dataset'])
+            testMovieLens25M(cfgDatasets['text_dataset'])
         else:
             print(f"Unsupported sub-mode '{subMode}' selected! Exiting ...")
     elif (mode == 'recsys'):
@@ -73,7 +74,7 @@ def main():
     else:
         print(f"Unsupported mode '{mode}' selected! Exiting ...")
     # Finish the program
-    print("\nStopping 'SceneSense'!")
+    print("\nStopping 'MoVieFex'!")
 
 if __name__ == "__main__":
     main()

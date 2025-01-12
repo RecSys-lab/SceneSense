@@ -1,6 +1,6 @@
 # SceneSense - Configurations
 
-The first recommended step to use the framework is setting the configuration parameters. You can find below the configurations modifiable in [`config.yml`](/config/config.yml):
+The first recommended step to use the framework is setting the configuration parameters. You can find below the configurations modifiable in [`config.yml`](/moviefex/config/config.yml):
 
 ## I. General
 

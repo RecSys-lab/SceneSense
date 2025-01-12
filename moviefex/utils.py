@@ -40,7 +40,7 @@ def loadDataFromCSV(csvPath: str):
     try:
         # Check if the file exists
         if not os.path.exists(csvPath):
-            raise FileNotFoundError(f"- File '{csvPath}' not found! Exiting ...")
+            raise FileNotFoundError(f"- File '{csvPath}' not found!")
         # Load the CSV data
         csvData = pd.read_csv(csvPath)
         return csvData

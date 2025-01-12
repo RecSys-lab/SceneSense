@@ -8,14 +8,14 @@ def downloadMovielens25m(url: str, downlpadPath: str):
 
     Parameters
     ----------
-    url :str
+    url: str
         The URL of the dataset
-    downlpadPath :str
+    downlpadPath: str
         The download path
     
     Returns
     -------
-    bool
+    status: bool
         The status of the download
     """
     # Download the dataset
