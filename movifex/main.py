@@ -2,7 +2,7 @@
 
 from movifex.utils import readConfigs
 from movifex.multimodal.fused.overlap_checker import runVisualTextualDatasetsOverlapChecker
-from movifex.datasets.runDataset import testMoViFexMetadata, testVisualDataProcess, testMovieLens25M
+from movifex.datasets.runDataset import testMoViFexMetadata, testMoViFexEmbeddings, testMovieLens25M
 from movifex.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures, runAggFeatures
 from movifex.multimodal.fused.fuse_visual_textual import fuseTextualWithMMTF, fuseTextualWithSceneSense
 from movifex.runCore import runTrailerDownloader, runMoviesFrameExtractor, runMoviesFramesFeatureExtractor
@@ -54,8 +54,8 @@ def main():
         subMode = cfgGeneral['sub_mode_ds']
         if (subMode == 'movifex_meta'):
             testMoViFexMetadata(cfgDatasets['visual_dataset']['movifex'])
-        elif (subMode == 'scenesense_visual'):
-            testVisualDataProcess()
+        elif (subMode == 'movifex_visual'):
+            testMoViFexEmbeddings(cfgDatasets['visual_dataset']['movifex'])
         elif (subMode == 'movielens_25m'):
             testMovieLens25M(cfgDatasets['text_dataset'])
         else:

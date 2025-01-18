@@ -4,6 +4,48 @@ import pandas as pd
 from movifex.utils import loadJsonFromUrl
 from movifex.datasets.movifex.helper_metadata import fetchAllMovieIds
 
+def aggFeatureAddressGenerator(datasetUrl: str, gFeature: str, gModel: str, gMovieId):
+  """
+  Generates the address of a packet file based on the given parameters.
+
+  Parameters:
+      datasetUrl (str): The base URL of the dataset.
+      gFeature (str): The feature type (e.g., "audio", "visual").
+      gModel (str): The model used for feature extraction.
+      gMovieId (int): The ID of the movie.
+      gPacketId (int): The ID of the packet.
+
+  Returns:
+      aggFeatureAddress (str): The URL address of the
+  """
+  # Variables
+  gMovieId = f"{int(gMovieId):010d}"
+  # Create address
+  aggFeatureAddress = datasetUrl + f"{gFeature}/{gModel}/{gMovieId}" + ".json"
+  # Return
+  return aggFeatureAddress
+
+def fetchAggregatedFeatures(url: str, gFeature: str, gModel: str, gMovieId):
+  """
+  Fetches all aggregated features of a movie from the dataset.
+
+  Parameters:
+      url (str): The base URL of the dataset.
+      gFeature (str): The feature type (e.g., "audio", "visual").
+      gModel (str): The model used for feature extraction.
+      gMovieId (int): The ID of the movie.
+
+  Returns:
+      jsonData (list): A list of all aggregated features of the movie.
+  """
+  # Variables
+  # Generate packet address
+  aggFeatureAddress = aggFeatureAddressGenerator(url, gFeature, gModel, gMovieId)
+  # Fetch JSON data
+  jsonData = loadJsonFromUrl(aggFeatureAddress)
+  # Return
+  return jsonData
+
 def allAggregatedFeatureAddresses(datasetUrl: str, featureModels: list, movieIds: list, aggFeatureSources: list):
   """
   Generates a list of addresses for all aggregated features of movies in the dataset.
@@ -58,10 +100,10 @@ def generatedAggFeatureAddresses(cfgDatasets: dict):
       moviePackets (list): A list of all packets of the movie.  
   """
   # Variables
-  rawFilesUrl = cfgDatasets['visual_dataset']['scenesense']['path_raw']
-  featureModels = cfgDatasets['visual_dataset']['scenesense']['feature_models']
-  datasetMetadataUrl = cfgDatasets['visual_dataset']['scenesense']['path_metadata']
-  aggFeatureSources = cfgDatasets['visual_dataset']['scenesense']['agg_feature_sources']
+  rawFilesUrl = cfgDatasets['path_raw']
+  featureModels = cfgDatasets['feature_models']
+  datasetMetadataUrl = cfgDatasets['path_metadata']
+  aggFeatureSources = cfgDatasets['agg_feature_sources']
   # Fetch JSON metadata from the URL
   print(f"- Fetching URL from '{datasetMetadataUrl}' ...")
   jsonData = loadJsonFromUrl(datasetMetadataUrl)

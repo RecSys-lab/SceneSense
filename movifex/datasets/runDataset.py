@@ -8,14 +8,9 @@ from movifex.datasets.movielens.helper_ratings import mergeMainGenreMoviesDFWith
 from movifex.datasets.movifex.helper_visualfeats import packetAddressGenerator, fetchAllPackets
 from movifex.datasets.movifex.helper_metadata import countNumberOfMovies, fetchRandomMovie, fetchMovieById
 from movifex.datasets.movielens.helper_movies import fetchAllUniqueGenres, fetchMoviesByGenre as fetchMoviesByGenreMovielens
-from movifex.datasets.movielens.helper_movies import augmentMoviesDFWithBinarizedGenres, binarizeMovieGenres, filterMoviesWithMainGenres, mainGenres
 from movifex.datasets.movifex.helper_metadata import classifyYearsByCount, fetchMoviesByGenre, classifyMoviesByGenre, calculateAverageGenrePerMovie
-
-# Sample variables
-datasetName = "SceneSense-visual"
-featureModels = ["incp3", "vgg19"]
-featureSources = ["full_movies", "movie_shots", "movie_trailers"]
-datasetRawFilesUrl = "https://huggingface.co/datasets/alitourani/moviefeats_visual/raw/main/"
+from movifex.datasets.movielens.helper_movies import augmentMoviesDFWithBinarizedGenres, binarizeMovieGenres, filterMoviesWithMainGenres, mainGenres
+from movifex.datasets.movifex.helper_visualfeats_agg import fetchAggregatedFeatures, generatedAggFeatureAddresses, loadAggregatedFeaturesIntoDataFrame
 
 def testMoViFexMetadata(configs: dict):
     """
@@ -67,17 +62,41 @@ def testMoViFexMetadata(configs: dict):
     print(f"\n- Visualizing the classification results in a bar chart ...")
     visualizeGenresDictionary(moviesByGenre)
 
-def testVisualDataProcess():
-    print(f"This is an example provided for you to work with the visual packets of the '{datasetName}' dataset ... \n")
-    # Fetch JSON data from the URL
+def testMoViFexEmbeddings(configs: dict):
+    # Variables
+    datasetName = configs['name']
+    datasetRawFilesUrl = configs['path_raw']
+    featureModels = configs['feature_models']
+    featureSources = configs['feature_sources']
+    aggFeatureSources = configs['agg_feature_sources']
+    # Other variables
     givenMovieId = 6
-    print(f"- Generating a sample packet address file from '{datasetRawFilesUrl}' ...")
-    packetAddress = packetAddressGenerator(datasetRawFilesUrl, featureSources[2], featureModels[0], givenMovieId, 1)
-    print(f"- Generated address (str): {packetAddress}\n")
+    givenModel = featureModels[0]
+    givenFeatureSource = featureSources[2]
+    givenAggFeatureSource = aggFeatureSources[0]
+    print(f"Running the visual dataset functions of '{datasetName}' embedding processing ...")
+    # Pre-check fetch addresses of files
+    print(f"\n- Generating a sample packet address file from '{datasetRawFilesUrl}' ...")
+    packetAddress = packetAddressGenerator(datasetRawFilesUrl, givenFeatureSource, givenModel, givenMovieId, 1)
+    print(f"- Generated address (str): {packetAddress}")
     # Fetch all packets of a movie
-    print(f"- Fetching all packets of the movie #{givenMovieId}) ...")
-    moviePackets = fetchAllPackets(datasetRawFilesUrl, featureSources[2], featureModels[0], givenMovieId)
-    print(f"- Number of packets fetched (list): {len(moviePackets)}")
+    print(f"\n- Fetching all packets of the movie #{givenMovieId}) ...")
+    moviePackets = fetchAllPackets(datasetRawFilesUrl, givenFeatureSource, givenModel, givenMovieId)
+    print(f"- Number of fetched packets (list): {len(moviePackets)}")
+    # Fetch all aggregated features of a given movie
+    print(f"\n- Fetching aggregated features of the movie #{givenMovieId} ({givenModel}, {givenAggFeatureSource}) ...")
+    aggFeatures = fetchAggregatedFeatures(datasetRawFilesUrl, givenAggFeatureSource, givenModel, givenMovieId)
+    print(f"- The fetched aggregated features (list): {aggFeatures}")
+    # Fetching aggregated features
+    print(f"\n- Generating addresses for aggregated features ...")
+    aggFeatureAddresses = generatedAggFeatureAddresses(configs)
+    print(f"- Samples of the generated addresses: {aggFeatureAddresses['full_movies_agg']['incp3'][:2]}")
+    # Loading a sample aggregated feature into a DataFrame
+    print(f"\n- Loading a sample aggregated feature into a DataFrame (Full-Movie, Inception 3.0) ...")
+    tmpVisualDFMax, tmpVisualDFMean = loadAggregatedFeaturesIntoDataFrame(aggFeatureAddresses['full_movies_agg']['incp3'])
+    print(f"- Loaded {len(tmpVisualDFMax)} records for 'Max' aggregated features! Check the first 3 records:")
+    print(f"- The loaded DataFrame (Max): {tmpVisualDFMax.head(3)}")
+    print(f"- The loaded DataFrame (Mean): {tmpVisualDFMean.head(3)}")
 
 def testMovieLens25M(configs: dict):
     """

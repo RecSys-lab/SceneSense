@@ -128,7 +128,7 @@ def fuseTextualWithSceneSense(cfgRecSys: dict, cfgDatasets: dict):
     print(f"- Filtered the dataset to contain only 'itemId' and 'title' columns! Check the first 3 records:")
     print(enrichedLLMDataset.head(3))
     # (2) Read the SceneSense (aggregated) dataset
-    aggFeatureAddresses = generatedAggFeatureAddresses(cfgDatasets)
+    aggFeatureAddresses = generatedAggFeatureAddresses(cfgDatasets['visual_dataset']['movifex'])
     # Round#1: Load the 'full_movies_agg' dataset, 'incp3' model
     print(f"\nII-A. Reading the Aggregated SceneSense data for 'Full-Movies', 'Inception-3' Model ...")
     tmpVisualDFMax, tmpVisualDFMean = loadAggregatedFeaturesIntoDataFrame(aggFeatureAddresses['full_movies_agg']['incp3'])
