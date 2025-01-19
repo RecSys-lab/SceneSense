@@ -5,13 +5,13 @@ config:
     # "ds": working with various datasets and processing them
     # "pipeline": working with various pipelines and processing them
     # "recsys": working with recommendation systems integrated with the framework
-    mode: "ds" # Possible values: ["ds", "pipeline", "recsys"]
+    mode: "pipeline" # Possible values: ["ds", "pipeline", "recsys"]
     # ------------------------- Framework sub-mode -------------------------
     # Sub-mode of the dataset mode - Possible values: ["movielens_25m", "movifex_meta", "movifex_visual", "mmtf_14k"]
     sub_mode_ds: "movifex_visual"
     # Sub-mode of the pipeline mode
     # Possible values: ["dl_trailers", "frame_extractor", "feat_extractor", "shot_from_frame", "shot_from_feat", "agg_features"]
-    sub_mode_pipeline: "agg_features"
+    sub_mode_pipeline: "dl_trailers"
     # Sub-mode of the recommendation system mode - Possible values: ["overlap_checker", "visual_text_fusion"]
     sub_mode_recsys: "visual_text_fusion"
   # ------------------------- Datasets configurations ------------------------
@@ -60,7 +60,7 @@ config:
       # Pipeline name
       name: Trailer-fetcher
       # Path to the pipeline
-      download_path: "~/Downloads"
+      download_path: "E:/Datasets/Movies/MovieTrailers"
     # Movie frames extractor pipeline
     movie_frames:
       # Pipeline name

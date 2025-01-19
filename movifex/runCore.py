@@ -14,7 +14,7 @@ from movifex.pipelines.shots.shotDetection import extractShotsFromMovieFrames, e
 
 def runTrailerDownloader(configs: dict, datasetInfo: dict):
     """
-    Runs the trailer downloader pipeline
+    Runs the trailer downloader pipeline to fetch movie trailers from a given movie list
 
     Parameters
     ----------
@@ -23,10 +23,13 @@ def runTrailerDownloader(configs: dict, datasetInfo: dict):
     datasetInfo :dict
         The dataset information dictionary
     """
+    # Variables
+    datasetName = datasetInfo['name']
+    jsonFilePath = datasetInfo['path_metadata']
     print("Running the trailer downloader pipeline ...")
     # Fetch JSON data from the URL
-    print(f"- Fetching URL from '{datasetInfo['name']}' ...")
-    jsonData = loadJsonFromUrl(datasetInfo['jsonPath'])
+    print(f"- Fetching the list of movies from '{datasetName}' dataset ...")
+    jsonData = loadJsonFromUrl(jsonFilePath)
     # Filter the movie list
     print(f"- Preparing data to make proper queries for movie finding ...")
     filteredMovies = filterMovieList(jsonData)

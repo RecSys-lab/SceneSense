@@ -29,9 +29,7 @@ def main():
         subMode = cfgGeneral['sub_mode_pipeline']
         if (subMode == 'dl_trailers'):
             # Run the trailer downloader pipeline
-            datasetInfo = {'name': cfgDatasets['visual_dataset']['scenesense']['name'],
-                           'jsonPath': cfgDatasets['visual_dataset']['scenesense']['path_metadata']}
-            runTrailerDownloader(cfgPipeline['movie_trailers'], datasetInfo)
+            runTrailerDownloader(cfgPipeline['movie_trailers'], cfgDatasets['visual_dataset']['movifex'])
         elif (subMode == 'frame_extractor'):
             # Run the movies frame extractor pipeline
             runMoviesFrameExtractor(cfgPipeline['movie_frames'])

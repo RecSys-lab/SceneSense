@@ -21,6 +21,6 @@ def filterMovieList(jsonData: list):
                                 'year': item['year']
                                 })
     # Prepare a log message
-    print(f"Processed {len(filteredMovies)} movies from the JSON data to query YouTube ...\n")
+    print(f"- Prepared {len(filteredMovies)} movies data from the JSON data to query YouTube ...\n")
     # Return
     return filteredMovies
