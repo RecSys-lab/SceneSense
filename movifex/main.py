@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from movifex.utils import readConfigs
+from movifex.pipelines.downloaders.utils import videoFileDownloader
 from movifex.multimodal.fused.overlap_checker import runVisualTextualDatasetsOverlapChecker
 from movifex.datasets.runDataset import testMoViFexMetadata, testMoViFexEmbeddings, testMovieLens25M
 from movifex.runCore import runShotDetectionFromFrames, runShotDetectionFromFeatures, runAggFeatures
@@ -31,6 +32,10 @@ def main():
             # Run the trailer downloader pipeline
             runTrailerDownloader(cfgPipeline['movie_trailers'], cfgDatasets['visual_dataset']['movifex'])
         elif (subMode == 'frame_extractor'):
+            # Download a sample video file (optional)
+            # downloadPath = cfgPipeline['movie_frames']['movies_path']
+            # videoUrl = 'https://cdn.pixabay.com/video/2024/02/28/202368-918049003_large.mp4'
+            # videoFileDownloader(videoUrl, downloadPath, fileName='test.mp4')
             # Run the movies frame extractor pipeline
             runMoviesFrameExtractor(cfgPipeline['movie_frames'])
         elif (subMode == 'feat_extractor'):
