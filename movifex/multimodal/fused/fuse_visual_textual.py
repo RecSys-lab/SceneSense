@@ -35,7 +35,7 @@ def fuseTextualWithMMTF(cfgRecSys: dict, cfgDatasets: dict):
     print(f"- Filtered the dataset to contain only 'itemId' and 'title' columns! Check the first 3 records:")
     print(enrichedLLMDataset.head(3))
     # (2) Read the MMTF-14K dataset
-    mmtfDatasetRootUrl = cfgDatasets['visual_dataset']['mmtf']['path_root']
+    mmtfDatasetRootUrl = cfgDatasets['visual_dataset']['mmtf']['download_path']
     # Join the paths
     mmtfVisualAvgCSVFilePath = os.path.join(mmtfDatasetRootUrl, 'Visual', 'AlexNet features', 'Avg', 'AlexNetFeatures - AVG - fc7.csv')
     mmtfVisualMedCSVFilePath = os.path.join(mmtfDatasetRootUrl, 'Visual', 'AlexNet features', 'Med', 'AlexNetFeatures - MED - fc7.csv')

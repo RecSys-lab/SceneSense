@@ -48,7 +48,7 @@ def runVisualTextualDatasetsOverlapChecker(cfgRecSys: dict, cfgDatasets: dict):
     print(f"- Filtered the dataset to contain only 'itemId' and 'title' columns! Check the first 3 records:")
     print(sceneSenseMovies.head(3))
     # (3) Read the MMTF-14K dataset
-    mmtfDatasetRootUrl = cfgDatasets['visual_dataset']['mmtf']['path_root']
+    mmtfDatasetRootUrl = cfgDatasets['visual_dataset']['mmtf']['download_path']
     # Join the path
     mmtfCSVFilePath = os.path.join(mmtfDatasetRootUrl, 'Metadata', 'YearOfProd.csv')
     mmtfCSVFilePath = os.path.normpath(mmtfCSVFilePath)
