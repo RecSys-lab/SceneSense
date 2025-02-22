@@ -25,7 +25,8 @@ setup(
         "scipy>=1.14.1",
         "requests>=2.32",
         "PyYAML>=6.0.1",
-        "openai==0.27.0",
+        "openai>=0.27.0",
+        "scikit-learn>=1.6.1",
         "tensorflow>=2.17.0"
     ]
 )
