@@ -2,6 +2,7 @@
 
 import os
 from movifex.utils import loadDataFromCSV, loadJsonFromUrl
+from movifex.datasets.utils import printTextualDatasetStats
 from movifex.datasets.movielens.downloader import downloadMovielens25m
 from movifex.datasets.movifex.visualizer_metadata import visualizeGenresDictionary
 from movifex.datasets.movielens.helper_ratings import mergeMainGenreMoviesDFWithRatingsDF
@@ -177,3 +178,7 @@ def testMovieLens25M(configs: dict):
     print(f"\n- Merging the movies (of the main genres) and ratings DataFrames ...")
     mergedDataFrame = mergeMainGenreMoviesDFWithRatingsDF(augmentedMoviesDataFrame, ratingsDataFrame)
     print(f"- The merged DataFrame has {len(mergedDataFrame)} items, such as:\n{mergedDataFrame.head(3)}")
+    # Test#12 - Dataset statistics
+    print(f"\n- Checking dataset statistics ...")
+    ratingsDataFrameRenamed = ratingsDataFrame.rename(columns={'movieId': 'itemId'})
+    printTextualDatasetStats(ratingsDataFrameRenamed)
